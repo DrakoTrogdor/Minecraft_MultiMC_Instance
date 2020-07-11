@@ -7,6 +7,7 @@ Created by DrakoTrogdor on 2020-04-12
 ## [1.1.7] - 2020-07-11
 - Updated Litematica to 0.0.0-dev.20200711.162756
 - Updated Tweakeroo to 0.10.0-dev.20200709.190355
+- Updated WorldEditCUI to 1.16.1+01+d695df4
 
 ## [1.1.6] - 2020-07-10
 - Updated WorldEdit to 7.2.0+373f869
