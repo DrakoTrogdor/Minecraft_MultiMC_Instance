@@ -48,6 +48,10 @@
     "mapPreviewSize": 160,
     "periodicAttackInterval": 20,
     "periodicUseInterval": 20,
+    "periodicHoldAttackDuration": 20,
+    "periodicHoldAttackInterval": 20,
+    "periodicHoldUseDuration": 20,
+    "periodicHoldUseInterval": 20,
     "placementGridSize": 3,
     "placementLimit": 3,
     "potionWarningThreshold": 600,
@@ -467,6 +471,18 @@
         "cancel": true
       }
     },
+    "toggleGrabCursor": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
     "toolPick": {
       "keys": "",
       "settings": {
@@ -500,6 +516,17 @@
     "snapAimLastYaw": 0.0
   },
   "Lists": {
+    "creativeExtraItems": [
+      "minecraft:command_block",
+      "minecraft:chain_command_block",
+      "minecraft:repeating_command_block",
+      "minecraft:dragon_egg",
+      "minecraft:structure_void",
+      "minecraft:structure_block",
+      "minecraft:structure_block{BlockEntityTag:{mode:\"SAVE\"}}",
+      "minecraft:structure_block{BlockEntityTag:{mode:\"LOAD\"}}",
+      "minecraft:structure_block{BlockEntityTag:{mode:\"CORNER\"}}"
+    ],
     "fastPlacementItemListType": "blacklist",
     "fastRightClickBlockListType": "blacklist",
     "fastRightClickListType": "none",
@@ -895,6 +922,7 @@
     "tweakChatPersistentText": false,
     "tweakChatTimestamp": false,
     "tweakCommandBlockExtraFields": false,
+    "tweakCreativeExtraItems": false,
     "tweakCustomFlatPresets": false,
     "tweakElytraCamera": false,
     "tweakEmptyShulkerBoxesStack": false,
@@ -902,6 +930,7 @@
     "tweakExplosionReducedParticles": false,
     "tweakF3Cursor": false,
     "tweakFakeSneaking": false,
+    "tweakFakeSneakPlacement": false,
     "tweakFastBlockPlacement": false,
     "tweakFastLeftClick": false,
     "tweakFastRightClick": false,
@@ -925,6 +954,8 @@
     "tweakMovementKeysLast": false,
     "tweakPeriodicAttack": false,
     "tweakPeriodicUse": false,
+    "tweakPeriodicHoldAttack": false,
+    "tweakPeriodicHoldUse": false,
     "tweakPermanentSneak": false,
     "tweakPermanentSprint": false,
     "tweakPlacementGrid": false,
@@ -1122,6 +1153,18 @@
         "cancel": true
       }
     },
+    "tweakCreativeExtraItems": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
     "tweakCustomFlatPresets": {
       "keys": "",
       "settings": {
@@ -1195,6 +1238,18 @@
       }
     },
     "tweakFakeSneaking": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
+    "tweakFakeSneakPlacement": {
       "keys": "",
       "settings": {
         "activate_on": "PRESS",
@@ -1471,6 +1526,30 @@
       }
     },
     "tweakPeriodicUse": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
+    "tweakPeriodicHoldAttack": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
+    "tweakPeriodicHoldUse": {
       "keys": "",
       "settings": {
         "activate_on": "PRESS",

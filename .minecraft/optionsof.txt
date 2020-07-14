@@ -6,7 +6,7 @@ ofSmoothFps:false
 ofSmoothWorld:true
 ofAoLevel:1.0
 ofClouds:1
-ofCloudsHeight:0.0
+ofCloudsHeight:1.0
 ofTrees:0
 ofDroppedItems:1
 ofRain:1
