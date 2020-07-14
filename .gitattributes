@@ -1,0 +1,2 @@
+*.properties filter=gitignore
+*.cfg filter=gitignore
