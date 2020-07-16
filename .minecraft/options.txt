@@ -31,7 +31,7 @@ graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:fast
-resourcePacks:["vanilla","optifine","file/Infested_Blocks.zip","file/VanillaTweaks_r798060.zip","file/Shield_Corrections.zip","file/VanillaTweaks_r348665.zip"]
+resourcePacks:["vanilla","optifine","file/Infested_Blocks.zip","file/Shield_Corrections.zip","file/VanillaTweaks_r966695.zip"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
@@ -96,6 +96,7 @@ key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
 key_of.key.zoom:key.keyboard.c
+key_bbor.key.toggleActive:key.keyboard.b
 key_key.worldeditcui.toggle:key.keyboard.unknown
 key_key.worldeditcui.clear:key.keyboard.unknown
 key_key.worldeditcui.chunk:key.keyboard.unknown

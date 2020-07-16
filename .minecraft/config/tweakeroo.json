@@ -8,7 +8,7 @@
   },
   "Generic": {
     "clientPlacementRotation": true,
-    "freeCameraMotionToggle": true,
+    "freeCameraPlayerMovement": false,
     "lavaVisibilityOptifineCompat": true,
     "handRestockPre": true,
     "permanentSneakAllowInGUIs": false,
@@ -256,6 +256,18 @@
       }
     },
     "flyPreset4": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
+    "freeCameraPlayerMovement": {
       "keys": "",
       "settings": {
         "activate_on": "PRESS",
@@ -938,7 +950,6 @@
     "tweakFlySpeed": false,
     "tweakFlexibleBlockPlacement": false,
     "tweakFreeCamera": false,
-    "tweakFreeCameraMotion": false,
     "tweakGammaOverride": false,
     "tweakHandRestock": false,
     "tweakHoldAttack": false,
@@ -969,6 +980,7 @@
     "tweakPickBeforePlace": false,
     "tweakPlayerListAlwaysVisible": false,
     "tweakRemoveOwnPotionEffects": false,
+    "tweakRenderEdgeChunks": false,
     "tweakRenderInvisibleEntities": false,
     "tweakRenderLimitEntities": false,
     "tweakRepairMode": false,
@@ -1345,18 +1357,6 @@
         "cancel": true
       }
     },
-    "tweakFreeCameraMotion": {
-      "keys": "",
-      "settings": {
-        "activate_on": "PRESS",
-        "context": "INGAME",
-        "allow_empty": false,
-        "allow_extra_keys": false,
-        "order_sensitive": true,
-        "exclusive": false,
-        "cancel": true
-      }
-    },
     "tweakGammaOverride": {
       "keys": "",
       "settings": {
@@ -1706,6 +1706,18 @@
       }
     },
     "tweakRemoveOwnPotionEffects": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
+    "tweakRenderEdgeChunks": {
       "keys": "",
       "settings": {
         "activate_on": "PRESS",

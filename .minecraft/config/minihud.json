@@ -720,7 +720,7 @@
     "debugSolidFaceEnabled": false,
     "debugWaterEnabled": false,
     "overlayBlockGrid": false,
-    "overlayLightLevel": true,
+    "overlayLightLevel": false,
     "overlayRandomTicksFixed": false,
     "overlayRandomTicksPlayer": false,
     "overlayRegionFile": false,
@@ -728,7 +728,7 @@
     "overlaySpawnableColumnHeights": false,
     "overlaySpawnChunkReal": false,
     "overlaySpawnChunkPlayer": false,
-    "overlayStructureMainToggle": false,
+    "overlayStructureMainToggle": true,
     "shapeRenderer": true
   },
   "RendererHotkeys": {
@@ -925,7 +925,7 @@
       }
     },
     "overlayStructureMainToggle": {
-      "keys": "",
+      "keys": "H,J",
       "settings": {
         "activate_on": "PRESS",
         "context": "INGAME",
@@ -1214,7 +1214,7 @@
     "Jungle Temple": false,
     "Mansion": false,
     "Mineshaft": false,
-    "Nether Fortress": false,
+    "Nether Fortress": true,
     "Nether Fossil": false,
     "Ocean Monument": false,
     "Ocean Ruin": false,

@@ -2,7 +2,20 @@ Created by DrakoTrogdor on 2020-04-12
 
 # Changelog
 
-## [Unreleased]
+## [Released]
+
+## [1.1.9] - 2020-07-15
+### Added
+- Added BoundingBox Outline Reloaded 2.3-1.16.1+dd237fb
+### Changed
+- Updated AutoSwitch to 2.6.0
+- Updated Cloth Config v4 to 4.6.0
+- Updated Fabric Loader to 0.9.0+build.204
+- Updated MiniHUD to 0.19.0-dev.20200716.164820
+- Updated Tweakeroo to 0.10.0-dev.20200716.161850
+- Updated WorlEdit to 7.2.0+b33d96b
+### Fixed
+- Fixed loaded resource packs to include new instance of Vanilla Tweaks Resource Pack
 
 ## [1.1.8] - 2020-07-14
 ### Added
@@ -14,6 +27,9 @@ Created by DrakoTrogdor on 2020-04-12
 - Fixed AutoSwitch default set to disabled on start
 ### Removed
 - Removed Vanilla Tweaks Resource Pack - UnobtrusiveRain (Too unobtrusive, cannot tell if it is actually raining)
+
+
+## [Unreleased]
 
 ## [1.1.7] - 2020-07-11
 ### Changed

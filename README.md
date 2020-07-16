@@ -5,6 +5,8 @@ MultiMC instance for Minecraft 1.16.1 with Fabric, Optifine and mods.
 - AppleSkin
 - AutoSwitch
 - Autofish
+> https://www.curseforge.com/minecraft/mc-mods/autofish
+- BoundingBox OutlineReloaded
 - Carpet Mod in Fabric
 - Cloth Config v4
 - CraftPresence
@@ -19,27 +21,28 @@ MultiMC instance for Minecraft 1.16.1 with Fabric, Optifine and mods.
 - MiniHUD
 - Mod Menu
 - OptiFine
+> Credit to sp614x [Donate](https://optifine.net/donate).
+> 
+> Downloads: https://optifine.net/downloads
 - Optifabric
 - Shulker Box Tooltip
 - Tweakeroo
 - VoxelMap
+> Credit to MamiyaOtaru [Patreon](https://www.patreon.com/MamiyaOtaru).
+> 
+> Downloads: https://www.curseforge.com/minecraft/mc-mods/voxelmap
 - WorldEdit
 - WorldEditCUI
 
 ## Resource Packs
 ### Vanilla Tweaks
-- BlazeFix
-- DiminishingTools
-- DoubleSlabFix
+> Downloaded from https://vanillatweaks.net/picker/resource-packs/
+#### Aesthetic
 - EndlessEndRods
-- JappaObserver
-- JappaSigns
-- LowerFire
-- LowerShield
 - NoteblockBanners
-- NumberedHotbar
-- OldDamageSounds
-- PingColorIndicator
+#### Variation
+- VariatedBookshelves
+#### Peace and Quiet
 - QuieterCows
 - QuieterDispensersDroppers
 - QuieterEndermen
@@ -51,11 +54,25 @@ MultiMC instance for Minecraft 1.16.1 with Fabric, Optifine and mods.
 - QuieterShulkers
 - QuieterVillagers
 - QuieterWater
+#### Utility
+- DiminishingTools
+#### Unobtrusive
+- LowerFire
+- LowerShield
 - SmallerUtilities
 - TransparentPumpkin
-- UnobtrusiveRain
 - UnobtrusiveScaffolding
-- VariatedBookshelves
+#### HUD
+- PingColorIndicator
+#### GUI
+- NumberedHotbar
+#### Retro
+- OldDamageSounds
+#### Fixes
+- BlazeFix
+- DoubleSlabFix
+- JappaObserver
+- JappaSigns
 
 ## Shader Packs
 - Sidulrs Vibrand Sahders Extreme-VL
