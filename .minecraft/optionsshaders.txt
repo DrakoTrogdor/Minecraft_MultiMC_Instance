@@ -1,4 +1,4 @@
-#Tue Jul 07 14:22:38 EDT 2020
+#Thu Jul 23 10:11:23 EDT 2020
 handDepthMul=0.125
 TexMinFilB=0
 oldLighting=default
@@ -6,7 +6,7 @@ TexMagFilN=0
 tweakBlockDamage=false
 cloudShadow=false
 TexMagFilS=0
-shaderPack=OFF
+shaderPack=
 TexMinFilN=0
 specularMapEnabled=true
 normalMapEnabled=true

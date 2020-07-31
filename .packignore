@@ -14,8 +14,6 @@
 .minecraft/coremods
 .minecraft/craftpresence
 .minecraft/crash-reports
-.minecraft/hs_err_pid*.log
-.minecraft/hs_err_pid2948.log
 .minecraft/itemscroller
 .minecraft/logs
 .minecraft/mods/mamiyaotaru/voxelmap

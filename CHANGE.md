@@ -4,6 +4,19 @@ Created by DrakoTrogdor on 2020-04-12
 
 ## [Released]
 
+## [1.1.10] - 2020-07-30
+- Updated AutoSwitch to 2.9.0
+- Updated Fabric API to 0.16.2+build.385-1.16.1
+- Updated Inventory Sorter to 1.7.0-1.16
+- Updated MaLiLib to 0.10.0-dev.21+arne.2
+- Updated Minecraft Skin Change Mod version 2.0.1
+- Updated Mod Menu to 1.14.5+build.30
+- Updated Optifine to 1.16.1  HD U G2 preview 5
+- Updated Tweakeroo to 0.10.0-dev.20200726.164244
+- Updated VoxelMap to 1.10.7
+- Updated WorlEdit to 7.2.0+b0d5100
+- Updated WorldEditCUI to 1.16.1+02+b134e8f
+
 ## [1.1.9] - 2020-07-15
 ### Added
 - Added BoundingBox Outline Reloaded 2.3-1.16.1+dd237fb
@@ -35,7 +48,8 @@ Created by DrakoTrogdor on 2020-04-12
 ### Changed
 - Updated Litematica to 0.0.0-dev.20200711.162756
 - Updated Tweakeroo to 0.10.0-dev.20200709.190355
-- Updated WorldEditCUI to 1.16.1+01+d695df4
+- Updated VoxelMap to 1.10.6
+- Updated WorldEditCUI to 1.16.1+01+5f9f105
 
 ## [1.1.6] - 2020-07-10
 ### Changed

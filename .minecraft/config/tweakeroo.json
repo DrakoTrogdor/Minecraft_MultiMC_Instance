@@ -19,6 +19,7 @@
     "slotSyncWorkaround": true,
     "snapAimIndicator": true,
     "snapAimPitchOvershoot": false,
+    "zoomAdjustMouseSensitivity": true,
     "breakingRestrictionMode": "line",
     "elytraCameraIndicator": "with_key",
     "placementRestrictionMode": "face",
