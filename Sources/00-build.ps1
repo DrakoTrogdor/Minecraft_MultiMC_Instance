@@ -1,5 +1,5 @@
 #git submodule update --remote
-Function Execute-Batch ($commandPath, $commandArguments, $workingDirectory, $timeout)
+Function Invoke-BatchFile ($commandPath, $commandArguments, $workingDirectory, $timeout)
 {
     $pinfo = New-Object System.Diagnostics.ProcessStartInfo
     $pinfo.FileName = $env:ComSpec
@@ -21,7 +21,6 @@ Function Execute-Batch ($commandPath, $commandArguments, $workingDirectory, $tim
     }
 }
 $basedir = (Get-Location).Path
-$JDKdir = 'C:\Program Files\AdoptOpenJDK\jdk-8.0.265.01-hotspot\bin\java.exe'
 $modsdir = Join-Path -Path ((Get-Item $basedir).Parent) -ChildPath .minecraft -AdditionalChildPath mods
 Get-ChildItem -Directory | ForEach-Object {
 	$currentmod = $_.Name
@@ -37,28 +36,28 @@ Get-ChildItem -Directory | ForEach-Object {
 	else {
 		switch ($currentmod) {
 			'WorldEdit' {
-				$gradleProperties = (Execute-Batch -commandPath $gradlew -commandArguments "worldedit-fabric:properties --no-daemon").StandardOutput
+				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "worldedit-fabric:properties --no-daemon").StandardOutput
 				$gradleBuild = 'worldedit-fabric:build'
 				$gitPull = $true
 				$jardir = Join-Path -Path $currentdir -ChildPath worldedit-fabric -AdditionalChildPath build,libs
 				break
 			}
 			'LambDynamicLights' {
-				$gradleProperties = (Execute-Batch -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
+				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
 				$gradleBuild = 'ShadowRemapJar'
 				$gitPull = $true
 				$jardir = Join-Path -Path $currentdir -ChildPath build -AdditionalChildPath libs
 				break
 			}
 			'Fabric-Autoswitch' {
-				$gradleProperties = (Execute-Batch -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
+				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
 				$gradleBuild = 'build'
 				$gitPull = $false
 				$jardir = Join-Path -Path $currentdir -ChildPath build -AdditionalChildPath libs
 				break
 			}
 			default {
-				$gradleProperties = (Execute-Batch -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
+				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
 				$gradleBuild = 'build'
 				$gitPull = $true
 				$jardir = Join-Path -Path $currentdir -ChildPath build -AdditionalChildPath libs
