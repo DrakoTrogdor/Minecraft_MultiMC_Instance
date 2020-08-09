@@ -1,0 +1,101 @@
+[submodule "sodium-fabric"]
+	path = sodium-fabric
+	url = https://github.com/jellysquid3/sodium-fabric
+[submodule "Sources/sodium-fabric"]
+	path = Sources/sodium-fabric
+	url = https://github.com/jellysquid3/sodium-fabric
+[submodule "Sources/fabric"]
+	path = Sources/fabric
+	url = https://github.com/FabricMC/fabric
+[submodule "Sources/connected-block-textures"]
+	path = Sources/connected-block-textures
+	url = https://github.com/Nuclearfarts/connected-block-textures
+	branch = 1.16
+[submodule "Sources/AppleSkin"]
+	path = Sources/AppleSkin
+	url = https://github.com/squeek502/AppleSkin
+	branch = 1.16-fabric
+[submodule "Sources/Fabric-Autoswitch"]
+	path = Sources/Fabric-Autoswitch
+	url = https://github.com/dexman545/Fabric-Autoswitch
+[submodule "Sources/fabric-carpet"]
+	path = Sources/fabric-carpet
+	url = https://github.com/gnembon/fabric-carpet
+	branch = 1.16
+[submodule "Sources/cloth-config"]
+	path = Sources/cloth-config
+	url = https://github.com/shedaniel/cloth-config
+	branch = v4
+[submodule "Sources/CraftPresence"]
+	path = Sources/CraftPresence
+	url = https://gitlab.com/CDAGaming/CraftPresence
+	branch = 1.16.x-Fabric
+[submodule "Sources/Grid"]
+	path = Sources/Grid
+	url = https://github.com/gbl/Grid
+	branch = fabric_1_16
+[submodule "Sources/HWYLA"]
+	path = Sources/HWYLA
+	url = https://github.com/TehNut/HWYLA
+	branch = 1.16_fabric
+[submodule "Sources/Inventory-Sorter"]
+	path = Sources/Inventory-Sorter
+	url = https://github.com/kyrptonaught/Inventory-Sorter
+	branch = 1.16
+[submodule "Sources/itemscroller"]
+	path = Sources/itemscroller
+	url = https://github.com/maruohon/itemscroller
+	branch = fabric_1.16_snapshots_temp
+[submodule "Sources/LambDynamicLights"]
+	path = Sources/LambDynamicLights
+	url = https://github.com/LambdAurora/LambDynamicLights
+	branch = mc1.16
+[submodule "Sources/litematica"]
+	path = Sources/litematica
+	url = https://github.com/maruohon/litematica
+	branch = fabric_1.16_snapshots_temp
+[submodule "Sources/malilib"]
+	path = Sources/malilib
+	url = https://github.com/maruohon/malilib
+	branch = fabric_1.16_snapshots_temp
+[submodule "Sources/minihud"]
+	path = Sources/minihud
+	url = https://github.com/maruohon/minihud
+	branch = fabric_1.16_snapshots_temp
+[submodule "Sources/ModMenu"]
+	path = Sources/ModMenu
+	url = https://github.com/Prospector/ModMenu
+	branch = 1.16
+[submodule "Sources/phosphor-fabric"]
+	path = Sources/phosphor-fabric
+	url = https://github.com/jellysquid3/phosphor-fabric
+	branch = 1.16.x/dev
+[submodule "Sources/ShulkerBoxTooltip"]
+	path = Sources/ShulkerBoxTooltip
+	url = https://github.com/MisterPeModder/ShulkerBoxTooltip
+	branch = 1.16
+[submodule "Sources/Skin-Swapper"]
+	path = Sources/Skin-Swapper
+	url = https://github.com/cobrasrock/Skin-Swapper
+[submodule "Sources/tweakeroo"]
+	path = Sources/tweakeroo
+	url = https://github.com/maruohon/tweakeroo
+	branch = fabric_1.16_snapshots_temp
+[submodule "Sources/WorldEdit"]
+	path = Sources/WorldEdit
+	url = https://github.com/enginehub/WorldEdit
+[submodule "Sources/soaring-clouds"]
+	path = Sources/soaring-clouds
+	url = https://github.com/Draylar/soaring-clouds
+	branch = 1.16
+[submodule "Sources/canvas"]
+	path = Sources/canvas
+	url = https://github.com/grondag/canvas
+	branch = one
+[submodule "Sources/BoundingBoxOutlineReloaded"]
+	path = Sources/BoundingBoxOutlineReloaded
+	url = https://github.com/irtimaled/BoundingBoxOutlineReloaded
+	branch = 1.16-fabric
+[submodule "Sources/WorldEditCUI"]
+	path = Sources/WorldEditCUI
+	url = https://github.com/mikroskeem/WorldEditCUI
