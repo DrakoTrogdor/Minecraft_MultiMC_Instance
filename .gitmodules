@@ -99,3 +99,7 @@
 [submodule "Sources/WorldEditCUI"]
 	path = Sources/WorldEditCUI
 	url = https://github.com/mikroskeem/WorldEditCUI
+[submodule "Sources/lithium-fabric"]
+	path = Sources/lithium-fabric
+	url = https://github.com/jellysquid3/lithium-fabric
+	branch = 1.16.x/dev

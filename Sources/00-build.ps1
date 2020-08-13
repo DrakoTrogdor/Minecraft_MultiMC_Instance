@@ -72,7 +72,8 @@ Get-ChildItem -Directory | ForEach-Object {
 		else {
 			$currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c `"$gradlew`" -q $gradleBuild --no-daemon" -NoNewWindow -PassThru #-Wait
 			$currentProcess.WaitForExit()
-			$jarfile = Get-ChildItem -Path $(Join-Path -Path $jardir -ChildPath "$archivesBaseName*.jar") -File -Exclude @('*-dev.jar','*-sources.jar') | Select-Object -First 1
+			$lastHour = (Get-Date).AddHours(-1)
+			$jarfile = Get-ChildItem -Path $(Join-Path -Path $jardir -ChildPath "$archivesBaseName*.jar") -File -Exclude @('*-dev.jar','*-sources.jar') | Where-Object {$_.CreationTime -ge $lastHour} | Sort-Object -Descending CreationTime | Select-Object -First 1
 			if ( $null -ne $jarfile ) {
 				$copyToFileName = Join-Path -Path $modsdir -ChildPath ("$(($jarfile).BaseName)+$commit.jar")
 				Copy-Item -Path $jarfile.FullName -Destination $copyToFileName -Force -EA:0
