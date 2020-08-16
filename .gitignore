@@ -1,3 +1,4 @@
+# Specific Minecraft folders/files
 /.minecraft/.fabric
 /.minecraft/.mixin.out
 /.minecraft/config/litematica
@@ -22,3 +23,10 @@
 /.minecraft/usercache.json
 /.minecraft/voxelmap
 /natives
+
+# Generic files
+Thumbs.db
+
+# Gradle related
+build
+.gradle
