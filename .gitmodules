@@ -103,3 +103,7 @@
 	path = Sources/lithium-fabric
 	url = https://github.com/jellysquid3/lithium-fabric
 	branch = 1.16.x/dev
+[submodule "Sources/OptiFabric"]
+	path = Sources/OptiFabric
+	url = https://github.com/kurosaki-haku/OptiFabric
+	branch = master

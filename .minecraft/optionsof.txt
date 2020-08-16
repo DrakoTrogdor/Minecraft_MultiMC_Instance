@@ -1,13 +1,13 @@
-ofFogType:2
+ofFogType:3
 ofFogStart:0.8
 ofMipmapType:0
 ofOcclusionFancy:false
 ofSmoothFps:false
-ofSmoothWorld:true
+ofSmoothWorld:false
 ofAoLevel:1.0
-ofClouds:2
+ofClouds:3
 ofCloudsHeight:1.0
-ofTrees:2
+ofTrees:0
 ofDroppedItems:1
 ofRain:2
 ofAnimatedWater:0
@@ -31,7 +31,7 @@ ofLagometer:false
 ofShowFps:false
 ofAutoSaveTicks:4000
 ofBetterGrass:2
-ofConnectedTextures:2
+ofConnectedTextures:1
 ofWeather:true
 ofSky:true
 ofStars:true
@@ -54,9 +54,9 @@ ofShowCapes:true
 ofNaturalTextures:true
 ofEmissiveTextures:true
 ofLazyChunkLoading:true
-ofRenderRegions:false
+ofRenderRegions:true
 ofSmartAnimations:true
-ofDynamicFov:true
+ofDynamicFov:false
 ofAlternateBlocks:true
 ofDynamicLights:1
 ofScreenshotSize:1
@@ -68,5 +68,4 @@ ofFastRender:true
 ofTranslucentBlocks:2
 ofChatBackground:0
 ofChatShadow:true
-ofUseVbo:true
 key_of.key.zoom:key.keyboard.c

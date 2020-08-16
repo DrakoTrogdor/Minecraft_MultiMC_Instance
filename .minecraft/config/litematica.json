@@ -3,7 +3,6 @@
     "areaSelectionBoxSideColor": "#30FFFFFF",
     "materialListHudItemCountsColor": "#FFFFAA00",
     "schematicRebuildBreakPlaceOverlayColor": "#4C33CC33",
-    "schematicRebuildBreakExceptPlaceOverlayColor": "#4CF03030",
     "schematicRebuildReplaceOverlayColor": "#4CF0A010",
     "schematicOverlayColorExtra": "#4CFF4CE6",
     "schematicOverlayColorMissing": "#2C33B3E6",
@@ -18,7 +17,6 @@
     "executeRequireHoldingTool": true,
     "fixRailRotation": true,
     "loadEntireSchematics": false,
-    "pasteIgnoreInventories": false,
     "pickBlockEnabled": true,
     "placementRestriction": false,
     "renderMaterialListInGuis": true,
@@ -454,18 +452,6 @@
       }
     },
     "schematicRebuildBreakPlaceAll": {
-      "keys": "",
-      "settings": {
-        "activate_on": "PRESS",
-        "context": "INGAME",
-        "allow_empty": false,
-        "allow_extra_keys": true,
-        "order_sensitive": false,
-        "exclusive": false,
-        "cancel": false
-      }
-    },
-    "schematicRebuildBreakAllExcept": {
       "keys": "",
       "settings": {
         "activate_on": "PRESS",
