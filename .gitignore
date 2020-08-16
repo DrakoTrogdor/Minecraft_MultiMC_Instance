@@ -1,6 +1,12 @@
 # Specific Minecraft folders/files
 /.minecraft/.fabric
 /.minecraft/.mixin.out
+/.minecraft/.fabric
+/.minecraft/.mixin.out
+/.minecraft/.optifine
+/.minecraft/WailaErrorOutput.txt
+/.minecraft/config/euclid.properties
+/.minecraft/config/lightoverlay.properties
 /.minecraft/config/litematica
 /.minecraft/config/minihud
 /.minecraft/config/skinchange
@@ -22,10 +28,10 @@
 /.minecraft/texturepacks
 /.minecraft/usercache.json
 /.minecraft/voxelmap
-/natives
 
 # Generic files
 Thumbs.db
+/natives
 
 # Gradle related
 build
