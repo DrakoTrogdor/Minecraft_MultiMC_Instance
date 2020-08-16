@@ -39,20 +39,22 @@ Get-ChildItem -Directory | ForEach-Object {
 				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "worldedit-fabric:properties --no-daemon").StandardOutput
 				$gradleBuild = 'worldedit-fabric:build'
 				$gitPull = $true
+				$build = $true
 				$jardir = Join-Path -Path $currentdir -ChildPath worldedit-fabric -AdditionalChildPath build,libs
 				break
+			}
+			'minihud' {
+				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
+				$gradleBuild = 'build'
+				$gitPull = $true
+				$build = $false
+				$jardir = Join-Path -Path $currentdir -ChildPath build -AdditionalChildPath libs
 			}
 			'LambDynamicLights' {
 				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
 				$gradleBuild = 'ShadowRemapJar'
 				$gitPull = $true
-				$jardir = Join-Path -Path $currentdir -ChildPath build -AdditionalChildPath libs
-				break
-			}
-			'Fabric-Autoswitch' {
-				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
-				$gradleBuild = 'build'
-				$gitPull = $false
+				$build = $true
 				$jardir = Join-Path -Path $currentdir -ChildPath build -AdditionalChildPath libs
 				break
 			}
@@ -60,27 +62,39 @@ Get-ChildItem -Directory | ForEach-Object {
 				$gradleProperties = (Invoke-BatchFile -commandPath $gradlew -commandArguments "properties --no-daemon").StandardOutput
 				$gradleBuild = 'build'
 				$gitPull = $true
+				$build = $true
 				$jardir = Join-Path -Path $currentdir -ChildPath build -AdditionalChildPath libs
 			}
 		}
-		if ( $gitPull ) { Start-Process "git" -ArgumentList @('pull')  -NoNewWindow -Wait }
-		$commit = (git rev-parse --short=7 HEAD)
-		$archivesBaseName = ($gradleProperties | Select-String -Pattern "(?:archivesBaseName:\s)([^`r`n]*)").Matches[0].Groups[1].Value
-		if ((Get-ChildItem -File -Path $modsdir | Where-Object {$_.Name -like "$archivesBaseName*+$commit.jar"}).Count -ne 0) {
-			Write-Host "Jar file in mods folder is already up to date."
+		if ( $gitPull ) {
+			Start-Process "git" -ArgumentList @('pull') -NoNewWindow -Wait
 		}
-		else {
-			$currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c `"$gradlew`" -q $gradleBuild --no-daemon" -NoNewWindow -PassThru #-Wait
-			$currentProcess.WaitForExit()
-			$lastHour = (Get-Date).AddHours(-1)
-			$jarfile = Get-ChildItem -Path $(Join-Path -Path $jardir -ChildPath "$archivesBaseName*.jar") -File -Exclude @('*-dev.jar','*-sources.jar') | Where-Object {$_.CreationTime -ge $lastHour} | Sort-Object -Descending CreationTime | Select-Object -First 1
-			if ( $null -ne $jarfile ) {
-				$copyToFileName = Join-Path -Path $modsdir -ChildPath ("$(($jarfile).BaseName)+$commit.jar")
-				Copy-Item -Path $jarfile.FullName -Destination $copyToFileName -Force -EA:0
+		$giturl = (git config --get remote.origin.url)
+		$gitbranch = (git branch --show-current)
+		$commit = (git rev-parse --short=7 HEAD)
+		Write-Host "URL:     $giturl`r`nBranch:  $gitbranch`r`nCommit:  $commit" -ForegroundColor Yellow
+		if ( $build ){
+			$archivesBaseName = ($gradleProperties | Select-String -Pattern "(?:archivesBaseName:\s)([^`r`n]*)").Matches[0].Groups[1].Value
+			if ((Get-ChildItem -File -Path $modsdir | Where-Object {$_.Name -like "$archivesBaseName*+$commit.jar" -or $_.Name -like "$archivesBaseName*+$commit.jar.disabled"}).Count -ne 0) {
+				Write-Host "Jar file in mods folder is already up to date."
 			}
 			else {
-				Write-Host "No jar file `"$jarfile`" found."
+				Start-Process "git" -ArgumentList @('clean','-xfd') -NoNewWindow -Wait
+				$currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c `"$gradlew`" -q $gradleBuild --no-daemon" -NoNewWindow -PassThru #-Wait
+				$currentProcess.WaitForExit()
+				$lastHour = (Get-Date).AddHours(-1)
+				$jarfile = Get-ChildItem -Path $(Join-Path -Path $jardir -ChildPath "$archivesBaseName*.jar") -File -Exclude @('*-dev.jar','*-sources.jar','*-fatjavadoc.jar') | Where-Object {$_.CreationTime -ge $lastHour} | Sort-Object -Descending CreationTime | Select-Object -First 1
+				if ( $null -ne $jarfile ) {
+					$copyToFileName = Join-Path -Path $modsdir -ChildPath ("$(($jarfile).BaseName)+$commit.jar")
+					Copy-Item -Path $jarfile.FullName -Destination $copyToFileName -Force -EA:0
+				}
+				else {
+					Write-Host "No jar file `"$jarfile`" found."
+				}
 			}
+		}
+		else {
+			Write-Host "Building of this submodule is currently disabled."
 		}
 	}
 }

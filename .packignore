@@ -1,0 +1,31 @@
+.git
+.gitattributes
+.gitignore
+.minecraft/.fabric
+.minecraft/.mixin.out
+.minecraft/.optifine
+.minecraft/WailaErrorOutput.txt
+.minecraft/config/euclid.properties
+.minecraft/config/lightoverlay.properties
+.minecraft/config/litematica
+.minecraft/config/minihud
+.minecraft/config/skinchange
+.minecraft/config/worldedit/sessions
+.minecraft/coremods
+.minecraft/craftpresence
+.minecraft/crash-reports
+.minecraft/itemscroller
+.minecraft/logs
+.minecraft/mods/mamiyaotaru/voxelmap
+.minecraft/resourcepacks/Sildurs Vibrant Shaders v1.27 Extreme-VL.zip
+.minecraft/saves
+.minecraft/schematics
+.minecraft/screenshots
+.minecraft/server-resource-packs
+.minecraft/servers.dat
+.minecraft/servers.dat_old
+.minecraft/shaderpacks/Sildurs fabulous shaders v1.0.zip
+.minecraft/skins
+.minecraft/texturepacks
+.minecraft/usercache.json
+patches
