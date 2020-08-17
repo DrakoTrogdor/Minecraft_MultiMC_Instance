@@ -75,7 +75,7 @@ Get-ChildItem -Directory | ForEach-Object {
 		Write-Host "URL:     $giturl`r`nBranch:  $gitbranch`r`nCommit:  $commit" -ForegroundColor Yellow
 		if ( $build ){
 			$archivesBaseName = ($gradleProperties | Select-String -Pattern "(?:archivesBaseName:\s)([^`r`n]*)").Matches[0].Groups[1].Value
-			if ((Get-ChildItem -File -Path $modsdir | Where-Object {$_.Name -like "$archivesBaseName*+$commit.jar" -or $_.Name -like "$archivesBaseName*+$commit.jar.disabled"}).Count -ne 0) {
+			if ((Get-ChildItem -File -Path $modsdir  -EA:0 | Where-Object {$_.Name -like "$archivesBaseName*+$commit.jar" -or $_.Name -like "$archivesBaseName*+$commit.jar.disabled"}).Count -ne 0) {
 				Write-Host "Jar file in mods folder is already up to date."
 			}
 			else {
@@ -83,7 +83,7 @@ Get-ChildItem -Directory | ForEach-Object {
 				$currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c `"$gradlew`" -q $gradleBuild --no-daemon" -NoNewWindow -PassThru #-Wait
 				$currentProcess.WaitForExit()
 				$lastHour = (Get-Date).AddHours(-1)
-				$jarfile = Get-ChildItem -Path $(Join-Path -Path $jardir -ChildPath "$archivesBaseName*.jar") -File -Exclude @('*-dev.jar','*-sources.jar','*-fatjavadoc.jar') | Where-Object {$_.CreationTime -ge $lastHour} | Sort-Object -Descending CreationTime | Select-Object -First 1
+				$jarfile = Get-ChildItem -Path $(Join-Path -Path $jardir -ChildPath "$archivesBaseName*.jar") -File -Exclude @('*-dev.jar','*-sources.jar','*-fatjavadoc.jar') -EA:0 | Where-Object {$_.CreationTime -ge $lastHour} | Sort-Object -Descending CreationTime | Select-Object -First 1
 				if ( $null -ne $jarfile ) {
 					$copyToFileName = Join-Path -Path $modsdir -ChildPath ("$(($jarfile).BaseName)+$commit.jar")
 					Copy-Item -Path $jarfile.FullName -Destination $copyToFileName -Force -EA:0
