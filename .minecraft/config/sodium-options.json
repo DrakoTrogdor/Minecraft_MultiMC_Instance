@@ -3,7 +3,6 @@
     "cloud_quality": "DEFAULT",
     "weather_quality": "DEFAULT",
     "enable_vignette": true,
-    "enable_fog": true,
     "enable_clouds": true,
     "smooth_lighting": "HIGH"
   },
