@@ -325,6 +325,17 @@ if (-not (Test-Path -Path '.\gradlew.bat')) {
 		$null									# Post-compile command
 	),
 	[SourceSubModule]::new(
+		'ModUpdater',							# Submodule name
+		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
+		$true,									# Git pull (True/False)
+		$true,									# Build submodule (True/False)
+		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
+		'build',								# Build command
+		'build\libs\modupdater-*.jar',			# Build output
+		$null,									# Pre-compile command
+		$null									# Post-compile command
+	),
+	[SourceSubModule]::new(
 		'OptiFabric',										# Submodule name
 		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
 		$true,									# Git pull (True/False)
@@ -424,7 +435,7 @@ if (-not (Test-Path -Path '.\gradlew.bat')) {
 		$null									# Post-compile command
 	)
 )
-
+[string[]]$updatedFiles = @()
 foreach ( $currentSource in $sources ) {
 	$currentDir = Join-Path -Path $sourcesdir -ChildPath $currentSource.Name
 	Write-Host "$('=' * 120)`r`nName:      $($currentSource.Name)`r`nDirectory: $currentDir`r`n$('=' * 120)" -ForegroundColor red
@@ -464,7 +475,7 @@ foreach ( $currentSource in $sources ) {
 		$finalOutputFilter += '(\.disabled)?'
 		$files = (Get-ChildItem -File -Path $finalOutputDir | Where-Object { $_.Name -match $finalOutputFilter })
 		if ($files.Count -ne 0) {
-			Write-Host "`"$(($files|Select-Object -First 1).FullName)`" is already up to date." -ForegroundColor Green
+			Write-Host "`"$(($files|Select-Object -First 1).FullName)`" is already up to date." -ForegroundColor DarkGreen
 		}
 		else {
 			Start-Process "git" -ArgumentList @('clean', '-xfd') -NoNewWindow -Wait
@@ -484,6 +495,7 @@ foreach ( $currentSource in $sources ) {
 				try {
 					Copy-Item -Path $copyFromFileFullName -Destination $copyToFileFullName -Force -ErrorAction:Stop
 					Write-Host "Copied `"$copyFromFileFullName`" to `"$copyToFileFullName`"." -ForegroundColor Green
+					$updatedFiles += $copyToFileFullName
 				}
 				catch {
 					Write-Host "Error copying file `"$copyFromFileFullName`" to `"$copyToFileFullName`"." -ForegroundColor Red
@@ -500,3 +512,9 @@ foreach ( $currentSource in $sources ) {
 	}
 }
 Pop-Location
+if ($updatedFiles.Count -gt 0) {
+	Write-Host "Updated Files...`r`n$('=' * 120)" -ForegroundColor Green
+	foreach ($item in $updatedFiles) {
+		Write-Host "`t$item" -ForegroundColor Green
+	}
+}
