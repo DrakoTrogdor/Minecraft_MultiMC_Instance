@@ -173,6 +173,17 @@ Write-Host "$('=' * 120)`r`nInstance:       $instancedir`r`nClient:         $cli
 		$null									# Post-compile command
 	),
 	[SourceSubModule]::new(
+		'Euclid',								# Submodule name
+		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
+		$true,									# Git pull (True/False)
+		$true,									# Build submodule (True/False)
+		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
+		'build',								# Build command
+		'build\libs\euclid-*.jar',				# Build output
+		$null,									# Pre-compile command
+		$null									# Post-compile command
+	),
+	[SourceSubModule]::new(
 		'fabric',								# Submodule name
 		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
 		$true,									# Git pull (True/False)

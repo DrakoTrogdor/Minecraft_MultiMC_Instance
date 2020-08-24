@@ -5,6 +5,6 @@
 	   Nether: minecraft:the_nether
 	*/
 	"cloudHeights": { 
-		"minecraft:overworld": 200
+		"minecraft:overworld": 255
 	}
 }

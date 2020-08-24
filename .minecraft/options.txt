@@ -24,7 +24,7 @@ screenEffectScale:0.0
 fovEffectScale:0.0
 gamma:1.0
 renderDistance:16
-entityDistanceScaling:5.0
+entityDistanceScaling:1.0
 guiScale:2
 particles:1
 maxFps:260
@@ -33,7 +33,7 @@ graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:false
-resourcePacks:["bbor","vanilla","file/Infested_Blocks.zip","file/VanillaTweaks_r954519 [2020-08-19].zip"]
+resourcePacks:["bbor","vanilla","file/Infested_Blocks.zip","file/VanillaTweaks_r954519 [2020-08-19].zip","file/Shield_Corrections.zip"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us

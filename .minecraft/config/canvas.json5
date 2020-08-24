@@ -2,9 +2,9 @@
 	// Glow effect around light sources. Work-in-Progress
 	"enableBloom": true,
 	// Intensity of glow effect around light sources. 0.0 to 0.5, default is 0.1.
-	"bloomIntensity": 0.5,
+	"bloomIntensity": 0.07500000298023224,
 	// Size of bloom effect around light sources. 0.0 to 2.0, default is 0.25.
-	"bloomScale": 2.0,
+	"bloomScale": 0.30000001192092896,
 	// Animated foliage
 	"wavyGrass": true,
 	// Enable rendering of internal buffers for debug purposes. Off by default to prevent accidental activation.

@@ -110,3 +110,6 @@
 [submodule "Sources/ModUpdater"]
 	path = Sources/ModUpdater
 	url = https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater.git
+[submodule "Sources/Euclid"]
+	path = Sources/Euclid
+	url = https://github.com/bermudalocket/Euclid

@@ -8,7 +8,7 @@ ofAoLevel:1.0
 ofClouds:3
 ofCloudsHeight:1.0
 ofTrees:0
-ofDroppedItems:1
+ofDroppedItems:0
 ofRain:2
 ofAnimatedWater:0
 ofAnimatedLava:0
@@ -60,7 +60,7 @@ ofDynamicFov:false
 ofAlternateBlocks:true
 ofDynamicLights:2
 ofScreenshotSize:1
-ofCustomEntityModels:true
+ofCustomEntityModels:false
 ofCustomGuis:true
 ofShowGlErrors:true
 ofFastMath:true
