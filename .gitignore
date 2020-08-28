@@ -17,6 +17,7 @@
 /.minecraft/hs_err_pid*.log
 /.minecraft/logs
 /.minecraft/mods/mamiyaotaru/voxelmap
+/.minecraft/replay_recordings
 /.minecraft/resourcepacks
 /.minecraft/saves
 /.minecraft/schematics

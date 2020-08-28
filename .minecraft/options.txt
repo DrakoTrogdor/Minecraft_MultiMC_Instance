@@ -33,7 +33,7 @@ graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:false
-resourcePacks:["vanilla","bbor","file/VanillaTweaks_r954519 [2020-08-19].zip","file/Infested_Blocks.zip","file/Shield_Corrections.zip"]
+resourcePacks:["vanilla","bbor","file/Infested_Blocks.zip","file/Shield_Corrections.zip"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
@@ -106,6 +106,20 @@ key_key.waila.config:key.keyboard.keypad.0
 key_key.waila.show_overlay:key.keyboard.keypad.1
 key_key.waila.toggle_liquid:key.keyboard.keypad.2
 key_key.autofish.open_gui:key.keyboard.v
+key_key.replaymod.playeroverview:key.keyboard.b
+key_key.replaymod.lighting:key.keyboard.z
+key_key.replaymod.quickmode:key.keyboard.q
+key_key.replaymod.settings:key.keyboard.unknown
+key_key.replaymod.marker:key.keyboard.m
+key_key.replaymod.thumbnail:key.keyboard.n
+key_key.replaymod.playpause:key.keyboard.p
+key_key.replaymod.rollclockwise:key.keyboard.l
+key_key.replaymod.rollcounterclockwise:key.keyboard.j
+key_key.replaymod.resettilt:key.keyboard.k
+key_key.replaymod.pathpreview:key.keyboard.h
+key_key.replaymod.keyframerepository:key.keyboard.x
+key_key.replaymod.clearkeyframes:key.keyboard.unknown
+key_key.replaymod.synctimeline:key.keyboard.v
 key_key.grid.showhide:key.keyboard.b
 key_key.grid.here:key.keyboard.unknown
 key_key.grid.fixy:key.keyboard.y
