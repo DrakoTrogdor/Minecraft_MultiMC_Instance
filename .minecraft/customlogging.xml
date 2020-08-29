@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   - This logger config is copied from Spigot's log4j2.xml. It does the following:
+   -
+   - * Filters out packet messages
+   - * Logs INFO and higher messages to two consoles (standard and windows-compatiable)
+   - * Logs INFO and higher messages to a rolling file log
+   -
+   - To use this file, add this to JVM args: -Dlog4j.configurationFile=log4j2.xml
+   - 
+   - For more information, see
+   - https://logging.apache.org/log4j/2.0/manual/filters.html
+   -->
+
+<!-- Entire configuration reloads from disk every 5 seconds -->
+<Configuration monitorInterval="5" status="INFO" packages="net.minecraft,com.mojang.util">
+    <!-- Defines destinations of log messages -->
+    <Appenders>
+        <!-- Output to windows compatable console -->
+        <Console name="SysOut" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%level/%c{2}]: %msg%n" /><!-- https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout -->
+            <!--
+            Use %c to see the name of the logger that is publishing the event.
+            Use %t to see the name of the thread that is publishing the event.
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%c/%t/%level]: %msg%n" />
+            -->
+        </Console>
+        
+        <!-- Output to terminal console -->
+        <Queue name="ServerGuiConsole">
+            <PatternLayout pattern="[%d{HH:mm:ss} %level]: %msg%n" /><!-- https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout -->
+        </Queue>
+        
+        <!-- Output to rolling (latest.log) and auto-compressed files with more verbose pattern -->
+        <RollingRandomAccessFile name="File" fileName="logs/latest.log" filePattern="logs/%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%level/%t/%c]: %msg%n" /><!-- https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout -->
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Moves and compresses latest.log to new file at midnight -->
+                <OnStartupTriggeringPolicy /><!-- Moves and compresses latest.log to new file on startup -->
+            </Policies>
+            <DefaultRolloverStrategy max="1000"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+  
+    <Loggers>
+        <!-- Global logger; affects every other logger. Restricts messages to INFO or higher level -->
+        <Root level="info">
+            <!-- Global filters -->
+            <Filters>
+                <!-- Disables logging of network packet handling -->
+                <MarkerFilter marker="NETWORK_PACKETS" onMatch="DENY" onMismatch="NEUTRAL" />
+
+                <!-- Example filters to disable generic plugin loading/enabling/disabling messages from any logger -->
+                <!--
+                <RegexFilter regex="\[.*?\] Loading.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="\[.*?\] Enabling.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="\[.*?\] Disabling.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                -->
+                <!-- Example filters to hide generic vanilla command messages -->
+                <!--
+                <RegexFilter regex="Playing effect.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Played sound.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Title command successfully executed" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex=".* moved wrongly!" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex=".* moved too quickly!.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                -->
+
+                <!-- Minecraft Startup spam -->
+                <RegexFilter regex="Reloading ResourceManager: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Created: \d+x\d+(?:x\d+)? .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Environment: authHost='.*', accountsHost='.*', sessionHost='.*', name='.*'" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Backend library: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Narrator library for .* successfully loaded" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="OpenAL initialized\." onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Sound engine started" onMatch="DENY" onMismatch="NEUTRAL"/>
+
+                <!-- Minecraft Connect to World spam -->
+                <RegexFilter regex="Loaded \d+ advancements" onMatch="DENY" onMismatch="NEUTRAL"/>
+
+                <!-- Minecraft Playing spam -->
+                <!-- <RegexFilter regex="\[CHAT\].*" onMatch="DENY" onMismatch="NEUTRAL"/> -->
+
+                <!-- Minecraft Disconnect from World spam -->
+                <RegexFilter regex="Unable to read property: .* with value: .* for blockstate: \{.*\}" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Received passengers for unknown entity" onMatch="DENY" onMismatch="NEUTRAL"/>
+
+                <!-- Minecraft General spam -->
+                <RegexFilter regex="\[STDOUT\]:.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+
+                <!-- <RegexFilter regex="" onMatch="DENY" onMismatch="NEUTRAL"/> -->
+            </Filters>
+            
+            <!-- Logs to all 3 destinations -->
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Root>
+
+        <Logger additivity="false" level="WARN" name="Fabric|Loader">
+            <Filters>
+                <RegexFilter regex="Mod `.*` \(.*\) does not respect SemVer - comparison support is limited\." onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="AutoSwitch">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="Canvas">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="ConnectedBlockTextures">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="craftpresence">
+            <Filters>
+                <RegexFilter regex="Unable to get Curse Manifest Data \(Ignore if Not using a Twitch/CursePack\)" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="euclid">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="net.fabricmc.fabric.impl.client.indigo.Indigo">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="inventorysorter">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="itemscroller">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="litematica">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="Lithium">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="LithiumConfig">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="malilib">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="minihud">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="mixin">
+            <Filters>
+                <RegexFilter regex="\@Mixin target .* is public in .* and should be specified in value" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Error loading class: shadersmod/client/ShadersRender.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Reference map '.*' for .* could not be read\. If this is a development environment you can ignore this message" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="io.github.prospector.modmenu.ModMenu">
+            <Filters>
+                <RegexFilter regex="Mod '.*' uses the modmenu:clientsideOnly custom value unnecessarily, as it can be inferred from the mod's declared environment." onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="com.chocohead.mm.MM"> <!-- OptiFabric -->
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="net.optifine">
+            <Filters>
+                <RegexFilter regex="\[OptiFine\] java\.lang\..*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="\[OptiFine\] java\.io\.FileNotFoundException: http://optifine\.net/version/1\.16\.2/HD_U\.txt" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="replaymod">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="com.replaymod.extras.ReplayModExtras">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="ShulkerBoxTooltip">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="Soaring Clouds">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="Sodium">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="SodiumConfig">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="tweakeroo">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="Waila">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="com.sk89q.worldedit.fabric.FabricWorldEdit">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="worldeditcui">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+
+        <!-- Example of setting a plugin's log level to WARN -->
+        <!--
+        <Logger additivity="false" level="WARN" name="PluginLoggerName">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        -->
+
+        <!-- Example of disabling a plugin's logger -->
+        <!--
+        <Logger additivity="false" level="OFF" name="PluginLoggerName">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        -->
+
+        <!-- Example of logging ALL debugging messages of a plugin -->
+        <!--
+        <Logger additivity="false" level="ALL" name="your.plugin.LoggerName">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        -->
+
+        <!-- Example loggers to prevent plugins incorrectly logging to STDOUT and STDERR -->
+        <!--
+        <Logger name="STDOUT" level="WARN" additivity="false">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger name="STDERR" level="WARN" additivity="false">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        -->
+    </Loggers>
+</Configuration>
