@@ -4,7 +4,48 @@ Created by DrakoTrogdor on 2020-04-12
 
 ## [Released]
 
+## [1.2.0] - 2020-08-29
+### Added
+- Added Euclid 1.2.1+3b1a3e8 (Replaced WorldEditCUI)
+- Added Lithium 0.5.2+14628c1
+- Added Phosphor 0.6.0+6dadb8d
+### Changed
+- Updated Minecraft to 1.16.2
+- Updated Fabric Loader to 0.9.2+build.206
+- Updated AppleSkin to 1.0.11+9239c57
+- Updated AutoSwitch to 2.10.3+2b1f23c
+- Updated Autofish to 0.9.0
+- Updated BoundingBox Outline Reloaded 2.3-1.16.2+e447d56
+- Updated Cloth Config v4 to 4.8.1+29cca91
+- Updated CraftPresence to 1.6.8+44b459f
+- Updated Fabric API to 0.19.0+a607839
+- Updated Grid to 0.17.2+75a55f8
+- Updated Hwyla to 1.9.23+75a55f8
+- Updated Inventory Sorter to 1.7.2+7c552e9
+- Updated Item Scroller to 0.15.0+a10fc6d
+- Updated Litematica to 0.0.0+9fc80e6
+- Updated MaLiLib to 0.10.0+94fc3d1
+- Updated Minecraft Skin Change Mod 1.16.2-2.0.1
+- Updated MiniHUD to 0.19.0-dev.20200819.013355
+- Updated Mod Menu to 1.14.6+74200fb
+- Updated Optifabric 1.3.1+0d6d792
+- Updated Optifine to 1.16.2  HD U G3
+- Updated Shulker Box Tooltip to 2.1.1+48f5762
+- Updated VoxelMap to 1.10.10
+- Updated WorlEdit to 7.2.0+3996998
+- Updated Sildurs Vibrant Shaders Extreme-VL to 1.28
+- Updated Vanilla Tweaks resource packs to latest [2020-08-28]
+### Fixed
+- Fixed Resource Packs (updated pack format to 6 in pack.mcmeta)
+### Disalbed
+These are still a part of the pack in case they are useful, just disabled for the reasons listed
+- Updated Carpet Mod to 1.4.9+a35d14e (Disabled due to issue with entities)
+- Updated Tweakeroo to 0.10.0+e77814c (Disabled due to not being used)
+### Removed 
+- WorldEditCUI - Replaced with Euclid due to not working with other mods
+
 ## [1.1.10] - 2020-07-30
+### Changed
 - Updated AutoSwitch to 2.9.0
 - Updated Fabric API to 0.16.2+build.385-1.16.1
 - Updated Inventory Sorter to 1.7.0-1.16
