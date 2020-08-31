@@ -3,7 +3,7 @@ ofFogStart:0.8
 ofMipmapType:0
 ofOcclusionFancy:false
 ofSmoothFps:false
-ofSmoothWorld:false
+ofSmoothWorld:true
 ofAoLevel:1.0
 ofClouds:3
 ofCloudsHeight:1.0
@@ -62,7 +62,7 @@ ofDynamicLights:2
 ofScreenshotSize:1
 ofCustomEntityModels:false
 ofCustomGuis:true
-ofShowGlErrors:true
+ofShowGlErrors:false
 ofFastMath:true
 ofFastRender:true
 ofTranslucentBlocks:2

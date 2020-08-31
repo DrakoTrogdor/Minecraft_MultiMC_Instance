@@ -1,4 +1,4 @@
-#Mon Aug 24 08:54:39 EDT 2020
+#Sun Aug 30 13:26:41 EDT 2020
 handDepthMul=0.125
 TexMinFilB=0
 oldLighting=default

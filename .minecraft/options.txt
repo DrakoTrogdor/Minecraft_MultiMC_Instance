@@ -33,7 +33,7 @@ graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:false
-resourcePacks:["vanilla","bbor","file/Infested_Blocks.zip","file/Shield_Corrections.zip"]
+resourcePacks:["bbor","vanilla","file/Infested_Blocks.zip","file/Shield_Corrections.zip","file/Stridaph.zip","file/VanillaTweaks_r810252 [2020-08-28].zip"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
