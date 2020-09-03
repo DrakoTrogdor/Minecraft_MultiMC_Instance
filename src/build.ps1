@@ -131,8 +131,8 @@ Write-Host "$('=' * 120)`r`nInstance:       $instancedir`r`nClient:         $cli
 	[SourceSubModule]::new(
 		'canvas',								# Submodule name
 		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-		$true,									# Git pull (True/False)
-		$true,									# Build submodule (True/False)
+		$false,									# Git pull (True/False)
+		$false,									# Build submodule (True/False)
 		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
 		'build',								# Build command
 		'build\libs\canvas-*.jar',				# Build output
@@ -153,8 +153,8 @@ Write-Host "$('=' * 120)`r`nInstance:       $instancedir`r`nClient:         $cli
 	[SourceSubModule]::new(
 		'connected-block-textures',				# Submodule name
 		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-		$true,									# Git pull (True/False)
-		$true,									# Build submodule (True/False)
+		$false,									# Git pull (True/False)
+		$false,									# Build submodule (True/False)
 		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
 		'build',								# Build command
 		'build\libs\connected-block-textures-*.jar',	# Build output
@@ -272,8 +272,8 @@ if (-not (Test-Path -Path '.\gradlew.bat')) {
 	[SourceSubModule]::new(
 		'LambDynamicLights',					# Submodule name
 		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-		$true,									# Git pull (True/False)
-		$true,									# Build submodule (True/False)
+		$false,									# Git pull (True/False)
+		$false,									# Build submodule (True/False)
 		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
 		'ShadowRemapJar',						# Build command
 		'build\libs\lambdynamiclights-fabric-*.jar',	# Build output
@@ -393,8 +393,8 @@ if (-not (Test-Path -Path '.\gradlew.bat')) {
 	[SourceSubModule]::new(
 		'soaring-clouds',						# Submodule name
 		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-		$true,									# Git pull (True/False)
-		$true,									# Build submodule (True/False)
+		$false,									# Git pull (True/False)
+		$false,									# Build submodule (True/False)
 		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
 		'build',								# Build command
 		'build\libs\soaring-clouds-*.jar',		# Build output
@@ -404,8 +404,8 @@ if (-not (Test-Path -Path '.\gradlew.bat')) {
 	[SourceSubModule]::new(
 		'sodium-fabric',						# Submodule name
 		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-		$true,									# Git pull (True/False)
-		$true,									# Build submodule (True/False)
+		$false,									# Git pull (True/False)
+		$false,									# Build submodule (True/False)
 		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
 		'build',								# Build command
 		'build\libs\sodium-fabric-*.jar',		# Build output
