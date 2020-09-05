@@ -214,7 +214,7 @@ Write-Host "$('=' * 120)`r`nInstance:       $instancedir`r`nClient:         $cli
 		'build',								# Build command
 		'build\libs\fabric-carpet-*.jar',		# Build output
 		# Pre-compile command
-		"Set-Content -Path .\build.gradle -Value ((((Get-Content -Path .\build.gradle -Raw).Replace('options.release.set(8)','// options.release.set(8)')).Replace(`"`r`n`",`"`n`")) -NoNewline",
+		'Set-Content -Path .\build.gradle -Value ((Get-Content -Path .\build.gradle -Raw).Replace("options.release.set(8)","// options.release.set(8)").Replace("`r`n","`n")) -NoNewline',
 		$null									# Post-compile command
 	),
 	[SourceSubModule]::new(
