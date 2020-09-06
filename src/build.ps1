@@ -202,7 +202,8 @@ Write-Host "$('=' * 120)`r`nInstance:       $instancedir`r`nClient:         $cli
 		[BuildType]::Gradle,					# Build type (Maven/Gradle/Java/Other)
 		'build',								# Build command
 		'build\libs\autoswitch-*.jar',			# Build output
-		$null,									# Pre-compile command
+		# Pre-compile command
+		$null, # 'Set-Content -Path .\build.gradle -Value ((Get-Content -Path .\build.gradle -Raw).Replace("options.release.set(8)","// options.release.set(8)").Replace("`r`n","`n")) -NoNewline',
 		$null									# Post-compile command
 	),
 	[SourceSubModule]::new(
@@ -214,7 +215,7 @@ Write-Host "$('=' * 120)`r`nInstance:       $instancedir`r`nClient:         $cli
 		'build',								# Build command
 		'build\libs\fabric-carpet-*.jar',		# Build output
 		# Pre-compile command
-		'Set-Content -Path .\build.gradle -Value ((Get-Content -Path .\build.gradle -Raw).Replace("options.release.set(8)","// options.release.set(8)").Replace("`r`n","`n")) -NoNewline',
+		$null, # 'Set-Content -Path .\build.gradle -Value ((Get-Content -Path .\build.gradle -Raw).Replace("options.release.set(8)","// options.release.set(8)").Replace("`r`n","`n")) -NoNewline',
 		$null									# Post-compile command
 	),
 	[SourceSubModule]::new(
