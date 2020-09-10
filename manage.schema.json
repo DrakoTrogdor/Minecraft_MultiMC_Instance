@@ -1,0 +1,145 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "https://drakotrogdor.com/schemas/manage.schema.json",
+    "title": "Submodule Manager Config",
+    "description": "Declares configuration settings for the PowerShell Git Submodule Manager script (manage.ps1)",
+    "type": "object",
+    "required": ["configuration","submodules"],
+    "definitions": {
+        "typeDictionaryEntry": {
+            "type": "object",
+            "required": ["key","value"],
+            "additionalProperties": false,
+            "properties": {
+                "key":   { "type": "string" },
+                "value": { "type": "string" }
+            }
+        },
+        "typeJavaVersionsDict": {
+            "type": "object",
+            "required": ["version","path"],
+            "additionalProperties": false,
+            "properties": {
+                "version": { "type": "integer", "enum": [8,9,10,11,12,13,14] },
+                "path":    { "type": "string" }
+            }
+        },
+        "typeJavaVersions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "8":  { "type": "string" },
+                "9":  { "type": "string" },
+                "10": { "type": "string" },
+                "11": { "type": "string" },
+                "12": { "type": "string" },
+                "13": { "type": "string" },
+                "14": { "type": "string" }
+             }
+        },
+        "typeBuildType":{
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+                "Type":           { "type": "string", "enum": ["Base","Java","Gradle","Maven","NPM"] },
+                "Command":        { "oneOf": [ {"type": "string" },{ "type": "array", "items": { "type": "string" } } ] },
+                "InitCommand":    { "oneOf": [ {"type": "string" },{ "type": "array", "items": { "type": "string" } } ] },
+                "PreCommand":     { "oneOf": [ {"type": "string" },{ "type": "array", "items": { "type": "string" } } ] },
+                "PostCommand":    { "oneOf": [ {"type": "string" },{ "type": "array", "items": { "type": "string" } } ] },
+                "VersionCommand": { "oneOf": [ {"type": "string" },{ "type": "array", "items": { "type": "string" } } ] },
+                "Output":         { "type": "string"  },
+                "PerformBuild":   { "type": "boolean" },
+                "JAVA_HOME":      { "type": "integer" }
+            }
+        },
+        "typeGitRepo":{
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+                "Name":   { "type": "string"  },
+                "Origin": { "type": "string"  },
+                "Branch": { "type": "string"  },
+                "Pull":   { "type": "boolean" },
+                "SubModules":{
+                    "type": "array",
+                    "additionalProperties": false,
+                    "uniqueItems": true,
+                    "items": {"$ref": "#/definitions/typeGitRepo"},
+                    "additionalItems": false
+                }
+            }
+        },
+        "typeSubmodule":{
+            "type":"object",
+            "additionalProperties": false,
+            "required": ["Name","SubmoduleType","Repo","Build"],
+            "properties": {
+                "Name": { "type":"string" },
+                "SubmoduleType": {
+                    "type":"string",
+                    "enum": [
+                        "Other",
+                        "Server",
+                        "Script",
+                        "Plugin",
+                        "Module",
+                        "DataPack",
+                        "ResourcePack",
+                        "NodeDependancy"
+                    ]
+                },
+                "Repo":      { "$ref": "#/definitions/typeGitRepo"   },
+                "Build":     { "$ref": "#/definitions/typeBuildType" },
+                "FinalName": { "type": "string"                      }
+            }
+        }
+    },
+    "properties": {
+        "configuration": {
+            "description": "Defines script configuration settings",
+            "type": "object",
+            "required": ["myGit_URL","JAVA_HOME"],
+            "additionalProperties": false,
+            "properties": {
+                "myGit_URL": {
+                    "description": "URL location for source or forked repositories",
+                    "type": "string"
+                },
+                "JAVA_HOME": {
+                    "description": "File location for different versions of Java installed on the system",
+                    "type": "array",
+                    "additionalProperties": false,
+                    "uniqueItems": true,
+                    "items": {"$ref": "#/definitions/typeJavaVersions"},
+                    "additionalItems": false
+                },
+                "ShowDebugInfo":{
+                    "description": "Show debugging information",
+                    "type": "boolean"
+                },
+                "UntrackedExceptions": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "uniqueItems": true,
+                    "items": {"type": "string"},
+                    "additionalItems": false
+                },
+                "UntrackedAddtions": {
+                    "type": "array",
+                    "additionalProperties": false,
+                    "uniqueItems": true,
+                    "items": {"type": "string"},
+                    "additionalItems": false
+                }
+            }
+        },
+        "submodules": {
+            "description": "Defines the array of submodules",
+            "type": "array",
+            "additionalProperties": false,
+            "uniqueItems": true,
+            "additionalItems": false,
+            "items": {"$ref": "#/definitions/typeSubmodule"}
+        }
+    }
+}

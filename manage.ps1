@@ -297,6 +297,108 @@ function Show-Menu {
 		}
 	} while (-not $exitLoop)
 }
+function ConvertTo-Hashtable {
+    [CmdletBinding()]
+    [OutputType('hashtable')]
+    param (
+        [Parameter(ValueFromPipeline)]
+        $InputObject
+    )
+
+    process {
+        ## Return null if the input is null. This can happen when calling the function
+        ## recursively and a property is null
+        if ($null -eq $InputObject) {
+            return $null
+        }
+
+        ## Check if the input is an array or collection. If so, we also need to convert
+        ## those types into hash tables as well. This function will convert all child
+        ## objects into hash tables (if applicable)
+        if ($InputObject -is [System.Collections.IEnumerable] -and $InputObject -isnot [string]) {
+            $collection = @(
+                foreach ($object in $InputObject) {
+                    ConvertTo-Hashtable -InputObject $object
+                }
+            )
+
+            ## Return the array but don't enumerate it because the object may be pretty complex
+            Write-Output -NoEnumerate $collection
+        } elseif ($InputObject -is [psobject]) { ## If the object has properties that need enumeration
+            ## Convert it to its own hash table and return it
+            $hash = @{}
+            foreach ($property in $InputObject.PSObject.Properties) {
+                $hash[$property.Name] = ConvertTo-Hashtable -InputObject $property.Value
+            }
+            $hash
+        } else {
+            ## If the object isn't an array, collection, or other object, it's already a hash table
+            ## So just return it.
+            $InputObject
+        }
+    }
+}
+function LoadManageJSON {
+    param (
+        [string]$JsonContentPath,
+        [string]$JsonSchemaPath
+    )
+    
+    # Load JSON and JSON schema into strings
+    $stringJsonContent = Get-Content -Path $JsonContentPath -Raw
+    $stringJsonSchema  = Get-Content -Path $JsonSchemaPath  -Raw
+
+    # Test the JSON based on the schema and return an empty SourceSubModule array if there are any error
+    if (Test-Json -Json $stringJsonContent -Schema $stringJsonSchema){
+        # Convert the JSON content string into a JSON object
+        [Hashtable]$script:ManageJSON = ConvertFrom-Json -InputObject $stringJsonContent -AsHashtable
+    }
+    else {
+        [Hashtable]$script:ManageJSON = $null
+    }
+
+
+}
+function LoadConfiguration {
+    param (
+        [Hashtable]$ConfigurationData
+    )
+    if (-not $null -eq $ConfigurationData) {
+        ## URL for forked GIT Repositories
+        [string]$script:myGit_URL = $ConfigurationData.myGit_URL
+
+        ## JAVA_HOME alternatives
+        $script:JAVA_HOME = $ConfigurationData.JAVA_HOME
+
+        ## Show Debugging Information
+        [boolean]$script:ShowDebugInfo = ($ConfigurationData.ShowDebugInfo)
+    }
+}
+function LoadSourceSubModules {
+    param (
+        [Hashtable[]]$SubmodulesData,
+        [ref]$SourcesArray
+    )
+
+    # Sets the initial return value as a blank array of [SourceSubModule]
+    [SourceSubModule[]]$ReturnSources = [SourceSubModule[]]@()
+
+    # If the SubmodulesData is not null proceed to iteratation
+    if ($null -ne $SubmodulesData ) {
+        # Iterate through the submodules
+        foreach($item in $SubmodulesData){
+            # Set the JAVA_HOME property if it exists
+            if ($item.Build.Contains('JAVA_HOME')){
+                [int]$version = $item.Build.JAVA_HOME
+                [string]$path = $script:JAVA_HOME.$version
+                $item.Build.JAVA_HOME = [string]::IsNullOrWhiteSpace($path) ? $null : $path
+            }
+            $ReturnSources += [SourceSubModule]::new($item)
+        }
+    }
+    #return $ReturnSources
+    $SourcesArray.Value = $ReturnSources
+}
 Function Invoke-CommandLine ($command, $workingDirectory, $timeout) {
     $pinfo = New-Object System.Diagnostics.ProcessStartInfo
     $pinfo.FileName = $env:ComSpec
@@ -342,6 +444,14 @@ function Show-DirectoryInfo() {
     Write-Host "Client Directories:" -ForegroundColor Green
     Write-Host "`tClient Mods:    $dirModules" -ForegroundColor Green
     Write-Host "`tResource Packs: $dirResourcePacks" -ForegroundColor Green
+    Write-Host "Configuration:" -ForegroundColor Green
+    Write-Host "`tmyGit_URL:      $($script:myGit_URL)" -ForegroundColor Green
+    foreach ($item in $script:JAVA_HOME) {
+        [int]$spaces = 4 - ([string]($item.Keys[0])).Length
+        $spaces = $spaces -gt 0 ? $spaces : 0
+        Write-Host "`tJAVA_HOME($($item.Keys[0])):$(' ' * $spaces)$($item.Values[0])" -ForegroundColor Green
+    }
+    Write-Host "`tSubmodules:     $($sources.Count)" -ForegroundColor Green
     Write-Host "$('=' * 120)" -ForegroundColor Green
 }
 
@@ -349,13 +459,14 @@ function Show-DirectoryInfo() {
 # Declare Enums #
 #################
 enum SubModuleType {
-	Server = 0
-	Script = 1
-	Plugin = 2
-	Module = 3
-	DataPack = 4
-	ResourcePack = 5
-	NodeDependancy = 6
+    Other
+    Server
+	Script
+	Plugin
+	Module
+	DataPack
+	ResourcePack
+	NodeDependancy
 }
 
 ###################
@@ -371,7 +482,7 @@ class BuildType {
     [System.Boolean]$PerformBuild
     [string] hidden $generatedRawVersion = $null
     [string] hidden $generatedCleanVersion = $null
-	BuildType([string]$Command,[string]$InitCommand,[string]$PreCommand,[string]$PostCommand,[string]$VersionCommand,[string]$Output,[System.Boolean]$PerformBuild){
+    [void] hidden Init([string]$Command,[string]$InitCommand,[string]$PreCommand,[string]$PostCommand,[string]$VersionCommand,[string]$Output,[System.Boolean]$PerformBuild) {
 		$this.Command = $Command
 		$this.InitCommand = $InitCommand
 		$this.PreCommand = $PreCommand
@@ -380,14 +491,20 @@ class BuildType {
 		$this.Output = $Output
 		$this.PerformBuild = $PerformBuild
     }
+    BuildType() {
+        $this.Init($null, $null, $null, $null, $null, $null, $true)
+    }
+	BuildType([string]$Command,[string]$InitCommand,[string]$PreCommand,[string]$PostCommand,[string]$VersionCommand,[string]$Output,[System.Boolean]$PerformBuild){
+		$this.Init($Command, $InitCommand, $PreCommand, $PostCommand, $VersionCommand, $Output, $PerformBuild)
+    }
     BuildType([Hashtable]$Value){
-        if($Value.Contains('Command'))          { $this.Command         = [string]$Value.Command              }
-        if($Value.Contains('InitCommand'))      { $this.InitCommand     = [string]$Value.InitCommand          }
-        if($Value.Contains('PreCommand'))       { $this.PreCommand      = [string]$Value.PreCommand           }
-        if($Value.Contains('PostCommand'))      { $this.PostCommand     = [string]$Value.PostCommand          }
-        if($Value.Contains('VersionCommand'))   { $this.VersionCommand  = [string]$Value.VersionCommand       }
-        if($Value.Contains('Output'))           { $this.Output          = [string]$Value.Output               }
-        if($Value.Contains('PerformBuild'))     { $this.PerformBuild    = [System.Boolean]$Value.PerformBuild }
+        if($Value.Contains('Command'))          { $this.Command         = $this.FlattenString($Value.Command)        }
+        if($Value.Contains('InitCommand'))      { $this.InitCommand     = $this.FlattenString($Value.InitCommand)    }
+        if($Value.Contains('PreCommand'))       { $this.PreCommand      = $this.FlattenString($Value.PreCommand)     }
+        if($Value.Contains('PostCommand'))      { $this.PostCommand     = $this.FlattenString($Value.PostCommand)    }
+        if($Value.Contains('VersionCommand'))   { $this.VersionCommand  = $this.FlattenString($Value.VersionCommand) }
+        if($Value.Contains('Output'))           { $this.Output          = [string]$Value.Output                }
+        if($Value.Contains('PerformBuild'))     { $this.PerformBuild    = [System.Boolean]$Value.PerformBuild  }
         else { $this.PerformBuild = $true }
     }
     [string]GetOutput()	        		{ [string]$return = ([string]::IsNullOrWhiteSpace($this.Output)         ? $null : $this.Output);                                return $return; }
@@ -416,14 +533,24 @@ class BuildType {
     [System.Boolean]HasPostCommand()    { return -not [string]::IsNullOrWhiteSpace($this.PostCommand)    }
     [System.Boolean]HasVersionCommand() { return -not [string]::IsNullOrWhiteSpace($this.VersionCommand) }
     [System.Boolean]HasOutput()         { return -not [string]::IsNullOrWhiteSpace($this.Output)         }
-
+    [string]FlattenString($Value) {
+        [string]$return = $null
+        switch (($Value.GetType()).FullName) {
+            'System.String'   { $return = $Value;              break  }
+            'System.String[]' { $return = $Value -join "`r`n"; break  }
+            'System.Object[]' { $return = $Value -join "`r`n"; break  }
+            Default           { $return = ($Value.GetType()).FullName }
+        }
+        return $return
+    }
     [string]CleanVersion([string]$Value) {
         if ([string]::IsNullOrWhiteSpace($Value)) { return '' }
 
         [string]$ver = "1\.16(?:\.[0-3])?"
         $return = ($Value -replace "[$(-join ([System.Io.Path]::GetInvalidPathChars()| ForEach-Object {"\x$([Convert]::ToString([byte]$_,16).PadLeft(2,'0'))"}))]", '').Trim()
 
-        if ($return -match "^$($ver)$") { return $return }
+        if ($return -match "^[1-9]\d*\.\d+.\d+$") { return $return }
+        if ($return -match "^1\.16$")             { return '1.16.0' }
 
         [string]$sep = '[' + [System.Text.RegularExpressions.Regex]::Escape('-+') + ']'
         [string[]]$removables = @('custom','local','snapshot','(alpha|beta|dev|fabric|pre|rc)(\.?\d+)*','\d{2}w\d{2}[a-z]',"v\d{6,}","$ver")
@@ -454,10 +581,11 @@ class BuildTypeJava : BuildType {
 		$this.JAVA_HOME  = $JAVA_HOME
 		$this.originalJAVA_HOME = $env:JAVA_HOME
     }
+    BuildTypeJava() : base() {}
 	BuildTypeJava([string]$Command,[string]$InitCommand,[string]$PreCommand,[string]$PostCommand,[string]$VersionCommand,[string]$Output,[System.Boolean]$PerformBuild,[string]$JAVA_HOME) : base ($Command,$InitCommand,$PreCommand,$PostCommand,$VersionCommand,$Output,$PerformBuild) {
         $this.Init($JAVA_HOME)
     }
-    BuildTypeJava([Hashtable]$Value) : base ($value) {
+    BuildTypeJava([Hashtable]$Value) : base ($Value) {
         if($Value.Contains('JAVA_HOME')) { $this.Init($Value.JAVA_HOME) }
     }
 	[string] hidden GetJAVA_HOME(){
@@ -469,16 +597,15 @@ class BuildTypeJava : BuildType {
 }
 class BuildTypeGradle : BuildTypeJava {
 	BuildTypeGradle() : base('build',$null,$null,$null,'properties','build\libs\*.jar',$true,$null) {}
-	BuildTypeGradle([string]$Output) : base('build',$null,$null,$null,'properties',$Output,$true,$null) {}
 	BuildTypeGradle([string]$Command,[string]$InitCommand,[string]$PreCommand,[string]$PostCommand,[string]$VersionCommand,[string]$Output,[System.Boolean]$PerformBuild,[string]$JAVA_HOME) : base($Command,$InitCommand,$PreCommand,$PostCommand,$VersionCommand,$Output,$PerformBuild,$JAVA_HOME) {}
-    BuildTypeGradle([Hashtable]$Value) : base ($value) {
+    BuildTypeGradle([Hashtable]$Value) : base ($Value) {
         if(-not $Value.Contains('Command')) { $this.Command = 'build' }
         if(-not $Value.Contains('VersionCommand')) { $this.VersionCommand = 'properties' }
         if(-not $Value.Contains('Output')) { $this.Output = 'build\libs\*.jar' }
     }
 	[string]GetCommand() {
 		[string]$buildCommand = [string]::IsNullOrWhiteSpace($this.Command) ? 'build' : $this.Command
-		return ".\gradlew.bat -q $buildCommand $($this.UseNewJAVA_HOME ? "-``"Dorg.gradle.java.home``"=``"$($this.GetJAVA_HOME())``"" : '') --no-daemon"
+		return ".\gradlew.bat $buildCommand $($this.UseNewJAVA_HOME ? "-``"Dorg.gradle.java.home``"=``"$($this.GetJAVA_HOME())``"" : '') --no-daemon -`"Dorg.gradle.logging.level`"=`"quiet`" -`"Dorg.gradle.warning.mode`"=`"none`" -`"Dorg.gradle.console`"=`"rich`""
     }
     [string]GetVersion(){ return $this.GetVersion($false) }
 	[string]GetVersion([switch]$RawVersion) {
@@ -490,13 +617,9 @@ class BuildTypeGradle : BuildTypeJava {
             }
             else {
                 $this.CheckGradleInstall()
-                [Object[]]$tempReturn = $tempReturn = (.\gradlew.bat -q $versionCommand $($this.UseNewJAVA_HOME ? "-`"Dorg.gradle.java.home`"=`"$($this.GetJAVA_HOME())`"" : '') --no-daemon)
+                [Object[]]$tempReturn = $tempReturn = (.\gradlew.bat $versionCommand $($this.UseNewJAVA_HOME ? "-`"Dorg.gradle.java.home`"=`"$($this.GetJAVA_HOME())`"" : '') --no-daemon -"Dorg.gradle.logging.level"="quiet" -"Dorg.gradle.warning.mode"="none" -"Dorg.gradle.console"="rich")
                 [string]$tempReturn = $null -eq $tempReturn ? 'ERROR CHECKING VERSION' : [System.String]::Join("`r`n",$tempReturn)
                 if ($tempReturn -imatch '(?:^|\r?\n)(full|build|mod_|project|projectBase)[vV]ersion: (?''version''.*)(?:\r?\n|\z|$)') { $return = $Matches['version'] }
-                #elseif ($tempReturn -imatch '(?:^|\r?\n)fullVersion: (?''version''.*)(?:\r?\n|\z|$)') { $return = $Matches['version'] }
-                #elseif ($tempReturn -imatch '(?:^|\r?\n)mod_version: (?''version''.*)(?:\r?\n|\z|$)') { $return = $Matches['version'] }
-                #elseif ($tempReturn -imatch '(?:^|\r?\n)projectVersion: (?''version''.*)(?:\r?\n|\z|$)') { $return = $Matches['version'] }
-                #elseif ($tempReturn -imatch '(?:^|\r?\n)projectBaseVersion: (?''version''.*)(?:\r?\n|\z|$)') { $return = $Matches['version'] }
                 elseif ($tempReturn -imatch '(?:^|\r?\n)[vV]ersion: (?''version''.*)(?:\r?\n|\z|$)') { $return = $Matches['version'] }
                 else { $return = '' }
             }
@@ -520,9 +643,9 @@ class BuildTypeGradle : BuildTypeJava {
 }
 class BuildTypeMaven : BuildTypeJava {
 	BuildTypeMaven() : base('install',$null,$null,$null,$null,'target\*.jar',$true,$null) {}
-	BuildTypeMaven([string]$Output) : base('install',$null,$null,$null,$null,$Output,$true,$null) {}
+	#BuildTypeMaven([string]$Output) : base('install',$null,$null,$null,$null,$Output,$true,$null) {}
 	BuildTypeMaven([string]$Command,[string]$InitCommand,[string]$PreCommand,[string]$PostCommand,[string]$VersionCommand,[string]$Output,[System.Boolean]$PerformBuild,[string]$JAVA_HOME) : base($Command,$InitCommand,$PreCommand,$PostCommand,$VersionCommand,$Output,$PerformBuild,$JAVA_HOME) {}
-    BuildTypeMaven([Hashtable]$Value) : base ($value) {
+    BuildTypeMaven([Hashtable]$Value) : base ($Value) {
         if(-not $Value.Contains('Command')) { $this.Command = 'install' }
         if(-not $Value.Contains('VersionCommand')) { $this.VersionCommand = 'project.version' }
         if(-not $Value.Contains('Output')) { $this.Output = 'target\*.jar' }
@@ -573,7 +696,7 @@ class GitRepo {
         }
         elseif ([string]::IsNullOrWhiteSpace($Origin) -and -not [string]::IsNullOrWhiteSpace($Name)) {
             $this.Name = $Name
-            $this.Origin = "$($script:myGIT_URL)/$Name" }
+            $this.Origin = "$($script:myGit_URL)/$Name" }
         else {
             $this.Name = $Name
             $this.Origin = $Origin
@@ -584,16 +707,21 @@ class GitRepo {
         else { $this.Pull = $Pull }
         if ($null -eq $SubModules) { $this.SubModules = [GitRepo[]]@() }
         else { $this.SubModules = $SubModules }
-	}
-	GitRepo([string]$Origin)																				{ $this.init($null, $Origin, 'master', $true, [GitRepo[]]@()) }
-	GitRepo([string]$Name, [string]$Origin)																	{ $this.init($Name, $Origin, 'master', $true, [GitRepo[]]@()) }
+    }
+    GitRepo()                                                                                               { $this.init($null, $null,   'master', $true, [GitRepo[]]@()) }
     GitRepo([string]$Name, [string]$Origin, [string]$Branch, [System.Boolean]$Pull, [GitRepo[]]$SubModules)	{ $this.Init($Name, $Origin, $Branch,  $Pull, $SubModules)    }
     GitRepo([Hashtable]$Value) {
         $tmpName        = $Value.Contains('Name')       ? [string]$Value.Name          : $null
         $tmpOrigin      = $Value.Contains('Origin')     ? [string]$Value.Origin        : $null
         $tmpBranch      = $Value.Contains('Branch')     ? [string]$Value.Branch        : 'master'
         $tmpPull        = $Value.Contains('Pull')       ? [System.Boolean]$Value.Pull  : $true
-        $tmpSubModules  = $Value.Contains('SubModules') ? [GitRepo[]]$Value.SubModules : [GitRepo[]]@()
+        $tmpSubModules =  [GitRepo[]]@()
+        if ($Value.Contains('SubModules')){
+            foreach ($submodule in $Value.Contains('SubModules')){
+                $tmpSubModules += [GitRepo]::new([Hashtable]$submodule)
+            }
+            
+        }
         $this.Init($tmpName, $tmpOrigin, $tmpBranch,  $tmpPull, $tmpSubModules)
     }
     [string]GetCommit(){
@@ -635,37 +763,74 @@ class GitRepo {
 }
 class GitRepoForked : GITRepo {
 	[string]$Upstream
-	GITRepoForked([string]$Name, [string]$Upstream) : base($Name, "$myGIT_URL/$Name")																										{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [System.Boolean]$Pull, [string]$Upstream) : base($Name, "$myGIT_URL/$Name", $Pull)																			{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [string]$Upstream, [GitRepo[]]$SubModules) : base($Name, "$myGIT_URL/$Name", $SubModules)																	{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [System.Boolean]$Pull, [string]$Upstream, [GitRepo[]]$SubModules) : base($Name, "$myGIT_URL/$Name", $Pull, $SubModules)									{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [string]$Branch, [string]$Upstream) : base($Name, "$myGIT_URL/$Name", $Branch)																				{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [string]$Branch, [System.Boolean]$Pull, [string]$Upstream) : base($Name, "$myGIT_URL/$Name", $Branch, $Pull)												{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [string]$Branch, [string]$Upstream, [GitRepo[]]$SubModules) : base($Name, "$myGIT_URL/$Name", $Branch, $SubModules)										{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [string]$Branch, [System.Boolean]$Pull, [string]$Upstream, [GitRepo[]]$SubModules) : base($Name, "$myGIT_URL/$Name", $Branch, $Pull, $SubModules)			{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [string]$Origin, [string]$Branch, [string]$Upstream, [GitRepo[]]$SubModules) : base($Name, $Origin, $Branch, $SubModules)									{ $this.Upstream = $Upstream }
-	GITRepoForked([string]$Name, [string]$Origin, [string]$Branch, [System.Boolean]$Pull, [string]$Upstream, [GitRepo[]]$SubModules) : base($Name, $Origin, $Branch, $Pull, $SubModules)	{ $this.Upstream = $Upstream }
+	GITRepoForked() : base() {}
+    GITRepoForked([string]$Name, [string]$Origin, [string]$Branch, [System.Boolean]$Pull, [string]$Upstream, [GitRepo[]]$SubModules) : base($Name, $Origin, $Branch, $Pull, $SubModules) { $this.Upstream = $Upstream }
+    GITRepoForked([Hashtable]$Value) : base ($Value) { $this.Upstream ? $Value.Contains('Upstream') : $Value.Upstream }
 }
 class SourceSubModule {
 	[string]$Name
 	[SubModuleType]$SubModuleType
 	[GitRepo]$Repo
 	[BuildType]$Build
-	[string]$FinalName
+    [string]$FinalName
+    Init([string]$Name, [SubModuleType]$SubModuleType, [GitRepo]$Repo, [BuildType]$Build, [string]$FinalName) {
+        $this.Name = $Name
+        $this.SubModuleType = $SubModuleType
+        $this.Repo = $Repo
+        $this.Build = $Build
+        $this.FinalName = $FinalName
+    }
 	SourceSubModule([string]$Name, [SubModuleType]$SubModuleType, [GitRepo]$Repo, [BuildType]$Build) {
-		$this.Name = $Name
-		$this.SubModuleType = $SubModuleType
-		$this.Repo = $Repo
-		$this.Build = $Build
-		$this.FinalName = $null
+		$this.Init($Name, $SubModuleType, $Repo, $Build, $null)
 	}
 	SourceSubModule ([string]$Name, [SubModuleType]$SubModuleType, [GitRepo]$Repo, [BuildType]$Build, [string]$FinalName) {
-		$this.Name = $Name
-		$this.SubModuleType = $SubModuleType
-		$this.Repo = $Repo
-		$this.Build = $Build
-		$this.FinalName = $FinalName
-	}
+		$this.Init($Name, $SubModuleType, $Repo, $Build, $FinalName)
+    }
+    SourceSubModule([Hashtable]$Value) {
+        # Set the Name string
+        [string]$tmpName = $Value.Contains('Name') ? [string]$Value.Name : $null
+
+        # Set the Submodule Type enum
+        [SubModuleType]$tmpSubModuleType = [SubModuleType]::Other
+        if ($Value.Contains('SubmoduleType')){
+            switch ($Value.SubmoduleType) {
+                "Other"          { $tmpSubModuleType = [SubModuleType]::Other;          break }
+                "Server"         { $tmpSubModuleType = [SubModuleType]::Server;         break }
+                "Script"         { $tmpSubModuleType = [SubModuleType]::Script;         break }
+                "Plugin"         { $tmpSubModuleType = [SubModuleType]::Plugin;         break }
+                "Module"         { $tmpSubModuleType = [SubModuleType]::Module;         break }
+                "DataPack"       { $tmpSubModuleType = [SubModuleType]::DataPack;       break }
+                "ResourcePack"   { $tmpSubModuleType = [SubModuleType]::ResourcePack;   break }
+                "NodeDependancy" { $tmpSubModuleType = [SubModuleType]::NodeDependancy; break }
+                default          { $tmpSubModuleType = [SubModuleType]::Other                 }
+            }
+        }
+
+        # Create a GitRepo class
+        [GitRepo]$tmpRepo = $Value.Contains('Repo') ? [GitRepo]::new($Value.Repo) : [GitRepo]::new()
+
+        # Create a Build Type class or derived class
+        [BuildType]$tmpBuild = $null
+        if ($Value.Build.Contains('Type')) {
+            switch ($Value.Build.Type) {
+                "Base"   { $tmpBuild = [BuildType]::new($Value.Build);       break }
+                "Java"   { $tmpBuild = [BuildTypeJava]::new($Value.Build);   break }
+                "Gradle" { $tmpBuild = [BuildTypeGradle]::new($Value.Build); break }
+                "Maven"  { $tmpBuild = [BuildTypeMaven]::new($Value.Build);  break }
+                "NPM"    { $tmpBuild = [BuildTypeNPM]::new($Value.Build);    break }
+                Default  { $tmpBuild = [BuildType]::new($Value.Build)              }
+            }
+        }
+        else {
+            $tmpBuild = [BuildType]::new($Value.Build)
+        }
+
+        # Retrieve Final Name string
+        [string]$tmpFinalName =  $Value.Contains('FinalName')       ? [string]$Value.FinalName          : $null
+
+        # Complete constructor by executing the Init function
+        $this.Init($tmpName, $tmpSubModuleType, $tmpRepo, $tmpBuild, $tmpFinalName)
+    }
 	[string]GetFinalName() {
 		if ([string]::IsNullOrWhiteSpace($this.FinalName)){ return $this.Name }
 		else { return $this.FinalName }
@@ -719,7 +884,7 @@ class SourceSubModule {
 
         if ($this.Build.HasInitCommand()) { 
             if ($WhatIF) { Write-Host "WhatIF: $($this.Build.GetInitCommand())"}
-            else { Invoke-Expression -Command $this.Build.GetInitCommand() }
+            else { Invoke-Expression $($this.Build.GetInitCommand()) }
         }
 
         $commit = ($this.Repo.GetCommit())
@@ -753,7 +918,7 @@ class SourceSubModule {
         Write-Host "URL:          $($this.Repo.GetURLCheck())`r`nBranch:       $($this.Repo.GetBranchCheck())`r`nCommit:       $commit`r`nBuild Output: $($this.Build.GetOutput())`r`nVersion:      $version`r`Copy To:      $copyToFileFullName" -ForegroundColor Yellow
 
         if ($this.Build.PerformBuild) {
-            [string]$copyToExistingFilter = [System.Text.RegularExpressions.Regex]::Escape($copyToFileName) + '(\.disabled|\.backup)*'
+            [string]$copyToExistingFilter = '^' + [System.Text.RegularExpressions.Regex]::Escape($copyToFileName) + '(\.disabled|\.backup)*$'
             $copyToExistingFiles = Get-ChildItem -File -Path $copyToFilePath | Where-Object { $_.Name -match $copyToExistingFilter }
 
             if ($this.SubModuleType -eq [SubModuleType]::Script) { 
@@ -763,11 +928,11 @@ class SourceSubModule {
             elseif ($copyToExistingFiles.Count -eq 0) {
                 if ($this.Build.HasPreCommand()) { 
                     if ($WhatIF) { Write-Host "WhatIF: $($this.Build.GetPreCommand())"}
-                    else { Invoke-Expression -Command $this.Build.GetPreCommand() }
+                    else { Invoke-Expression $($this.Build.GetPreCommand()) }
                 }
                 $currentBuildCommand = $this.Build.GetCommand()
                 if ($WhatIF) { Write-Host "WhatIF: $($env:ComSpec) /c $currentBuildCommand"}
-                else { 
+                else {
                     $currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c $currentBuildCommand" -NoNewWindow -PassThru
                     $currentProcess.WaitForExit()
                 }
@@ -785,7 +950,7 @@ class SourceSubModule {
                     if ($this.SafeCopy($copyFromFileFullName,$copyToFileFullName,$WhatIF,$false)) { $updatedFile = $copyToFileFullName }
                     if ($this.Build.HasPostCommand()) {
                         if ($WhatIF) { Write-Host "'WhatIF: $($this.Build.GetPostCommand())"}
-                        else { Invoke-Expression -Command $this.Build.GetPostCommand() }
+                        else { Invoke-Expression $($this.Build.GetPostCommand()) }
                     }
                 }
                 else { Write-Host "No build output file `"$copyFromExistingFiles`" found." -ForegroundColor Red }
@@ -815,459 +980,23 @@ $dirDataPacks = Join-Path -Path $dirWorlds -ChildPath datapacks
 $dirModules = Join-Path -Path $dirRoot -ChildPath .minecraft -AdditionalChildPath mods
 $dirResourcePacks = Join-Path -Path $dirRoot -ChildPath .minecraft -AdditionalChildPath resourcepacks
 
-## URL for forked GIT Repositories
-$myGIT_URL = 'https://github.com/DrakoTrogdor'
+## Blank [SourceSubModule] array
+[SourceSubModule[]]$sources = @()
 
-## JAVA_HOME alternatives
-$Java8 = 'C:\Program Files\AdoptOpenJDK\jdk-8.0.265.01-hotspot'
-$Java11 = 'C:\Program Files\AdoptOpenJDK\jdk-11.0.7.10-hotspot'
-$Java14 = 'C:\Program Files\AdoptOpenJDK\jdk-14.0.2.12-hotspot'
+## Load configuration and submodule hashtables from manage.json
+LoadManageJSON -JsonContentPath "$dirRoot\manage.json" -JsonSchemaPath "$dirRoot\manage.schema.json"
 
-## Debugging Variables
-[boolean]$script:ShowDebugInfo = $false
+## Load script configuration values from hashtable
+LoadConfiguration -ConfigurationData $script:ManageJSON.configuration
 
-## Begin Declare all submodule sources
-[SourceSubModule[]] $sources = @(
-<#
-        [BuildTypeMaven]::new(@{
-            Command = 'install'
-            PreCommand = ''
-            PostCommand = ''
-            VersionCommand = 'project.version'
-            Output = 'target\*.jar'
-            PerformBuild = $true
-            JAVA_HOME = ''
-        })
-        [BuildTypeGradle]::new(@{
-            Command = 'build'
-            PreCommand = ''
-            PostCommand = ''
-            VersionCommand = 'properties'
-            Output = 'build\libs\*.jar'
-            PerformBuild = $true
-            JAVA_HOME = ''
-        })
-#>
-	[SourceSubModule]::new(
-		'AppleSkin',							# Submodule name
-        [SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/squeek502/AppleSkin'
-            Branch          = '1.16-fabric'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\appleskin-*.jar'
-            JAVA_HOME       = $Java8
-        })
-	),
-	[SourceSubModule]::new(
-		'BoundingBoxOutlineReloaded',			# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/irtimaled/BoundingBoxOutlineReloaded'
-            Branch          = '1.16.2-fabric'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\BBOutlineReloaded-*-fabric.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'BBOutlineReloaded'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'canvas',								# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/grondag/canvas'
-            Branch          = 'one'
-            Pull            = $false
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\canvas-*.jar'
-            PerformBuild    = $false
-            JAVA_HOME       = $Java8
-        })
-	),
-	[SourceSubModule]::new(
-		'cloth-config',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          ='https://github.com/shedaniel/cloth-config'
-            Branch          ='v4'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\config-2-*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'ClothConfig'
-	),
-	[SourceSubModule]::new(
-		'connected-block-textures',				# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/Nuclearfarts/connected-block-textures'
-            Branch          = '1.16'
-            Pull            = $false
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\connected-block-textures-*.jar'
-            PerformBuild    = $false
-        }),
-        'ConnectedBlockTextures'
-	),
-	[SourceSubModule]::new(
-		'CraftPresence',						# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://gitlab.com/CDAGaming/CraftPresence.git'
-            Branch          = '1.16.x-Fabric'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\CraftPresence-Fabric-*.jar'
-            JAVA_HOME       = $Java8
-        })
-	),
-	[SourceSubModule]::new(
-		'Euclid',								# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/bermudalocket/Euclid'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\euclid-*.jar'
-        })
-	),
-	[SourceSubModule]::new(
-		'fabric',								# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/FabricMC/fabric'
-            Branch          = '1.16'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\fabric-api-*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'FabricAPI'
-	),
-	[SourceSubModule]::new(
-		'Fabric-Autoswitch',					# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/dexman545/Fabric-Autoswitch'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\autoswitch-*.jar'
-            InitCommand      =
-@'
-[string]$file = '.\build\loom-cache\ModUpdater-1.1.11+1.16.2.jar'
-if (-not (Test-Path -Path $file)) {
-    [string]$leaf = Split-Path -Path $file -Leaf
-    Write-Host "Copying $leaf dependancy from mods folder..."
-    $source = (Get-ChildItem -Path ..\..\.minecraft\mods\ModUpdater*1.1.11*.jar* | Select -First 1)
-    Copy-Item -Path $source -Destination $file -Force 
-    Write-Host "$leaf dependancy copied."
-    
-    Write-Host "Adjusting MopUpdater dependancy..."
-    $file = '.\gradle.properties'
-    $content = (Get-Content -Path $file -Raw)
-    $content = $content -replace 'modupdater_version = 1\.1\.9\+1\.16\.1','modupdater_version = 1.1.11+1.16.2'
-    Set-Content -Path $file -Value $content -NoNewline
-    Write-Host "Adjusted ModUpdater dependancy."
-}
-'@
-            JAVA_HOME       = $Java14
-        }),
-        'Autoswitch'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'fabric-carpet',						# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/gnembon/fabric-carpet'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'Carpet'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'Grid',									# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/gbl/Grid'
-            Branch          = 'fabric_1_16'}),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\grid-*-fabric*.jar'
-        })
-	),
-	[SourceSubModule]::new(
-		'HWYLA',								# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/TehNut/HWYLA'
-            Branch          = '1.16_fabric'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\Hwyla-fabric-*.jar'
-            JAVA_HOME       = $Java8
-        })
-	),
-	[SourceSubModule]::new(
-		'Inventory-Sorter',						# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/kyrptonaught/Inventory-Sorter'
-            Branch          = '1.16'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\InventorySorter-*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'InventorySorter'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'itemscroller',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/maruohon/itemscroller'
-            Branch          = 'fabric_1.16_snapshots_temp'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\itemscroller-fabric-*.jar'
-        }),
-        'ItemScroller'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'LambDynamicLights',					# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/LambdAurora/LambDynamicLights'
-            Branch          = 'mc1.16'
-            Pull            = $false
-        }),
-        [BuildTypeGradle]::new(@{
-            Command         = 'ShadowRemapJar'
-            Output          = 'build\libs\lambdynamiclights-fabric-*.jar'
-            PerformBuild    = $false
-        })
-	),
-	[SourceSubModule]::new(
-		'litematica',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/maruohon/litematica'
-            Branch          = 'fabric_1.16_snapshots_temp'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\litematica-fabric-*.jar'
-        }),
-        'Litematica'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'lithium-fabric',						# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/jellysquid3/lithium-fabric'
-            Branch          = '1.16.x/dev'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\lithium-fabric-*.jar'
-        }),
-        'Lithium'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'malilib',								# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/maruohon/malilib'
-            Branch          = 'fabric_1.16_snapshots_temp'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\malilib-fabric-*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'MaliLib'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'minihud',										# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/maruohon/minihud'
-            Branch          = 'fabric_1.16_snapshots_temp'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\minihud-fabric-*.jar'
-            # Minihud as it stands will not compile unless either:
-            #    Download:
-            #        https://masa.dy.fi/mcmods/malilib/malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21%2Bbeta.1.jar
-            #        malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21+beta.1.jar => malilib-fabric-1.16-snap-20w21a.jar
-            #    Change build.properties and fix issues (why doesn't this just get updated):
-            #        minecraft_version_out = 1.16-snap-20w21a => 1.16.2
-            #        minecraft_version     = 20w21a           => 1.16.2
-            #        mappings_version      = 20w21a+build.7   => 1.16.2+build.1
-            #        fabric_loader_version = 0.8.4+build.198  => 0.9.1+build.205
-            #        mod_menu_version      = 1.11.5+build.10  => 1.14.6+build.31
-            PreCommand      =
-@'
-[string]$file = '.\build\loom-cache\malilib-fabric-1.16-snap-20w21a.jar'
-if (-not (Test-Path -Path $file)) {
-    [string]$leaf = Split-Path -Path $file -Leaf
-    Write-Host "Downloading $leaf dependancy..."
-	$url = 'https://masa.dy.fi/mcmods/malilib/malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21%2Bbeta.1.jar'
-	Invoke-WebRequest -Uri $url -OutFile $file
-	Write-Host "$leaf dependancy downloaded."
-}
-'@
-            PerformBuild    = $false
-            JAVA_HOME       = $Java8
-        }),
-        'MiniHUD'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'ModMenu',								# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/Prospector/ModMenu'
-            Branch          = '1.16'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\modmenu-*.jar'
-            JAVA_HOME       = $Java8
-        })
-	),
-	[SourceSubModule]::new(
-		'ModUpdater',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater.git'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\modupdater-*.jar'
-            JAVA_HOME       = $Java8
-        })
-	),
-	[SourceSubModule]::new(
-		'OptiFabric',										# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin = 'https://github.com/Chocohead/OptiFabric'
-            Branch = 'llama'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\optifabric*.jar'
-        })
-	),
-	[SourceSubModule]::new(
-		'phosphor-fabric',						# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/jellysquid3/phosphor-fabric'
-            Branch          = '1.16.x/dev'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\phosphor-fabric-*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'Phosphor'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'ShulkerBoxTooltip',										# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/MisterPeModder/ShulkerBoxTooltip'
-            Branch          = '1.16'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\shulkerboxtooltip-*.jar'
-        })
-	),
-	[SourceSubModule]::new(
-		'Skin-Swapper',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/cobrasrock/Skin-Swapper'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\Skin_Swapper_*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'SkinSwapper'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'soaring-clouds',						# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin = 'https://github.com/Draylar/soaring-clouds'
-            Branch          = '1.16'
-            Pull = $false
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\soaring-clouds-*.jar'
-            PerformBuild    = $false
-            JAVA_HOME       = $Java8
-        }),
-        'SoaringClouds'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'sodium-fabric',						# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/jellysquid3/sodium-fabric'
-            Branch          = '1.16.x/dev'
-            Pull            = $false
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\sodium-fabric-*.jar'
-            PerformBuild    = $false
-        }),
-        'Sodium'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'tweakeroo',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/maruohon/tweakeroo'
-            Branch          = 'fabric_1.16_snapshots_temp'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\tweakeroo-fabric-*.jar'
-            JAVA_HOME       = $Java8
-        }),
-        'Tweakeroo'                                      # Final Name
-	),
-	[SourceSubModule]::new(
-		'WorldEdit',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/enginehub/WorldEdit'
-        }),
-        [BuildTypeGradle]::new(@{
-            Command         = 'worldedit-fabric:build'
-            VersionCommand  = 'worldedit-fabric:properties'
-            Output          = 'worldedit-fabric\build\libs\worldedit-fabric-*.jar'
-            JAVA_HOME       = $Java8
-        })
-	),
-	[SourceSubModule]::new(
-		'WorldEditCUI',							# Submodule name
-		[SubModuleType]::Module,				# Submodule type (Server/Plugin/Module/Data-pack/Resource-pack)
-        [GitRepo]::new(@{
-            Origin          = 'https://github.com/mikroskeem/WorldEditCUI'
-        }),
-        [BuildTypeGradle]::new(@{
-            Output          = 'build\libs\WorldEditCUI-*.jar'
-            JAVA_HOME       = $Java8
-        })
-	)
-)
-## End Declare all submodule sources
+## Load submodules from hashtable
+LoadSourceSubModules -SubmodulesData $script:ManageJSON.submodules -SourcesArray ([ref]$sources)
 
 do { # Main loop
     Clear-Host
     Show-WhatIfInfo
     Show-DirectoryInfo
-	$choice = Show-Choices -Title 'Select an action' -List @('Build','Build One','Clean','Archive','Get Versions','Test','Toggle: WhatIF','Toggle: ForcePull') -NoSort -ExitPath $dirStartup
+	$choice = Show-Choices -Title 'Select an action' -List @('Build','Build One','Clean','Archive','Get Versions','Test','Toggle: WhatIF','Toggle: ForcePull','Reload Configuration','Reload Submodules') -NoSort -ExitPath $dirStartup
 	switch ($choice) {
 		'Archive'{
             Push-Location -Path $dirRoot -StackName 'MainLoop'
@@ -1369,7 +1098,14 @@ do { # Main loop
             PressAnyKey
             break
         }
-		'Test' { PressAnyKey; break; }
+        'Reload Configuration' {
+            LoadManageJSON -JsonContentPath "$dirRoot\manage.json" -JsonSchemaPath "$dirRoot\manage.schema.json"
+            LoadConfiguration -ConfigurationData $script:ManageJSON.configuration
+        }
+        'Reload Submodules' {
+            LoadManageJSON -JsonContentPath "$dirRoot\manage.json" -JsonSchemaPath "$dirRoot\manage.schema.json"
+            LoadSourceSubModules -SubmodulesData $script:ManageJSON.submodules -SourcesArray ([ref]$sources)
+        }
         'Toggle: WhatIF' { $WhatIF = -not $WhatIF; break; }
         'Toggle: ForcePull' { $ForcePull = -not $ForcePull; break; }
 		Default {

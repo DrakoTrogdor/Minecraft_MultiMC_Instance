@@ -186,6 +186,16 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="net.optifine.Config">
+            <Filters>
+                <RegexFilter regex="\[OptiFine\] Unknown resource pack type: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="\[OptiFine\] Unknown resource pack file: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="\[OptiFine\] java\.lang\.ClassNotFoundException: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="\[OptiFine\] java\.lang\.reflect\.InaccessibleObjectException: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="replaymod">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>

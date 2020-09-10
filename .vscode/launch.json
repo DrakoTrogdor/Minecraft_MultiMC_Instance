@@ -5,12 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "PowerShell Attach to Host Process",
+            "type": "PowerShell",
+            "request": "attach",
+            "runspaceId": 1
+        },
+
+        {
             "name": "Launch manage.ps1",
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}/manage.ps1",
             "cwd": "${workspaceFolder}",
-            "args": ["-WhatIF"]
+            "args": ["-WhatIF"],
+            "createTemporaryIntegratedConsole": true,
+            "internalConsoleOptions": "openOnSessionStart"
+
         }
     ]
 }
