@@ -10,17 +10,15 @@
             "request": "attach",
             "runspaceId": 1
         },
-
         {
             "name": "Launch manage.ps1",
             "type": "PowerShell",
             "request": "launch",
             "script": "${workspaceFolder}/manage.ps1",
             "cwd": "${workspaceFolder}",
-            "args": ["-WhatIF"],
+            //"args": ["-WhatIF"],
             "createTemporaryIntegratedConsole": true,
             "internalConsoleOptions": "openOnSessionStart"
-
         }
     ]
 }

@@ -62,9 +62,26 @@
                 "Pull":   { "type": "boolean" },
                 "SubModules":{
                     "type": "array",
-                    "additionalProperties": false,
                     "uniqueItems": true,
                     "items": {"$ref": "#/definitions/typeGitRepo"},
+                    "additionalItems": false
+                },
+                "ArchiveAddtions": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": { "type": "string" },
+                    "additionalItems": false
+                },
+                "CleanExceptions": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {"type": "string"},
+                    "additionalItems": false
+                },
+                "CleanAdditions": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {"type": "string"},
                     "additionalItems": false
                 }
             }
@@ -75,6 +92,8 @@
             "required": ["Name","SubmoduleType","Repo","Build"],
             "properties": {
                 "Name": { "type":"string" },
+                "Ignore": { "type": "boolean" },
+                "Comment": { "type":"string" },
                 "SubmoduleType": {
                     "type":"string",
                     "enum": [
@@ -108,7 +127,6 @@
                 "JAVA_HOME": {
                     "description": "File location for different versions of Java installed on the system",
                     "type": "array",
-                    "additionalProperties": false,
                     "uniqueItems": true,
                     "items": {"$ref": "#/definitions/typeJavaVersions"},
                     "additionalItems": false
@@ -117,16 +135,26 @@
                     "description": "Show debugging information",
                     "type": "boolean"
                 },
-                "UntrackedExceptions": {
+                "ArchiveExceptions": {
                     "type": "array",
-                    "additionalProperties": false,
                     "uniqueItems": true,
                     "items": {"type": "string"},
                     "additionalItems": false
                 },
-                "UntrackedAddtions": {
+                "ArchiveAdditions": {
                     "type": "array",
-                    "additionalProperties": false,
+                    "uniqueItems": true,
+                    "items": {"type": "string"},
+                    "additionalItems": false
+                },
+                "CleanExceptions": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {"type": "string"},
+                    "additionalItems": false
+                },
+                "CleanAdditions": {
+                    "type": "array",
                     "uniqueItems": true,
                     "items": {"type": "string"},
                     "additionalItems": false

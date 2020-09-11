@@ -4,10 +4,47 @@
         "myGit_URL": "https://github.com/DrakoTrogdor",
         "JAVA_HOME": [
             {"8": "C:\\Program Files\\AdoptOpenJDK\\jdk-8.0.265.01-hotspot"},
-            {"11": "C:\\Program Files\\AdoptOpenJDK\\jdk-11.0.7.10-hotspot"},
+            {"9": "C:\\Program Files\\AdoptOpenJDK\\jdk-9.0.4+11"},
+            {"10": "C:\\Program Files\\AdoptOpenJDK\\jdk-10.0.2+13"},
+            {"11": "C:\\Program Files\\AdoptOpenJDK\\jdk-11.0.8.10-hotspot"},
+            {"12": "C:\\Program Files\\AdoptOpenJDK\\jdk-12.0.2.10-hotspot"},
+            {"13": "C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot"},
             {"14": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.2.12-hotspot"}
         ],
-        "ShowDebugInfo": false
+        "ShowDebugInfo": false,
+        "ArchiveExceptions": [
+            ".minecraft/.fabric/",
+            ".minecraft/.mixin.out/",
+            ".minecraft/.optifine/",
+            ".minecraft/crash-reports/",
+            ".minecraft/logs/",
+            ".minecraft/mods/*.jar.disabled",
+            ".minecraft/schematics",
+            ".minecraft/screenshots",
+            ".minecraft/skins",
+            "????-??-??@??-??-untracked.zip",
+            "*.dat_old",
+            "*.log",
+            "*.old"
+        ],
+        "CleanExceptions": [
+            ".minecraft/config/",
+            ".minecraft/craftpresence/",
+            ".minecraft/coremods/",
+            ".minecraft/mods/*.jar.disabled",
+            ".minecraft/replay_recordings/",
+            ".minecraft/modcore/",
+            ".minecraft/resourcepacks/",
+            ".minecraft/saves/",
+            ".minecraft/schematics",
+            ".minecraft/screenshots",
+            ".minecraft/server-resource-packs",
+            ".minecraft/skins",
+            ".minecraft/texturepacks",
+            "????-??-??@??-??-untracked.zip",
+            ".minecraft/usercache.json",
+            ".minecraft/voxelmap"
+        ]
     },
     "submodules": [
         {
@@ -39,6 +76,8 @@
         },
         {
             "Name": "canvas",
+            "Ignore": true,
+            "Comment": "Ignored as OptiFine is working.",
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/grondag/canvas",
@@ -55,6 +94,8 @@
         },
         {
             "Name": "cloth-config",
+            "Ignore": true,
+            "Comment": "Ignored as it is only required if designing a mod",
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/shedaniel/cloth-config",
@@ -69,6 +110,8 @@
         },
         {
             "Name": "connected-block-textures",
+            "Ignore": true,
+            "Comment": "Ignored as OptiFine is working.",
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/Nuclearfarts/connected-block-textures",
@@ -220,6 +263,8 @@
         },
         {
             "Name": "LambDynamicLights",
+            "Ignore": true,
+            "Comment": "Ignored as OptiFine is working.",
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/LambdAurora/LambDynamicLights",
@@ -325,6 +370,8 @@
         },
         {
             "Name": "ModUpdater",
+            "Ignore": true,
+            "Comment": "Ignored as it seems to be abandonware.",
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater.git"
@@ -388,6 +435,8 @@
         },
         {
             "Name": "soaring-clouds",
+            "Ignore": true,
+            "Comment": "Ignored as OptiFine is working.",
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/Draylar/soaring-clouds",
@@ -404,6 +453,8 @@
         },
         {
             "Name": "sodium-fabric",
+            "Ignore": true,
+            "Comment": "Ignored as OptiFine is working.",
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/jellysquid3/sodium-fabric",

@@ -207,7 +207,7 @@ function Show-Choices {
 		do {
 			[string]$response = Read-Host $Prompt
 			$response = $response.Trim()
-			Write-DebugInfo -String "Response: $response" -NoFooter
+            Write-DebugInfo -String "Response: $response" -NoFooter
 			switch -regex ( $response ) {
 				'[b|back]' {
 					$return = $null
@@ -242,7 +242,8 @@ function Show-Choices {
 								$List | ForEach-Object {
 									if ($_.GetType().FullName -eq 'System.Management.Automation.PSCustomObject') {
 										$return = ($List | Where-Object {$_.$ObjectKey -eq $MenuItems[$choice]} | Select-Object -First 1)
-									} else {
+                                    }
+                                    else {
 										$return = ($List | Where-Object {$_ -eq $MenuItems[$choice]} | Select-Object -First 1)
 									}
 								}
@@ -363,7 +364,7 @@ function LoadConfiguration {
     param (
         [Hashtable]$ConfigurationData
     )
-    if (-not $null -eq $ConfigurationData) {
+    if ($null -ne $ConfigurationData) {
         ## URL for forked GIT Repositories
         [string]$script:myGit_URL = $ConfigurationData.myGit_URL
 
@@ -372,6 +373,35 @@ function LoadConfiguration {
 
         ## Show Debugging Information
         [boolean]$script:ShowDebugInfo = ($ConfigurationData.ShowDebugInfo)
+
+        [string[]]$script:ArchiveExceptions = [string[]]@()
+        if ($ConfigurationData.Contains('ArchiveExceptions')) {
+            foreach ($item in $ConfigurationData.ArchiveExceptions) {
+                $script:ArchiveExceptions += [string]$item
+            }
+        }
+
+        [string[]]$script:ArchiveAdditions = [string[]]@()
+        if ($ConfigurationData.Contains('ArchiveAdditions')) {
+            foreach ($item in $ConfigurationData.ArchiveAdditions) {
+                $script:ArchiveAdditions += [string]$item
+            }
+        }
+
+        [string[]]$script:CleanExceptions = [string[]]@()
+        if ($ConfigurationData.Contains('CleanExceptions')) {
+            foreach ($item in $ConfigurationData.CleanExceptions) {
+                $script:CleanExceptions += [string]$item
+            }
+        }
+
+        [string[]]$script:CleanAdditions = [string[]]@()
+        if ($ConfigurationData.Contains('CleanAdditions')) {
+            foreach ($item in $ConfigurationData.CleanAdditions) {
+                $script:CleanAdditions += [string]$item
+            }
+        }
+
     }
 }
 function LoadSourceSubModules {
@@ -387,13 +417,15 @@ function LoadSourceSubModules {
     if ($null -ne $SubmodulesData ) {
         # Iterate through the submodules
         foreach($item in $SubmodulesData){
-            # Set the JAVA_HOME property if it exists
-            if ($item.Build.Contains('JAVA_HOME')){
-                [int]$version = $item.Build.JAVA_HOME
-                [string]$path = $script:JAVA_HOME.$version
-                $item.Build.JAVA_HOME = [string]::IsNullOrWhiteSpace($path) ? $null : $path
+            if (-not ($item.Contains('Ignore') -and $item.Ignore)) {
+                # Set the JAVA_HOME property if it exists
+                if ($item.Build.Contains('JAVA_HOME')){
+                    [int]$version = $item.Build.JAVA_HOME
+                    [string]$path = $script:JAVA_HOME.$version
+                    $item.Build.JAVA_HOME = [string]::IsNullOrWhiteSpace($path) ? $null : $path
+                }
+                $ReturnSources += [SourceSubModule]::new($item)
             }
-            $ReturnSources += [SourceSubModule]::new($item)
         }
     }
     #return $ReturnSources
@@ -420,6 +452,29 @@ Function Invoke-CommandLine ($command, $workingDirectory, $timeout) {
         StandardOutput = $stdOutput
         StandardError = $stdError
         ExitCode = $exitCode
+    }
+}
+function BuildSpigot {
+    param (
+        [string]$Version,
+        [string]$ToolPath,
+        [string]$JDKPath
+    )
+    $file = Join-Path -Path "$ToolPath" -ChildPath "spigot-$Version.jar"
+    if (($null -ne (mvn dependency:get -Dartifact="org.spigotmc:spigot:$Version-R0.1-SNAPSHOT" -o -q)) -or ($null -ne (mvn dependency:get -Dartifact="org.spigotmc:spigot-api:$Version-R0.1-SNAPSHOT" -o -q))) {
+        if (-not (Test-Path -Path $file)) {
+            Push-Location -Path "$ToolPath" -StackName 'SpigotBuild'
+            $javaCommand = [BuildTypeJava]::PushEnvJava($JDKPath)
+            Write-Host "Building Craftbukkit and Spigot versions $Version"
+            $javaProcess = Start-Process -FilePath "$javaCommand" -ArgumentList "-jar $ToolPath\\BuildTools.jar --rev $Version --compile CRAFTBUKKIT,SPIGOT" -NoNewWindow -PassThru
+            $javaProcess.WaitForExit()
+            [BuildTypeJava]::PopEnvJava()
+            Pop-Location -StackName 'SpigotBuild'
+        }
+        Write-Host "Installing spigot $Version-R0.1-SNAPSHOT to maven local repository"
+        mvn install:install-file -DgroupId='org.spigotmc' -DartifactId=spigot -Dversion="$Version-R0.1-SNAPSHOT" -Dpackaging=jar -Dfile="$file"
+        Write-Host "Installing spigot-API $Version-R0.1-SNAPSHOT to maven local repository"
+        mvn install:install-file -DgroupId='org.spigotmc' -DartifactId=spigot-api -Dversion="$Version-R0.1-SNAPSHOT" -Dpackaging=jar -Dfile="$file"
     }
 }
 function Show-WhatIfInfo() {
@@ -514,7 +569,7 @@ class BuildType {
     [string]GetCommand()				{ [string]$return = ([string]::IsNullOrWhiteSpace($this.Command)        ? $null : $this.Command);                               return $return; }
     [string]GetInitCommand()			{ [string]$return = ([string]::IsNullOrWhiteSpace($this.InitCommand)    ? $null : $this.InitCommand);                           return $return; }
     [string]GetPreCommand()				{ [string]$return = ([string]::IsNullOrWhiteSpace($this.PreCommand)     ? $null : $this.PreCommand);                            return $return; }
-    [string]GetPostCommand()			{ [string]$return = ([string]::IsNullOrWhiteSpace($this.PreCommand)     ? $null : $this.PostCommand);                           return $return; }
+    [string]GetPostCommand()			{ [string]$return = ([string]::IsNullOrWhiteSpace($this.PostCommand)    ? $null : $this.PostCommand);                           return $return; }
     [string]GetVersionCommand()			{ [string]$return = ([string]::IsNullOrWhiteSpace($this.VersionCommand) ? $null : $this.VersionCommand);                        return $return; }
 
     [string]GetVersion() {
@@ -527,7 +582,7 @@ class BuildType {
         else { return $this.generatedCleanVersion }
     }
 
-    [System.Boolean]HasCommand()        { return -not [string]::IsNullOrWhiteSpace($this.PreCommand)     }
+    [System.Boolean]HasCommand()        { return -not [string]::IsNullOrWhiteSpace($this.Command)     }
     [System.Boolean]HasInitCommand()    { return -not [string]::IsNullOrWhiteSpace($this.InitCommand)    }
     [System.Boolean]HasPreCommand()     { return -not [string]::IsNullOrWhiteSpace($this.PreCommand)     }
     [System.Boolean]HasPostCommand()    { return -not [string]::IsNullOrWhiteSpace($this.PostCommand)    }
@@ -543,6 +598,42 @@ class BuildType {
         }
         return $return
     }
+
+    InvokeInitBuild(){ $this.InvokeInitBuild($false) }
+    InvokePreBuild(){ $this.InvokePreBuild($false) }
+    InvokeBuild(){ $this.InvokeBuild($false) }
+    InvokePostBuild(){ $this.InvokePostBuild($false) }
+
+    InvokeInitBuild([switch]$WhatIF){
+        if ($this.HasInitCommand()) { 
+            if ($WhatIF) { Write-Host "WhatIF: $($this.GetInitCommand())"}
+            else { Invoke-Expression $($this.GetInitCommand()) }
+        }
+    }
+    InvokePreBuild([switch]$WhatIF){
+        if ($this.HasPreCommand()) { 
+            if ($WhatIF) { Write-Host "WhatIF: $($this.GetPreCommand())"}
+            else { Invoke-Expression $($this.GetPreCommand()) }
+        }
+    }
+    InvokeBuild([switch]$WhatIF){
+        if ($this.HasCommand()) { 
+            if ($WhatIF) { Write-Host "WhatIF: $($this.GetCommand())"}
+            else {
+                [string]$buildCommand = $this.GetCommand()
+                Write-Host "Executing:       `"$buildCommand`""
+                $currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c $buildCommand" -NoNewWindow -PassThru
+                $currentProcess.WaitForExit()
+            }
+        }
+    }
+    InvokePostBuild([switch]$WhatIF){
+        if ($this.HasPostCommand()) { 
+            if ($WhatIF) { Write-Host "WhatIF: $($this.GetPostCommand())"}
+            else { Invoke-Expression $($this.GetPostCommand()) }
+        }
+    }
+
     [string]CleanVersion([string]$Value) {
         if ([string]::IsNullOrWhiteSpace($Value)) { return '' }
 
@@ -591,9 +682,51 @@ class BuildTypeJava : BuildType {
 	[string] hidden GetJAVA_HOME(){
 		if ($this.UseNewJAVA_HOME) { return $this.JAVA_HOME }
 		else { return $env:JAVA_HOME }
-	}
-	[void]PushJAVA_HOME() { if ($this.UseNewJAVA_HOME) { $env:JAVA_HOME = $this.GetJAVA_HOME } }
-	[void]PopJAVA_HOME() { if ($this.UseNewJAVA_HOME) { $env:JAVA_HOME = $this.originalJAVA_HOME } }
+    }
+
+    [string] hidden static $origEnvJAVA_HOME
+    [string] hidden static $origEnvPath
+    [string] static PushEnvJava($Value){
+        if ([string]::IsNullOrWhiteSpace([BuildTypeJava]::origEnvJAVA_HOME)) { [BuildTypeJava]::origEnvJAVA_HOME = $env:JAVA_HOME }
+        if ([string]::IsNullOrWhiteSpace([BuildTypeJava]::origEnvPath))      { [BuildTypeJava]::origEnvPath      = $env:Path      }
+        $env:JAVA_HOME = $Value
+        [string]$javaBin = Join-Path -Path $Value -ChildPath 'bin'
+        $env:Path      = $env:Path -replace '([A-Z]:\\[^\;]+\\jdk-\d+\.\d+\.\d+[\.\+]\d+(-hotspot)?\\bin;)+',"$($javaBin);"
+        return Join-Path -Path $javaBin -ChildPath 'java.exe'
+    }
+    [string] static PopEnvJava(){
+        if (-not [string]::IsNullOrWhiteSpace([BuildTypeJava]::origEnvJAVA_HOME)) { $env:JAVA_HOME = [BuildTypeJava]::origEnvJAVA_HOME; [BuildTypeJava]::origEnvJAVA_HOME = $null }
+        if (-not [string]::IsNullOrWhiteSpace([BuildTypeJava]::origEnvPath))      { $env:Path      = [BuildTypeJava]::origEnvPath;      [BuildTypeJava]::origEnvPath      = $null }
+        return Join-Path -Path $env:JAVA_HOME -ChildPath 'bin' -AdditionalChildPath 'java.exe'
+    }
+	[void]PushJAVA_HOME() { if ($this.UseNewJAVA_HOME) { [BuildTypeJava]::PushEnvJava($this.GetJAVA_HOME()) } }
+    [void]PopJAVA_HOME()  { if ($this.UseNewJAVA_HOME) { [BuildTypeJava]::PopEnvJava()                      } }
+
+    InvokeInitBuild()               { $this.InvokeInitBuild($false) }
+    InvokePreBuild()                { $this.InvokePreBuild($false) }
+    InvokeBuild()                   { $this.InvokeBuild($false) }
+    InvokePostBuild()               { $this.InvokePostBuild($false) }
+    InvokeInitBuild([switch]$WhatIF){
+        $this.PushJAVA_HOME()
+        ([BuildType]$this).InvokeInitBuild($WhatIF)
+        $this.PopJAVA_HOME()
+    }
+    InvokePreBuild([switch]$WhatIF) {
+        $this.PushJAVA_HOME()
+        ([BuildType]$this).InvokePreBuild($WhatIF)
+        $this.PopJAVA_HOME()
+    }
+    InvokeBuild([switch]$WhatIF)    {
+        $this.PushJAVA_HOME()
+        Write-Host "Using JAVA_HOME: `"$($env:JAVA_HOME)`""
+        ([BuildType]$this).InvokeBuild($WhatIF)
+        $this.PopJAVA_HOME()
+    }
+    InvokePostBuild([switch]$WhatIF){
+        $this.PushJAVA_HOME()
+        ([BuildType]$this).InvokePostBuild($WhatIF)
+        $this.PopJAVA_HOME()
+    }
 }
 class BuildTypeGradle : BuildTypeJava {
 	BuildTypeGradle() : base('build',$null,$null,$null,'properties','build\libs\*.jar',$true,$null) {}
@@ -605,7 +738,7 @@ class BuildTypeGradle : BuildTypeJava {
     }
 	[string]GetCommand() {
 		[string]$buildCommand = [string]::IsNullOrWhiteSpace($this.Command) ? 'build' : $this.Command
-		return ".\gradlew.bat $buildCommand $($this.UseNewJAVA_HOME ? "-``"Dorg.gradle.java.home``"=``"$($this.GetJAVA_HOME())``"" : '') --no-daemon -`"Dorg.gradle.logging.level`"=`"quiet`" -`"Dorg.gradle.warning.mode`"=`"none`" -`"Dorg.gradle.console`"=`"rich`""
+		return ".\gradlew.bat $buildCommand $($this.UseNewJAVA_HOME ? "-``"Dorg.gradle.java.home``"=``"$($this.GetJAVA_HOME())``"" : '') --no-daemon --quiet --warning-mode=none --console=rich" #-`"Dorg.gradle.logging.level`"=`"quiet`" -`"Dorg.gradle.warning.mode`"=`"none`" -`"Dorg.gradle.console`"=`"rich`"
     }
     [string]GetVersion(){ return $this.GetVersion($false) }
 	[string]GetVersion([switch]$RawVersion) {
@@ -631,6 +764,19 @@ class BuildTypeGradle : BuildTypeJava {
         if ($RawVersion) { return $this.generatedRawVersion }
         else { return $this.generatedCleanVersion }
     }
+
+    InvokeInitBuild()               { $this.InvokeInitBuild($false) }
+    InvokePreBuild()                { $this.InvokePreBuild($false) }
+    InvokeBuild()                   { $this.InvokeBuild($false) }
+    InvokePostBuild()               { $this.InvokePostBuild($false) }
+    InvokeInitBuild([switch]$WhatIF){ ([BuildTypeJava]$this).InvokeInitBuild($WhatIF) }
+    InvokePreBuild([switch]$WhatIF) { ([BuildTypeJava]$this).InvokePreBuild($WhatIF)  }
+    InvokeBuild([switch]$WhatIF)    {
+        $this.CheckGradleInstall()
+        ([BuildTypeJava]$this).InvokeBuild($WhatIF)
+    }
+    InvokePostBuild([switch]$WhatIF){ ([BuildTypeJava]$this).InvokePostBuild($WhatIF) }
+
     [void] hidden CheckGradleInstall(){
         if (-not (Test-Path -Path '.\gradlew.bat')) {
             $url = 'https://services.gradle.org/distributions/gradle-6.6-bin.zip'
@@ -652,11 +798,11 @@ class BuildTypeMaven : BuildTypeJava {
     }
 	[string]GetCommand() {
 		[string]$buildCommand = [string]::IsNullOrWhiteSpace($this.Command) ? 'install' : $this.Command
-		return "mvn $buildCommand -q" 
+		return "mvn $buildCommand -q -U"
 	}
     [string]GetVersion(){ return $this.GetVersion($false) }
 	[string]GetVersion([switch]$RawVersion) {
-        if([string]::IsNullOrWhiteSpace($this.generatedRawVersion)) {
+        if([string]::IsNullOrWhiteSpace($this.generatedRawVersion) -or $this.generatedRawVersion -eq 'ERROR CHECKING VERSION') {
             [string]$versionCommand = [string]::IsNullOrWhiteSpace($this.VersionCommand) ? 'project.version' : $this.VersionCommand
             [string]$return = ''
             if ($versionCommand -match '^\"(.*)\"$'){
@@ -676,6 +822,15 @@ class BuildTypeMaven : BuildTypeJava {
         if ($RawVersion) { return $this.generatedRawVersion }
         else { return $this.generatedCleanVersion }
     }
+
+    InvokeInitBuild()               { $this.InvokeInitBuild($false) }
+    InvokePreBuild()                { $this.InvokePreBuild($false) }
+    InvokeBuild()                   { $this.InvokeBuild($false) }
+    InvokePostBuild()               { $this.InvokePostBuild($false) }
+    InvokeInitBuild([switch]$WhatIF){ ([BuildTypeJava]$this).InvokeInitBuild($WhatIF) }
+    InvokePreBuild([switch]$WhatIF) { ([BuildTypeJava]$this).InvokePreBuild($WhatIF)  }
+    InvokeBuild([switch]$WhatIF)    { ([BuildTypeJava]$this).InvokeBuild($WhatIF)     }
+    InvokePostBuild([switch]$WhatIF){ ([BuildTypeJava]$this).InvokePostBuild($WhatIF) }
 }
 class BuildTypeNPM : BuildType {
     [string]$Name
@@ -687,9 +842,20 @@ class GitRepo {
 	[string]$Origin
 	[string]$Branch
 	[System.Boolean]$Pull
-	[GitRepo[]]$SubModules
-	[void] hidden Init([string]$Name, [string]$Origin, [string]$Branch, [System.Boolean]$Pull, [GitRepo[]]$SubModules)
-	{
+    [GitRepo[]]$SubModules
+    [string[]]$ArchiveAdditions
+    [string[]]$CleanAdditions
+    [string[]]$CleanExceptions
+    [void] hidden Init (
+        [string]$Name,
+        [string]$Origin,
+        [string]$Branch,
+        [System.Boolean]$Pull,
+        [GitRepo[]]$SubModules,
+        [string[]]$ArchiveAdditions,
+        [string[]]$CleanAdditions,
+        [string[]]$CleanExceptions
+    ){
         if ([string]::IsNullOrWhiteSpace($Name) -and -not [string]::IsNullOrWhiteSpace($Origin)) {
             $this.Name = (Split-Path -Path $Origin -Leaf) -replace '^(.*)\.git$', '$1'
             $this.Origin = $Origin
@@ -707,9 +873,26 @@ class GitRepo {
         else { $this.Pull = $Pull }
         if ($null -eq $SubModules) { $this.SubModules = [GitRepo[]]@() }
         else { $this.SubModules = $SubModules }
+        if ($null -eq $ArchiveAdditions) { $this.ArchiveAdditions = [string[]]@() }
+        else { $this.ArchiveAdditions = $ArchiveAdditions }
+        if ($null -eq $CleanAdditions) { $this.CleanAdditions = [string[]]@() }
+        else { $this.CleanAdditions = $CleanAdditions }
+        if ($null -eq $CleanExceptions) { $this.CleanExceptions = [string[]]@() }
+        else { $this.CleanExceptions = $CleanExceptions }
     }
-    GitRepo()                                                                                               { $this.init($null, $null,   'master', $true, [GitRepo[]]@()) }
-    GitRepo([string]$Name, [string]$Origin, [string]$Branch, [System.Boolean]$Pull, [GitRepo[]]$SubModules)	{ $this.Init($Name, $Origin, $Branch,  $Pull, $SubModules)    }
+    GitRepo() { $this.init($null, $null,   'master', $true, [GitRepo[]]@()), [string[]]@() }
+    GitRepo(
+        [string]$Name,
+        [string]$Origin,
+        [string]$Branch,
+        [System.Boolean]$Pull,
+        [GitRepo[]]$SubModules,
+        [string[]]$ArchiveAdditions,
+        [string[]]$CleanAdditions,
+        [string[]]$CleanExceptions
+    ) {
+        $this.Init($Name, $Origin, $Branch,  $Pull, $SubModules, $ArchiveAdditions, $CleanAdditions, $CleanExceptions)
+    }
     GitRepo([Hashtable]$Value) {
         $tmpName        = $Value.Contains('Name')       ? [string]$Value.Name          : $null
         $tmpOrigin      = $Value.Contains('Origin')     ? [string]$Value.Origin        : $null
@@ -717,12 +900,33 @@ class GitRepo {
         $tmpPull        = $Value.Contains('Pull')       ? [System.Boolean]$Value.Pull  : $true
         $tmpSubModules =  [GitRepo[]]@()
         if ($Value.Contains('SubModules')){
-            foreach ($submodule in $Value.Contains('SubModules')){
+            foreach ($submodule in $Value.SubModules){
                 $tmpSubModules += [GitRepo]::new([Hashtable]$submodule)
             }
             
         }
-        $this.Init($tmpName, $tmpOrigin, $tmpBranch,  $tmpPull, $tmpSubModules)
+        $tmpArchiveAdditions = [string[]]@()
+        if ($Value.Contains('ArchiveAdditions')){
+            foreach ($item in $Value.ArchiveAdditions){
+                $tmpArchiveAdditions += [string]$item
+            }
+            
+        }
+        $tmpCleanAdditions = [string[]]@()
+        if ($Value.Contains('CleanAdditions')){
+            foreach ($item in $Value.CleanAdditions){
+                $tmpCleanAdditions += [string]$item
+            }
+            
+        }
+        $tmpCleanExceptions = [string[]]@()
+        if ($Value.Contains('CleanExceptions')){
+            foreach ($item in $Value.CleanExceptions){
+                $tmpCleanExceptions += [string]$item
+            }
+            
+        }
+        $this.Init($tmpName, $tmpOrigin, $tmpBranch,  $tmpPull, $tmpSubModules, $tmpArchiveAdditions, $tmpCleanAdditions, $tmpCleanExceptions)
     }
     [string]GetCommit(){
         [string]$return = (git rev-parse --short=7 HEAD)
@@ -738,12 +942,21 @@ class GitRepo {
         if ($return -like $this.Branch) { $return += " (Same)" } else { $return += " (Changed from `"$($this.Branch)`")" }
         return $return
     }
+    [void]CheckoutBranch() {
+        git checkout -B $($this.Branch) --force
+        git fetch origin
+    }
     [void]InvokeClean(){
-        if ($this.Pull) {
-            if ($script:WhatIF) { Write-Host 'WhatIF: git clean -fd' }
-            else {
-                Start-Process "git" -ArgumentList @('clean','-fd') -NoNewWindow -Wait
-            }
+
+        if ($script:WhatIF) { Write-Host 'WhatIF: git clean' }
+        [string[]]$cleanArguments = @('clean')
+        $cleanArguments += ($script:WhatIF ? '-nxfd' : '-xfd')
+        foreach ($item in $this.CleanExceptions) {
+            $cleanArguments += @('-e',$([string]$item))
+        }
+        git @cleanArguments
+        foreach ($item in $this.CleanAdditions) {
+            Remove-Item $item -Force -Recurse -WhatIf:$($script:WhatIF)
         }
     }
     [void]InvokePull(){
@@ -862,6 +1075,15 @@ class SourceSubModule {
             }
         }
     }
+    InvokeClean(
+        [string]$PathSource
+    ){
+        $dirCurrentSource = Join-Path -Path $PathSource -ChildPath $this.Name
+        #Write-Host "$('=' * 120)`r`nName:      $($this.Name)`r`nDirectory: $dirCurrentSource`r`n$('=' * 120)" -ForegroundColor red
+        Write-Host "Cleaning $($this.GetFinalName())"
+        Set-Location -Path $dirCurrentSource
+        $this.Repo.InvokeClean()
+    }
     [string]InvokeBuild (
             [string]$PathSource,
             [string]$PathServer,
@@ -872,20 +1094,17 @@ class SourceSubModule {
             [string]$PathResourcePack,
             [string]$PathNodeDependancy,
             [switch]$WhatIF
-        ){
+    ){
         [string]$updatedFile = $null
-        $dirCurrentSource = Join-Path -Path $PathSource -ChildPath $this.Name
 
+        $dirCurrentSource = Join-Path -Path $PathSource -ChildPath $this.Name
         Write-Host "$('=' * 120)`r`nName:      $($this.Name)`r`nDirectory: $dirCurrentSource`r`n$('=' * 120)" -ForegroundColor red
         Set-Location -Path $dirCurrentSource
 
         $this.Repo.InvokeClean()
         $this.Repo.InvokePull()
 
-        if ($this.Build.HasInitCommand()) { 
-            if ($WhatIF) { Write-Host "WhatIF: $($this.Build.GetInitCommand())"}
-            else { Invoke-Expression $($this.Build.GetInitCommand()) }
-        }
+        $this.Build.InvokeInitBuild($WhatIF)
 
         $commit = ($this.Repo.GetCommit())
         $version = ($this.Build.GetVersion())
@@ -893,6 +1112,7 @@ class SourceSubModule {
         # Determine the copy to output file directory
         [string]$copyToFilePath = ''
         switch ($this.SubModuleType) {
+            Other           { $copyToFilePath = $dirCurrentSource;      break; }
             Server          { $copyToFilePath = $PathServer;            break; }
             Script          { $copyToFilePath = $PathScript;            break; }
             Plugin          { $copyToFilePath = $PathPlugin;            break; }
@@ -921,41 +1141,41 @@ class SourceSubModule {
             [string]$copyToExistingFilter = '^' + [System.Text.RegularExpressions.Regex]::Escape($copyToFileName) + '(\.disabled|\.backup)*$'
             $copyToExistingFiles = Get-ChildItem -File -Path $copyToFilePath | Where-Object { $_.Name -match $copyToExistingFilter }
 
-            if ($this.SubModuleType -eq [SubModuleType]::Script) { 
-                [string]$copyFromFileName = Join-Path -Path $dirCurrentSource -ChildPath ($this.Build.GetOutput())
-                if ($this.SafeCopy($copyFromFileName,$copyToFileFullName,$WhatIF,$true)) { $updatedFile = $copyToFileFullName }
-            }
-            elseif ($copyToExistingFiles.Count -eq 0) {
-                if ($this.Build.HasPreCommand()) { 
-                    if ($WhatIF) { Write-Host "WhatIF: $($this.Build.GetPreCommand())"}
-                    else { Invoke-Expression $($this.Build.GetPreCommand()) }
+            switch ($this.SubModuleType) {
+                Script {
+                    [string]$copyFromFileName = Join-Path -Path $dirCurrentSource -ChildPath ($this.Build.GetOutput())
+                    if ($this.SafeCopy($copyFromFileName,$copyToFileFullName,$WhatIF,$true)) { $updatedFile = $copyToFileFullName }
+                    break
                 }
-                $currentBuildCommand = $this.Build.GetCommand()
-                if ($WhatIF) { Write-Host "WhatIF: $($env:ComSpec) /c $currentBuildCommand"}
-                else {
-                    $currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c $currentBuildCommand" -NoNewWindow -PassThru
-                    $currentProcess.WaitForExit()
+                Other {
+                    $this.Build.InvokePreBuild($WhatIF)
+                    $this.Build.InvokeBuild($WhatIF)
+                    $this.Build.InvokePostBuild($WhatIF)
+                    break
                 }
-                $lastHour = (Get-Date).AddDays(-1)
-                $copyFromExistingFiles = Get-ChildItem -Path $(Join-Path -Path $dirCurrentSource -ChildPath $this.Build.GetOutput()) -File -Exclude @('*-dev.jar','*-sources.jar','*-fatjavadoc.jar','*-noshade.jar') -EA:0 | Where-Object {$_.CreationTime -ge $lastHour} | Sort-Object -Descending CreationTime | Select-Object -First 1
-                if ( $null -ne $copyFromExistingFiles -or $WhatIF ) {
-                    $renameOldFileFilter = [System.Text.RegularExpressions.Regex]::Escape("$($this.GetFinalName())-") + '.*\-CUSTOM\+.*' + [System.Text.RegularExpressions.Regex]::Escape($this.Build.GetOutputExtension()) + '$'
-                    $renameOldFiles = Get-ChildItem -File -Path $copyToFilePath | Where-Object { $_.Name -match $renameOldFileFilter }
-                    foreach ($renameOldFile in $renameOldFiles) {
-                        Write-Host "Renaming `"$($renameOldFile.FullName)`" to `"$($renameOldFile.FullName).disabled`""
-                        if ($WhatIF) { Write-Host "WhatIF: Rename-Item -Path `"$($renameOldFile.FullName)`" -NewName `"$($renameOldFile.FullName).disabled`" -Force -EA:0" }
-                        else { Rename-Item -Path "$($renameOldFile.FullName)" -NewName "$($renameOldFile.FullName).disabled" -Force -EA:0 }
+                Default {
+                    if ($copyToExistingFiles.Count -eq 0) {
+                        $this.Build.InvokePreBuild($WhatIF)
+                        $this.Build.InvokeBuild($WhatIF)
+                        $lastHour = (Get-Date).AddDays(-1)
+                        $copyFromExistingFiles = Get-ChildItem -Path $(Join-Path -Path $dirCurrentSource -ChildPath $this.Build.GetOutput()) -File -Exclude @('*-dev.jar','*-sources.jar','*-fatjavadoc.jar','*-noshade.jar') -EA:0 | Where-Object {$_.CreationTime -ge $lastHour} | Sort-Object -Descending CreationTime | Select-Object -First 1
+                        if ( $null -ne $copyFromExistingFiles -or $WhatIF ) {
+                            $renameOldFileFilter = [System.Text.RegularExpressions.Regex]::Escape("$($this.GetFinalName())-") + '.*\-CUSTOM\+.*' + [System.Text.RegularExpressions.Regex]::Escape($this.Build.GetOutputExtension()) + '$'
+                            $renameOldFiles = Get-ChildItem -File -Path $copyToFilePath | Where-Object { $_.Name -match $renameOldFileFilter }
+                            foreach ($renameOldFile in $renameOldFiles) {
+                                Write-Host "Renaming `"$($renameOldFile.FullName)`" to `"$($renameOldFile.FullName).disabled`""
+                                if ($WhatIF) { Write-Host "WhatIF: Rename-Item -Path `"$($renameOldFile.FullName)`" -NewName `"$($renameOldFile.FullName).disabled`" -Force -EA:0" }
+                                else { Rename-Item -Path "$($renameOldFile.FullName)" -NewName "$($renameOldFile.FullName).disabled" -Force -EA:0 }
+                            }
+                            [string]$copyFromFileFullName = ($WhatIF ? '<buildOutputFile>' : $copyFromExistingFiles.FullName)
+                            if ($this.SafeCopy($copyFromFileFullName,$copyToFileFullName,$WhatIF,$false)) { $updatedFile = $copyToFileFullName }
+                            $this.Build.InvokePostBuild($WhatIF)
+                        }
+                        else { Write-Host "No build output file `"$copyFromExistingFiles`" found." -ForegroundColor Red }
                     }
-                    [string]$copyFromFileFullName = ($WhatIF ? '<buildOutputFile>' : $copyFromExistingFiles.FullName)
-                    if ($this.SafeCopy($copyFromFileFullName,$copyToFileFullName,$WhatIF,$false)) { $updatedFile = $copyToFileFullName }
-                    if ($this.Build.HasPostCommand()) {
-                        if ($WhatIF) { Write-Host "'WhatIF: $($this.Build.GetPostCommand())"}
-                        else { Invoke-Expression $($this.Build.GetPostCommand()) }
-                    }
+                    else { Write-Host "`"$(($copyToExistingFiles|Select-Object -First 1).FullName)`" is already up to date." -ForegroundColor DarkGreen }
                 }
-                else { Write-Host "No build output file `"$copyFromExistingFiles`" found." -ForegroundColor Red }
             }
-            else { Write-Host "`"$(($copyToExistingFiles|Select-Object -First 1).FullName)`" is already up to date." -ForegroundColor DarkGreen }
         }
         else { Write-Host "Building of this submodule is currently disabled." -ForegroundColor Magenta }
         return $updatedFile
@@ -996,40 +1216,32 @@ do { # Main loop
     Clear-Host
     Show-WhatIfInfo
     Show-DirectoryInfo
-	$choice = Show-Choices -Title 'Select an action' -List @('Build','Build One','Clean','Archive','Get Versions','Test','Toggle: WhatIF','Toggle: ForcePull','Reload Configuration','Reload Submodules') -NoSort -ExitPath $dirStartup
+	$choice = Show-Choices -Title 'Select an action' -List @('Build','Build One','Clean','Archive','Get Versions','Test','Toggle: WhatIF','Toggle: ForcePull','Checkout Repos','Reload Configuration','Reload Submodules') -NoSort -ExitPath $dirStartup
 	switch ($choice) {
 		'Archive'{
             Push-Location -Path $dirRoot -StackName 'MainLoop'
             $files = @()
-            $exceptions = @(
-                '-x', 'backups/',
-                '-x', 'cache/',
-                '-x', 'logs/',
-                '-x', 'plugins/00 - Previous Versions/',
-                '-x', 'plugins/bStats/',
-                '-x', 'plugins/Chunkmaster/chunkmaster.db',
-                '-x', 'plugins/CoreProtect/database.db',
-                '-x', 'plugins/dynmap/',
-                '-x', 'plugins/WorldEdit/sessions/',
-                '-x', 'src/SpigotBuild/',
-                '-x', 'Untracked/',
-                '-x', 'worlds/',
-                '-x', '????-??-??@??-??-untracked.zip'
-                '-x', '*.log',
-                '-x', '*.old',
-                '-x', '.console_history',
-                '-x', 'server.jar'
-            )
-            $additions = @(
-                "$dirSources/Minecraft-Server-BASH-Script/aws_instance_request.conf",
-                "$dirSources/Minecraft-Server-BASH-Script/aws_instance_start.conf",
-                "$dirSources/Minecraft-Server-BASH-Script/aws_instance_stop.conf",
-                "$dirSources/Minecraft-Server-BASH-Script/Request-AWSSpotInstance_Minecwaft.ps1"
-            )
-            $filesRoot = (git ls-files . --other @exceptions)
-            foreach ($file in $filesRoot) {
-                $files += Resolve-Path -Path "$dirRoot\$file"
+
+            #Setup untracked exceptions to exclude from the archive
+            [string[]]$exceptions = @()
+            # Retrieve untracked exceptions that will be excluded from the archive for the base repo
+            foreach ($item in $script:ArchiveExceptions) { $exceptions += @('-x',$([string]$item)) }
+            # Retrieve untracked exceptions that will be excluded from the archive for each submodule
+            foreach ($currentSource in $sources) {
+                foreach ($item in $currentSource.Repo.ArchiveExceptions) { $exceptions += @('-x',$([string]$item)) }
             }
+
+            #Setup untracked additions to add to the archive
+            [string[]]$additions = @()
+            # Retrieve untracked additions to add to the archive for the base repo
+            foreach ($item in $script:ArchiveAdditions) { $additions += [string]$item }
+            # Retrieve untracked additions to add to the archive for each submodule
+            foreach ($currentSource in $sources) {
+                foreach ($item in $currentSource.Repo.ArchiveAdditions) { $additions += [string]$item }
+            }
+
+            $filesRoot = (git ls-files . --other @exceptions)
+            foreach ($file in $filesRoot) { $files += Resolve-Path -Path "$dirRoot\$file" }
             
             foreach ($file in $additions) {
                 if (Test-Path -Path $file){ $files += Resolve-Path -Path "$file" }
@@ -1057,8 +1269,28 @@ do { # Main loop
 			break
 		}
 		'Clean'{
-            Push-Location -Path $dirSources -StackName 'MainLoop'
-			git submodule foreach 'remote="$(git remote)";branch="$(git branch|sed -n ''s/^\* \(.*\)$/\1/p'');echo $remote/$branch;git reset --hard $remote/$branch --recurse-submodules;git clean -xfd;echo'
+            Push-Location -Path $dirRoot -StackName 'MainLoop'
+            Write-Host "Cleaning Root Folder"
+            if ($script:WhatIF) { Write-Host 'WhatIF: git clean' }
+            [string[]]$cleanArguments = @('clean')
+            $cleanArguments += ($script:WhatIF ? '-nxfd' : '-xfd')
+            $cleanArguments += @('-e','plugins/')
+            $cleanArguments += @('-e','worlds/')
+            $cleanArguments += @('-e','worlds/world/datapacks/')
+            $cleanArguments += @('-e','.minecraft/mods/')
+            $cleanArguments += @('-e','.minecraft/resourcepacks/')
+
+            foreach ($item in $script:CleanExceptions) {
+                $cleanArguments += @('-e',[string]$item)
+            }
+            git @cleanArguments
+            foreach ($item in $this.CleanAdditions) {
+                Remove-Item $item -Force -Recurse -WhatIf:$($script:WhatIF)
+            }
+            foreach ($currentSource in $sources) {
+                $currentSource.InvokeClean($dirSources)
+            }
+			#git submodule foreach 'remote="$(git remote)";branch="$(git branch|sed -n ''s/^\* \(.*\)$/\1/p'');echo $remote/$branch;git reset --hard $remote/$branch --recurse-submodules;git clean -xfd;echo'
             PressAnyKey
 			break
 		}
@@ -1088,7 +1320,7 @@ do { # Main loop
         }
         'Get Versions'{
             Push-Location -Path $dirSources -StackName 'MainLoop'
-			foreach ( $currentSource in $sources ) {
+            foreach ( $currentSource in $sources ) {
                 $dirCurrent = Join-Path -Path $dirSources -ChildPath $currentSource.Name
                 Set-Location -Path $dirCurrent
                 Write-Host $currentSource.GetFinalName()
@@ -1098,13 +1330,26 @@ do { # Main loop
             PressAnyKey
             break
         }
+        'Checkout Repos' {
+            Push-Location -Path $dirSources -StackName 'MainLoop'
+            foreach ( $currentSource in $sources ) {
+                $dirCurrent = Join-Path -Path $dirSources -ChildPath $currentSource.Name
+                Set-Location -Path $dirCurrent
+                Write-Host $currentSource.GetFinalName()
+                $currentSource.Repo.CheckoutBranch()
+            }
+            PressAnyKey
+            break
+        }
         'Reload Configuration' {
             LoadManageJSON -JsonContentPath "$dirRoot\manage.json" -JsonSchemaPath "$dirRoot\manage.schema.json"
             LoadConfiguration -ConfigurationData $script:ManageJSON.configuration
+            break
         }
         'Reload Submodules' {
             LoadManageJSON -JsonContentPath "$dirRoot\manage.json" -JsonSchemaPath "$dirRoot\manage.schema.json"
             LoadSourceSubModules -SubmodulesData $script:ManageJSON.submodules -SourcesArray ([ref]$sources)
+            break
         }
         'Toggle: WhatIF' { $WhatIF = -not $WhatIF; break; }
         'Toggle: ForcePull' { $ForcePull = -not $ForcePull; break; }

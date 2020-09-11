@@ -31,6 +31,9 @@
 /.minecraft/usercache.json
 /.minecraft/voxelmap
 
+# Root Files
+????-??-??@??-??-untracked.zip
+
 # Generic files
 Thumbs.db
 /natives
