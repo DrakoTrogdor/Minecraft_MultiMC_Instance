@@ -948,7 +948,6 @@ class GitRepo {
     }
     [void]InvokeClean(){
 
-        if ($script:WhatIF) { Write-Host 'WhatIF: git clean' }
         [string[]]$cleanArguments = @('clean')
         $cleanArguments += ($script:WhatIF ? '-nxfd' : '-xfd')
         foreach ($item in $this.CleanExceptions) {
@@ -1216,9 +1215,9 @@ do { # Main loop
     Clear-Host
     Show-WhatIfInfo
     Show-DirectoryInfo
-	$choice = Show-Choices -Title 'Select an action' -List @('Build','Build One','Clean','Archive','Get Versions','Test','Toggle: WhatIF','Toggle: ForcePull','Checkout Repos','Reload Configuration','Reload Submodules') -NoSort -ExitPath $dirStartup
+	$choice = Show-Choices -Title 'Select an action' -List @('Build','Build One','Repositories - Clean','Repositories - Reset','Archive Untracked','Get Versions','Test','Toggle: WhatIF','Toggle: ForcePull','Checkout Repos','Reload Configuration','Reload Submodules') -NoSort -ExitPath $dirStartup
 	switch ($choice) {
-		'Archive'{
+		'Archive Untracked'{
             Push-Location -Path $dirRoot -StackName 'MainLoop'
             $files = @()
 
@@ -1237,7 +1236,7 @@ do { # Main loop
             foreach ($item in $script:ArchiveAdditions) { $additions += [string]$item }
             # Retrieve untracked additions to add to the archive for each submodule
             foreach ($currentSource in $sources) {
-                foreach ($item in $currentSource.Repo.ArchiveAdditions) { $additions += [string]$item }
+                foreach ($item in $currentSource.Repo.ArchiveAdditions) { $additions += Join-Path -Path $dirSources -ChildPath $currentSource.Name -AdditionalChildPath $item }
             }
 
             $filesRoot = (git ls-files . --other @exceptions)
@@ -1268,7 +1267,7 @@ do { # Main loop
             PressAnyKey
 			break
 		}
-		'Clean'{
+		'Repositories - Clean'{
             Push-Location -Path $dirRoot -StackName 'MainLoop'
             Write-Host "Cleaning Root Folder"
             if ($script:WhatIF) { Write-Host 'WhatIF: git clean' }
@@ -1293,7 +1292,14 @@ do { # Main loop
 			#git submodule foreach 'remote="$(git remote)";branch="$(git branch|sed -n ''s/^\* \(.*\)$/\1/p'');echo $remote/$branch;git reset --hard $remote/$branch --recurse-submodules;git clean -xfd;echo'
             PressAnyKey
 			break
-		}
+        }
+        'Repositories - Reset' {
+            Push-Location -Path $dirSources -StackName 'MainLoop'
+            Write-Host "Resetting Repositories"
+            git submodule foreach 'remote="$(git remote)";branch="$(git branch|sed -n ''s/^\* \(.*\)$/\1/p'');echo $remote/$branch;git reset --hard $remote/$branch --recurse-submodules;echo'
+            PressAnyKey
+            break
+        }
 		'Build'{
             Push-Location -Path $dirSources -StackName 'MainLoop'
             [string[]]$updatedFiles = @()
