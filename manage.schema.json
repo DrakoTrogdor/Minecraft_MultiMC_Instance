@@ -135,6 +135,10 @@
                     "description": "Show debugging information",
                     "type": "boolean"
                 },
+                "CleanAndPullRepo":{
+                    "description": "If set to false the repositories will not be cleaned or pulled before building.",
+                    "type": "boolean"
+                },
                 "ArchiveExceptions": {
                     "type": "array",
                     "uniqueItems": true,

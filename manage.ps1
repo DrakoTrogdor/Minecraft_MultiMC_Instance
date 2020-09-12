@@ -42,6 +42,119 @@ param (
 #####################
 # Declare Functions #
 #####################
+Function Write-Color
+{
+<#
+  .SYNOPSIS
+    Enables support to write multiple color text on a single line
+  .DESCRIPTION
+    Users color codes to enable support to write multiple color text on a single line
+    ################################################
+    # Write-Color Color Codes
+    ################################################
+    # ^f + Color Code = Foreground Color
+    # ^b + Color Code = Background Color
+    # ^f?^b? = Foreground and Background Color
+    ################################################
+    # Color Codes
+    ################################################
+    # k = Black
+    # b = Blue
+    # c = Cyan
+    # e = Gray
+    # g = Green
+    # m = Magenta
+    # r = Red
+    # w = White
+    # y = Yellow
+    # B = DarkBlue
+    # C = DarkCyan
+    # E = DarkGray
+    # G = DarkGreen
+    # M = DarkMagenta
+    # R = DarkRed
+    # Y = DarkYellow [Unsupported in Powershell]
+    # z = <Default Color>
+    ################################################
+  .PARAMETER Value
+    Mandatory. Line of text to write
+  .INPUTS
+    [string]$Value
+  .OUTPUTS
+    None
+  .PARAMETER NoNewLine
+    Writes the text without any lines in between.
+  .NOTES
+    Version:          2.0
+    Author:           Casey J Sullivan
+    Update Date:      11/09/2020
+    Original Author:  Brian Clark
+    Original Date:    01/21/2017
+    Initially found at:  https://www.reddit.com/r/PowerShell/comments/5pdepn/writecolor_multiple_colors_on_a_single_line/
+  .EXAMPLE
+    A normal usage example:
+        Write-Color "Hey look ^crThis is red ^cgAnd this is green!"
+    An example using a piped array:
+        @('^fmMagenta text,^fB^bE Blue on Dark Gray ^fr Red','This is a^fM Test ^fzof ^fgGreen and ^fG^bYGreen on Dark Yellow')|Write-Color
+#>
+ 
+  [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$Value,
+        [Parameter(Mandatory=$false)][switch]$NoNewLine
+    )
+    Begin {
+        $colors = new-object System.Collections.Hashtable
+        $colors.b = 'Blue'
+        $colors.B = 'DarkBlue'
+        $colors.c = 'Cyan'
+        $colors.C = 'DarkCyan'
+        $colors.e = 'Gray'
+        $colors.E = 'DarkGray'
+        $colors.g = 'Green'
+        $colors.G = 'DarkGreen'
+        $colors.k = 'Black'
+        $colors.m = 'Magenta'
+        $colors.M = 'DarkMagenta'
+        $colors.r = 'Red'
+        $colors.R = 'DarkRed'
+        $colors.w = 'White'
+        $colors.y = 'Yellow'
+        $colors.Y = 'DarkYellow'
+        $colors.z = ''
+    }
+    Process {
+        $Value |
+            Select-String -Pattern '(?ms)(((?''fg''^?\^f[bBcCeEgGkmMrRwyYz])(?''bg''^?\^b[bBcCeEgGkmMrRwyYz])|(?''bg''^?\^b[bBcCeEgGkmMrRwyYz])(?''fg''^?\^f[bBcCeEgGkmMrRwyYz])|(?''fg''^?\^f[bBcCeEgGkmMrRwyYz])|(?''bg''^?\^b[bBcCeEgGkmMrRwyYz])|^)(?''text''.*?))(?=\^[fb][bBcCeEgGkmMrRwyYz]|\Z)' -AllMatches | 
+            ForEach-Object { $_.Matches } |
+            ForEach-Object {
+                $fg = ($_.Groups | Where-Object {$_.Name -eq 'fg'}).Value -replace '^\^f',''
+                $bg = ($_.Groups | Where-Object {$_.Name -eq 'bg'}).Value -replace '^\^b',''
+                $text = ($_.Groups | Where-Object {$_.Name -eq 'text'}).Value
+                $fgColor = [string]::IsNullOrWhiteSpace($fg) -or $fg -eq 'z' ? $Host.UI.RawUI.ForegroundColor : $colors.$fg
+                $bgColor = [string]::IsNullOrWhiteSpace($bg) -or $bg -eq 'z' ? $Host.UI.RawUI.BackgroundColor : $colors.$bg
+                Write-Host -Object $text -ForegroundColor $fgColor -BackgroundColor $bgColor -NoNewline
+            }
+        if (-not $NoNewLine) { Write-Host }
+    }
+    End {
+    }
+}
+function Write-Log {
+    Param (
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)][string]$Value,
+        [Parameter(Mandatory=$false)][string]$Title = 'Info',
+        [Parameter(Mandatory=$false)][int]$Align = 12,
+        [Parameter(Mandatory=$false)][int]$Indent = 1,
+        [Parameter(Mandatory=$false)][switch]$NoNewLine
+    )
+    Begin {
+        [string]$spaces = "$(' ' * (($Align) - $Title.Length -1))"
+    }
+    Process {
+        Write-Color "$("`t" * $Indent)^fy$Title^fz:$spaces$Value"
+    }
+}
 function Write-Console {
     # This function exists to make upgrading from terminal/console to an application easier.
 	param (
@@ -374,6 +487,9 @@ function LoadConfiguration {
         ## Show Debugging Information
         [boolean]$script:ShowDebugInfo = ($ConfigurationData.ShowDebugInfo)
 
+        ## Clean and pull repositories before building
+        [boolean]$script:CleanAndPullRepo = $ConfigurationData.Contains('CleanAndPullRepo') ? $ConfigurationData.CleanAndPullRepo : $true
+
         [string[]]$script:ArchiveExceptions = [string[]]@()
         if ($ConfigurationData.Contains('ArchiveExceptions')) {
             foreach ($item in $ConfigurationData.ArchiveExceptions) {
@@ -606,22 +722,22 @@ class BuildType {
 
     InvokeInitBuild([switch]$WhatIF){
         if ($this.HasInitCommand()) { 
-            if ($WhatIF) { Write-Host "WhatIF: $($this.GetInitCommand())"}
+            if ($WhatIF) { Write-Log "$($this.GetInitCommand())" -Title 'WhatIF' }
             else { Invoke-Expression $($this.GetInitCommand()) }
         }
     }
     InvokePreBuild([switch]$WhatIF){
         if ($this.HasPreCommand()) { 
-            if ($WhatIF) { Write-Host "WhatIF: $($this.GetPreCommand())"}
+            if ($WhatIF) { Write-Log "$($this.GetPreCommand())" -Title 'WhatIF'}
             else { Invoke-Expression $($this.GetPreCommand()) }
         }
     }
     InvokeBuild([switch]$WhatIF){
         if ($this.HasCommand()) { 
-            if ($WhatIF) { Write-Host "WhatIF: $($this.GetCommand())"}
+            if ($WhatIF) { Write-Log "$($this.GetCommand())" -Title 'WhatIF'}
             else {
                 [string]$buildCommand = $this.GetCommand()
-                Write-Host "Executing:       `"$buildCommand`""
+                Write-Log "`"$buildCommand`""  -Title 'Executing'
                 $currentProcess = Start-Process -FilePath "$env:ComSpec" -ArgumentList "/c $buildCommand" -NoNewWindow -PassThru
                 $currentProcess.WaitForExit()
             }
@@ -629,7 +745,7 @@ class BuildType {
     }
     InvokePostBuild([switch]$WhatIF){
         if ($this.HasPostCommand()) { 
-            if ($WhatIF) { Write-Host "WhatIF: $($this.GetPostCommand())"}
+            if ($WhatIF) { Write-Log "$($this.GetPostCommand())" -Title 'WhatIF' }
             else { Invoke-Expression $($this.GetPostCommand()) }
         }
     }
@@ -718,7 +834,7 @@ class BuildTypeJava : BuildType {
     }
     InvokeBuild([switch]$WhatIF)    {
         $this.PushJAVA_HOME()
-        Write-Host "Using JAVA_HOME: `"$($env:JAVA_HOME)`""
+        Write-Log "`"$($env:JAVA_HOME)`"" -Title 'JAVA_HOME'
         ([BuildType]$this).InvokeBuild($WhatIF)
         $this.PopJAVA_HOME()
     }
@@ -789,7 +905,6 @@ class BuildTypeGradle : BuildTypeJava {
 }
 class BuildTypeMaven : BuildTypeJava {
 	BuildTypeMaven() : base('install',$null,$null,$null,$null,'target\*.jar',$true,$null) {}
-	#BuildTypeMaven([string]$Output) : base('install',$null,$null,$null,$null,$Output,$true,$null) {}
 	BuildTypeMaven([string]$Command,[string]$InitCommand,[string]$PreCommand,[string]$PostCommand,[string]$VersionCommand,[string]$Output,[System.Boolean]$PerformBuild,[string]$JAVA_HOME) : base($Command,$InitCommand,$PreCommand,$PostCommand,$VersionCommand,$Output,$PerformBuild,$JAVA_HOME) {}
     BuildTypeMaven([Hashtable]$Value) : base ($Value) {
         if(-not $Value.Contains('Command')) { $this.Command = 'install' }
@@ -928,26 +1043,80 @@ class GitRepo {
         }
         $this.Init($tmpName, $tmpOrigin, $tmpBranch,  $tmpPull, $tmpSubModules, $tmpArchiveAdditions, $tmpCleanAdditions, $tmpCleanExceptions)
     }
+    [string]GetUpstream() {
+        [string]$return = (git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}')
+        return $return
+    }
+    [string]GetRemote() {
+        [string]$return = $this.GetUpstream() -replace '/.*$',''
+        return $return
+    }
+    [string]GetURL() {
+        [string]$return = (git config --get remote.$($this.GetRemote()).url)
+        return $return
+    }
+    [string]GetBranch() {
+        [string[]]$Value = (git branch)
+        [string]$return = ( $Value | Select-String -Pattern '(^\* (?''match''.*)$)' | Select-Object -First 1 | ForEach-Object {
+            $_.matches.groups | Where-Object {
+                $_.Name -match 'match'
+            }
+        } | Select-Object -Expand Value )
+        return $return
+
+        return $return
+    }
     [string]GetCommit(){
         [string]$return = (git rev-parse --short=7 HEAD)
         return $return
     }
-    [string]GetURLCheck(){
-        [string]$return = (git config --get remote.origin.url)
-        if ($return -like $this.Origin) { $return += " (Same)" } else { $return += " (Changed from `"$($this.Origin)`")" }
-        return $return
+    [string]CheckConfigRemote([System.Boolean]$InColor){
+        [string]$reportedRemote = $this.GetRemote()
+        if ($reportedRemote -like 'origin') { $reportedRemote += " ($($InColor ? '^fgSame^fz' : 'Same'))" } else { $reportedRemote += " (" + ($InColor ? "^frChanged from `"origin`"^fz" : "Changed from `"origin`"") + ")" }
+        return $reportedRemote
     }
-    [string]GetBranchCheck(){
-        [string]$return = (git branch --show-current)
-        if ($return -like $this.Branch) { $return += " (Same)" } else { $return += " (Changed from `"$($this.Branch)`")" }
-        return $return
+    [string]CheckConfigRemote() { return CheckConfigURL($false) }
+    [string]CheckConfigURL([System.Boolean]$InColor){
+        [string]$reportedURL = $this.GetURL()
+        if ($reportedURL -like $this.Origin) { $reportedURL += " ($($InColor ? '^fgSame^fz' : 'Same'))" } else { $reportedURL += " (" + ($InColor ? "^frChanged from `"" + $this.Origin + "`"^fz" : "Changed from `"" + $this.Origin + "`"") + ")" }
+        return $reportedURL
     }
-    [void]CheckoutBranch() {
-        git checkout -B $($this.Branch) --force
-        git fetch origin
-    }
-    [void]InvokeClean(){
+    [string]CheckConfigURL() { return CheckConfigURL($false) }
 
+    [string]CheckConfigBranch([System.Boolean]$InColor){
+        [string]$reportedBranch = $this.GetBranch()
+        if ($reportedBranch -like $this.Branch) { $reportedBranch += " ($($InColor ? '^fgSame^fz' : 'Same'))" } else { $reportedBranch += " (" + ($InColor ? "^frChanged from `"" + $this.Branch + "`"^fz" : "Changed from `"" + $this.Branch + "`"") + ")" } #" (Same)" } else { $reportedBranch += " (Changed from `"$($this.Branch)`")" }
+        return $reportedBranch
+    }
+    [string]CheckConfigBranch() { return CheckConfigBranch($false) }
+
+    [void]Display([System.Boolean]$ShowName){
+        if ($ShowName) { Write-Color "^fM$($this.Name)^fz" }
+        Write-Log "$($this.CheckConfigRemote($true))" -Title 'Remote'
+        Write-Log "$($this.CheckConfigURL($true))" -Title 'URL'
+        Write-Log "$($this.CheckConfigBranch($true))" -Title 'Branch'
+        Write-Log "$($this.GetCommit())" -Title 'Commit'
+    }
+    [void]Display(){ $this.Display($true) }
+    [void]InvokeCheckout() {
+        Write-Host "(before)"
+        $this.Display()
+        git checkout -B $($this.Branch) --force
+        git branch --set-upstream-to=$($this.GetRemote())/$($this.Branch) $($this.Branch)
+        git fetch --force $($this.GetRemote())
+        Write-Host "(after)"
+        $this.Display()
+        Write-Host ''
+    }
+    [void]InvokeReset() {
+        $this.Display()
+        [string]$upstream = $this.GetUpstream()
+        if ($script:WhatIF) { Write-Log "git reset --hard $upstream --recurse-submodules" -Title 'WhatIF' }
+        else { git reset --hard "$upstream" --recurse-submodules }
+        Write-Host ''
+    }
+    [void]InvokeClean([System.Boolean]$Quiet) {
+        if ($Quiet) { Write-Log -Value "Cleaning..." -Title "Action" } else { $this.Display() }
         [string[]]$cleanArguments = @('clean')
         $cleanArguments += ($script:WhatIF ? '-nxfd' : '-xfd')
         foreach ($item in $this.CleanExceptions) {
@@ -958,20 +1127,23 @@ class GitRepo {
             Remove-Item $item -Force -Recurse -WhatIf:$($script:WhatIF)
         }
     }
-    [void]InvokePull(){
+    [void]InvokeClean() { $this.InvokeClean($false) }
+    [void]InvokePull([System.Boolean]$Quiet) {
         if ($this.Pull) {
-            if ($script:WhatIF -and -not $script:ForcePull) { Write-Host 'WhatIF: git pull' }
+            if ($Quiet) { Write-Log -Value "Pulling..." -Title "Action" } else { $this.Display() }
+            if ($script:WhatIF -and -not $script:ForcePull) { Write-Log "git pull" -Title 'WhatIF' }
             else {
                 [string]$tmpBranch = $null
                 try { $tmpBranch = git symbolic-ref HEAD }
-                catch { Write-Host "$($_.Exception.Message)" }
+                catch { Write-Log "^fr$($_.Exception.Message)^fz" -Title 'Error' }
                 if ([string]::IsNullOrWhiteSpace($tmpBranch)) {
-                    git checkout $this.Branch
+                    $this.InvokeCheckout()
                 }
-                Start-Process "git" -ArgumentList @('pull') -NoNewWindow -Wait
+                git pull
             }
         }
     }
+    [void]InvokePull() { $this.InvokePull($false) }
 }
 class GitRepoForked : GITRepo {
 	[string]$Upstream
@@ -1049,27 +1221,27 @@ class SourceSubModule {
 	}
     [System.Boolean] hidden SafeCopy([string]$Source,[string]$Destination,[switch]$WhatIF,[switch]$Compare){
         if ([string]::IsNullOrWhiteSpace($Source)){
-            Write-Host "Source file is empty."
+            Write-Log "Source file is empty."
             return $false
         }
         if ([string]::IsNullOrWhiteSpace($Destination)) {
-            Write-Host "Destination file is empty."
+            Write-Log "Destination file is empty."
             return $false
         }
         if ($Compare -and ($null -eq (Compare-Object -ReferenceObject (Get-Content -Path $Source) -DifferenceObject (Get-Content -Path $Destination)))) {
-            Write-Host "`"$Source`" and `"$Destination`" are identical." -ForegroundColor DarkGreen
+            Write-Log "`"^fG$Source^fz`" and `"^fG$Destination^fz`" are identical."
             return $false
         }
         else {
-            Write-Host "Copying `"$Source`" to `"$Destination`"..."
+            Write-Log "`"$Source`" to `"$Destination`"..." -Title 'Copying'
             try {
-                if ($WhatIF) { Write-Host "WhatIF: Copy-Item -Path $Source -Destination $Destination -Force"}
+                if ($WhatIF) { Write-Log "Copy-Item -Path $Source -Destination $Destination -Force" -Title 'WhatIF'}
                 else { Copy-Item -Path $Source -Destination $Destination -Force }
-                Write-Host "Copied `"$Source`" to `"$Destination`"." -ForegroundColor Green
+                Write-Log "`"^fg$Source^fz`" to `"^fg$Destination^fz`"." -Title "Copied"
                 return $true
             }
             catch {
-                Write-Host "Error copying file `"$Source`" to `"$Destination`"." -ForegroundColor Red
+                Write-Log "^frCopying file `"$Source`" to `"$Destination`".^fz" -Title 'Error'
                 return $false
             }
         }
@@ -1092,6 +1264,7 @@ class SourceSubModule {
             [string]$PathDataPack,
             [string]$PathResourcePack,
             [string]$PathNodeDependancy,
+            [switch]$PerformCleanAndPull,
             [switch]$WhatIF
     ){
         [string]$updatedFile = $null
@@ -1100,8 +1273,10 @@ class SourceSubModule {
         Write-Host "$('=' * 120)`r`nName:      $($this.Name)`r`nDirectory: $dirCurrentSource`r`n$('=' * 120)" -ForegroundColor red
         Set-Location -Path $dirCurrentSource
 
-        $this.Repo.InvokeClean()
-        $this.Repo.InvokePull()
+        if ($PerformCleanAndPull) {
+            $this.Repo.InvokeClean($true)
+            $this.Repo.InvokePull($true)
+        }
 
         $this.Build.InvokeInitBuild($WhatIF)
 
@@ -1134,7 +1309,10 @@ class SourceSubModule {
         [string]$copyToFileFullName = Join-Path -Path $copyToFilePath -ChildPath $copyToFileName
 
         # Show current values before checking if a build is required
-        Write-Host "URL:          $($this.Repo.GetURLCheck())`r`nBranch:       $($this.Repo.GetBranchCheck())`r`nCommit:       $commit`r`nBuild Output: $($this.Build.GetOutput())`r`nVersion:      $version`r`Copy To:      $copyToFileFullName" -ForegroundColor Yellow
+        $this.Repo.Display($false)
+        Write-Log "$($this.Build.GetOutput())" -Title 'Output'
+        Write-Log "$version" -Title 'Version'
+        Write-Log "$copyToFileFullName" -Title 'Copy To'
 
         if ($this.Build.PerformBuild) {
             [string]$copyToExistingFilter = '^' + [System.Text.RegularExpressions.Regex]::Escape($copyToFileName) + '(\.disabled|\.backup)*$'
@@ -1162,21 +1340,21 @@ class SourceSubModule {
                             $renameOldFileFilter = [System.Text.RegularExpressions.Regex]::Escape("$($this.GetFinalName())-") + '.*\-CUSTOM\+.*' + [System.Text.RegularExpressions.Regex]::Escape($this.Build.GetOutputExtension()) + '$'
                             $renameOldFiles = Get-ChildItem -File -Path $copyToFilePath | Where-Object { $_.Name -match $renameOldFileFilter }
                             foreach ($renameOldFile in $renameOldFiles) {
-                                Write-Host "Renaming `"$($renameOldFile.FullName)`" to `"$($renameOldFile.FullName).disabled`""
-                                if ($WhatIF) { Write-Host "WhatIF: Rename-Item -Path `"$($renameOldFile.FullName)`" -NewName `"$($renameOldFile.FullName).disabled`" -Force -EA:0" }
+                                Write-Log "`"$($renameOldFile.FullName)`" to `"$($renameOldFile.FullName)^fE.disabled^fz`"" -Title 'Renaming'
+                                if ($WhatIF) { Write-Log "Rename-Item -Path `"$($renameOldFile.FullName)`" -NewName `"$($renameOldFile.FullName).disabled`" -Force -EA:0" -Title 'WhatIF'}
                                 else { Rename-Item -Path "$($renameOldFile.FullName)" -NewName "$($renameOldFile.FullName).disabled" -Force -EA:0 }
                             }
                             [string]$copyFromFileFullName = ($WhatIF ? '<buildOutputFile>' : $copyFromExistingFiles.FullName)
                             if ($this.SafeCopy($copyFromFileFullName,$copyToFileFullName,$WhatIF,$false)) { $updatedFile = $copyToFileFullName }
                             $this.Build.InvokePostBuild($WhatIF)
                         }
-                        else { Write-Host "No build output file `"$copyFromExistingFiles`" found." -ForegroundColor Red }
+                        else { Write-Log "^frNo build output file `"$copyFromExistingFiles`" found." -Title 'Error' }
                     }
-                    else { Write-Host "`"$(($copyToExistingFiles|Select-Object -First 1).FullName)`" is already up to date." -ForegroundColor DarkGreen }
+                    else { Write-Log "`"^fG$(($copyToExistingFiles|Select-Object -First 1).FullName)^fz`" is already up to date." }
                 }
             }
         }
-        else { Write-Host "Building of this submodule is currently disabled." -ForegroundColor Magenta }
+        else { Write-Log "^fMBuilding of this submodule is currently disabled.^fz" }
         return $updatedFile
     }
 }
@@ -1215,9 +1393,34 @@ do { # Main loop
     Clear-Host
     Show-WhatIfInfo
     Show-DirectoryInfo
-	$choice = Show-Choices -Title 'Select an action' -List @('Build','Build One','Repositories - Clean','Repositories - Reset','Archive Untracked','Get Versions','Test','Toggle: WhatIF','Toggle: ForcePull','Checkout Repos','Reload Configuration','Reload Submodules') -NoSort -ExitPath $dirStartup
+    $menuItems =  @(
+        'Build - Compile All',
+        'Build - Compile One',
+        'Build - Get Versions',
+        'Repositories - Display Details',
+        'Repositories - Archive Untracked',
+        'Repositories - Checkout',
+        'Repositories - Clean',
+        'Repositories - Reset',
+        'Configuration - Reload Generic',
+        'Configuration - Reload Submodules',
+        'Configuration - Toggle WhatIF',
+        'Configuration - Toggle ForcePull'
+    )
+	$choice = Show-Choices -Title 'Select an action' -List $menuItems -NoSort -ExitPath $dirStartup
 	switch ($choice) {
-		'Archive Untracked'{
+        'Repositories - Display Details'{
+            Push-Location -Path $dirSources -StackName 'MainLoop'
+            Write-Host "Displaying Repository Details"
+            foreach ($currentSource in $sources) {
+                $dirCurrent = Join-Path -Path $dirSources -ChildPath $currentSource.Name
+                Set-Location -Path $dirCurrent
+                $currentSource.Repo.Display()
+            }
+            PressAnyKey
+            break
+        }
+		'Repositories - Archive Untracked'{
             Push-Location -Path $dirRoot -StackName 'MainLoop'
             $files = @()
 
@@ -1289,22 +1492,25 @@ do { # Main loop
             foreach ($currentSource in $sources) {
                 $currentSource.InvokeClean($dirSources)
             }
-			#git submodule foreach 'remote="$(git remote)";branch="$(git branch|sed -n ''s/^\* \(.*\)$/\1/p'');echo $remote/$branch;git reset --hard $remote/$branch --recurse-submodules;git clean -xfd;echo'
             PressAnyKey
-			break
+            break
         }
         'Repositories - Reset' {
             Push-Location -Path $dirSources -StackName 'MainLoop'
             Write-Host "Resetting Repositories"
-            git submodule foreach 'remote="$(git remote)";branch="$(git branch|sed -n ''s/^\* \(.*\)$/\1/p'');echo $remote/$branch;git reset --hard $remote/$branch --recurse-submodules;echo'
+            foreach ($currentSource in $sources) {
+                $dirCurrent = Join-Path -Path $dirSources -ChildPath $currentSource.Name
+                Set-Location -Path $dirCurrent
+                $currentSource.Repo.InvokeReset()
+            }
             PressAnyKey
             break
         }
-		'Build'{
+		'Build - Compile All'{
             Push-Location -Path $dirSources -StackName 'MainLoop'
             [string[]]$updatedFiles = @()
 			foreach ( $currentSource in $sources ) {
-                [string]$buildReturn = $currentSource.InvokeBuild($dirSources,$dirServer,$dirServer,$dirPlugins,$dirModules,$dirDataPacks,$dirResourcePacks,'',$WhatIF)
+                [string]$buildReturn = $currentSource.InvokeBuild($dirSources,$dirServer,$dirServer,$dirPlugins,$dirModules,$dirDataPacks,$dirResourcePacks,'',$script:CleanAndPullRepo,$WhatIF)
                 if (-not [string]::IsNullOrWhiteSpace($buildReturn)) { $updatedFiles += $buildReturn }
             }
             if ($updatedFiles.Count -gt 0) {
@@ -1316,15 +1522,15 @@ do { # Main loop
             PressAnyKey
 			break
         }
-        'Build One'{
+        'Build - Compile One'{
             Push-Location -Path $dirSources -StackName 'MainLoop'
             $currentSource = Show-Choices -Title 'Select an action' -List $sources -ExitPath $dirStartup
-            [string]$buildReturn = $currentSource.InvokeBuild($dirSources,$dirServer,$dirServer,$dirPlugins,$dirModules,$dirDataPacks,$dirResourcePacks,'',$WhatIF)
+            [string]$buildReturn = $currentSource.InvokeBuild($dirSources,$dirServer,$dirServer,$dirPlugins,$dirModules,$dirDataPacks,$dirResourcePacks,'',$script:CleanAndPullRepo,$WhatIF)
             if (-not [string]::IsNullOrWhiteSpace($buildReturn)) { Write-Host "Updated Files...`r`n$('=' * 120)`r`n`t$buildReturn" -ForegroundColor Green }
             PressAnyKey
             break
         }
-        'Get Versions'{
+        'Build - Get Versions'{
             Push-Location -Path $dirSources -StackName 'MainLoop'
             foreach ( $currentSource in $sources ) {
                 $dirCurrent = Join-Path -Path $dirSources -ChildPath $currentSource.Name
@@ -1336,29 +1542,29 @@ do { # Main loop
             PressAnyKey
             break
         }
-        'Checkout Repos' {
+        'Repositories - Checkout' {
             Push-Location -Path $dirSources -StackName 'MainLoop'
             foreach ( $currentSource in $sources ) {
                 $dirCurrent = Join-Path -Path $dirSources -ChildPath $currentSource.Name
                 Set-Location -Path $dirCurrent
                 Write-Host $currentSource.GetFinalName()
-                $currentSource.Repo.CheckoutBranch()
+                $currentSource.Repo.InvokeCheckout()
             }
             PressAnyKey
             break
         }
-        'Reload Configuration' {
+        'Configuration - Reload Generic' {
             LoadManageJSON -JsonContentPath "$dirRoot\manage.json" -JsonSchemaPath "$dirRoot\manage.schema.json"
             LoadConfiguration -ConfigurationData $script:ManageJSON.configuration
             break
         }
-        'Reload Submodules' {
+        'Configuration - Reload Submodules' {
             LoadManageJSON -JsonContentPath "$dirRoot\manage.json" -JsonSchemaPath "$dirRoot\manage.schema.json"
             LoadSourceSubModules -SubmodulesData $script:ManageJSON.submodules -SourcesArray ([ref]$sources)
             break
         }
-        'Toggle: WhatIF' { $WhatIF = -not $WhatIF; break; }
-        'Toggle: ForcePull' { $ForcePull = -not $ForcePull; break; }
+        'Configuration - Toggle WhatIF' { $WhatIF = -not $WhatIF; break; }
+        'Configuration - Toggle ForcePull' { $ForcePull = -not $ForcePull; break; }
 		Default {
             Write-Host $choice
             PressAnyKey
