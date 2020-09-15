@@ -52,7 +52,11 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/squeek502/AppleSkin",
-                "Branch": "1.16-fabric"
+                "Branch": "1.16-fabric",
+                "BranchIgnore": [
+                    "1\\.1[0-5](?:\\.[\\dx])?",
+                    "forge"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -65,7 +69,13 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/irtimaled/BoundingBoxOutlineReloaded",
-                "Branch": "1.16.2-fabric"
+                "Branch": "1.16.2-fabric",
+                "BranchIgnore": [
+                    "1\\.1[0-5](?:\\.[\\dx])?",
+                    "bukkit",
+                    "forge",
+                    "master"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -130,7 +140,16 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://gitlab.com/CDAGaming/CraftPresence.git",
-                "Branch": "1.16.x-Fabric"
+                "Branch": "1.16.x-Fabric",
+                "BranchIgnore": [
+                    "1\\.1[0-5](?:\\.[\\dx])?",
+                    "1\\.1\\.0",
+                    "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
+                    "experiment",
+                    "Forge",
+                    "Rift"
+                ],
+                "LockAtCommit": "d2890b2a"
             },
             "Build": {
                 "Type": "Gradle",
@@ -154,7 +173,14 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/FabricMC/fabric",
-                "Branch": "1.16"
+                "Branch": "1.16",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "20w(0[0-9]|1[0-4])[a-f]",
+                    "20w14infinite",
+                    "dev/0\\.2"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -167,7 +193,14 @@
             "Name": "Fabric-Autoswitch",
             "SubmoduleType": "Module",
             "Repo": {
-                "Origin": "https://github.com/dexman545/Fabric-Autoswitch"
+                "Origin": "https://github.com/dexman545/Fabric-Autoswitch",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "modmeu-feature",
+                    "event-system",
+                    "refactor-4"
+                ]
+
             },
             "Build": {
                 "Type": "Gradle",
@@ -202,7 +235,20 @@
             "Name": "fabric-carpet",
             "SubmoduleType": "Module",
             "Repo": {
-                "Origin": "https://github.com/gnembon/fabric-carpet"
+                "Origin": "https://github.com/gnembon/fabric-carpet",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "20w14inf",
+                    "ghost",
+                    "honey",
+                    "optimizedCollisions",
+                    "slime",
+                    "storm",
+                    "sunny",
+                    "thunder",
+                    "villagerAPI"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -216,7 +262,14 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/gbl/Grid",
-                "Branch": "fabric_1_16"
+                "Branch": "fabric_1_16",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "forge",
+                    "rift"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -229,7 +282,14 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/TehNut/HWYLA",
-                "Branch": "1.16_fabric"
+                "Branch": "1.16_fabric",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "forge"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -256,7 +316,16 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/maruohon/itemscroller",
-                "Branch": "fabric_1.16_snapshots_temp"
+                "Branch": "fabric_1.16_snapshots_temp",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "forge",
+                    "rift",
+                    "liteloader"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -286,7 +355,14 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/maruohon/litematica",
-                "Branch": "fabric_1.16_snapshots_temp"
+                "Branch": "fabric_1.16_snapshots_temp",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "forge",
+                    "rift"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -299,7 +375,13 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/jellysquid3/lithium-fabric",
-                "Branch": "1.16.x/dev"
+                "Branch": "1.16.x/dev",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]"
+                ],
+                "LockAtCommit": "bb261b0"
             },
             "Build": {
                 "Type": "Gradle",
@@ -312,7 +394,15 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/maruohon/malilib",
-                "Branch": "fabric_1.16_snapshots_temp"
+                "Branch": "fabric_1.16_snapshots_temp",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "forge",
+                    "rift",
+                    "liteloader"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -326,7 +416,16 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/maruohon/minihud",
-                "Branch": "fabric_1.16_snapshots_temp"
+                "Branch": "fabric_1.16_snapshots_temp",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "forge",
+                    "rift",
+                    "liteloader"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -341,19 +440,19 @@
                     "#        mappings_version      = 20w21a+build.7   => 1.16.2+build.1",
                     "#        fabric_loader_version = 0.8.4+build.198  => 0.9.1+build.205",
                     "#        mod_menu_version      = 1.11.5+build.10  => 1.14.6+build.31",
-                    "[string]$file = '.\\build\\loom-cache\\malilib-fabric-1.16-snap-20w21a.jar'",
-                    "if (-not (Test-Path -Path $file)) {",
-                    "    [string]$folder = Split-Path -Path $file -Parent",
-                    "    [string]$leaf = Split-Path -Path $file -Leaf",
-                    "    Write-Log \"Downloading $leaf dependancy...\"",
-                    "    if (-not (Test-Path -Path $folder)) { New-Item -Type Directory -Path $folder -Force }",
-	                "    $url = 'https://masa.dy.fi/mcmods/malilib/malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21%2Bbeta.1.jar'",
-	                "    Invoke-WebRequest -Uri $url -OutFile $file",
-                    "    Write-Log \"$leaf dependancy downloaded.\"",
-                    "}"
+                    "#[string]$file = '.\\build\\loom-cache\\malilib-fabric-1.16-snap-20w21a.jar'",
+                    "#if (-not (Test-Path -Path $file)) {",
+                    "#    [string]$folder = Split-Path -Path $file -Parent",
+                    "#    [string]$leaf = Split-Path -Path $file -Leaf",
+                    "#    Write-Log \"Downloading $leaf dependancy...\"",
+                    "#    if (-not (Test-Path -Path $folder)) { New-Item -Type Directory -Path $folder -Force }",
+	                "#    $url = 'https://masa.dy.fi/mcmods/malilib/malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21%2Bbeta.1.jar'",
+	                "#    Invoke-WebRequest -Uri $url -OutFile $file",
+                    "#    Write-Log \"$leaf dependancy downloaded.\"",
+                    "#}"
                 ],
                 "Output": "build\\libs\\minihud-fabric-*.jar",
-                "PerformBuild": false,
+                "PerformBuild": true,
                 "JAVA_HOME": 8
             },
             "FinalName": "MiniHUD"
@@ -363,7 +462,12 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/Prospector/ModMenu",
-                "Branch": "1.16"
+                "Branch": "1.16",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -390,7 +494,10 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/Chocohead/OptiFabric",
-                "Branch": "llama"
+                "Branch": "llama",
+                "BranchIgnore": [
+                    "optisine"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -402,7 +509,12 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/jellysquid3/phosphor-fabric",
-                "Branch": "1.16.x/dev"
+                "Branch": "1.16.x/dev",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -416,7 +528,12 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/MisterPeModder/ShulkerBoxTooltip",
-                "Branch": "1.16"
+                "Branch": "1.16",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -476,7 +593,15 @@
             "SubmoduleType": "Module",
             "Repo": {
                 "Origin": "https://github.com/maruohon/tweakeroo",
-                "Branch": "fabric_1.16_snapshots_temp"
+                "Branch": "fabric_1.16_snapshots_temp",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "forge",
+                    "rift",
+                    "liteloader"
+                ]
             },
             "Build": {
                 "Type": "Gradle",
@@ -489,7 +614,21 @@
             "Name": "WorldEdit",
             "SubmoduleType": "Module",
             "Repo": {
-                "Origin": "https://github.com/enginehub/WorldEdit"
+                "Origin": "https://github.com/enginehub/WorldEdit",
+                "BranchIgnore": [
+                    "1.1[0-5](?:\\.[\\dx])?",
+                    "1[2-9]w[0-5][0-9][a-f]",
+                    "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                    "feature",
+                    "forge",
+                    "spigot",
+                    "sponge",
+                    "ops-redux-7",
+                    "test-commands",
+                    "groupmanager",
+                    "temp-docprinter-hack",
+                    "version/5\\.x"
+                ]
             },
             "Build": {
                 "Type": "Gradle",

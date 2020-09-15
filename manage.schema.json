@@ -56,10 +56,17 @@
             "type":"object",
             "additionalProperties": false,
             "properties": {
-                "Name":   { "type": "string"  },
-                "Origin": { "type": "string"  },
-                "Branch": { "type": "string"  },
-                "Pull":   { "type": "boolean" },
+                "Name":         { "type": "string"  },
+                "Origin":       { "type": "string"  },
+                "Branch":       { "type": "string"  },
+                "Pull":         { "type": "boolean" },
+                "LockAtCommit": { "type": "string"  },
+                "BranchIgnore":{
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": { "type": "string" },
+                    "additionalItems": false
+                },
                 "SubModules":{
                     "type": "array",
                     "uniqueItems": true,
