@@ -4,6 +4,35 @@ Created by DrakoTrogdor on 2020-04-12
 
 ## [Released]
 
+## [1.2.1] - 2020-09-15
+### Changed
+- Updated to AppleSkin v1.0.11+9239c57
+- Updated to Autofish v0.9.0-fabric-mc1.16.2
+- Updated to Autoswitch v2.11.1+5dc7db7
+- Updated to BBOutlineReloaded v2.3.0+2d0061d
+- Updated to Carpet v1.4.11+755f3a7
+- Updated to CraftPresence v1.7.0+d2890b2
+- Updated to Euclid v1.2.1+3b1a3e8.jar
+- Updated to FabricAPI v0.20.2+74685c1
+- Updated to VoxelMap v1.10.10
+- Updated to Grid v1.6.2+39153b1
+- Updated to HWYLA v1.9.23+75a55f8
+- Updated to InventorySorter v1.7.2+7c552e9
+- Updated to ItemScroller v0.15.0+10f7f7a
+- Updated to Litematica v0.0.0+d5105cf
+- Updated to MaliLib v0.10.0+dbe292d
+- Updated to MiniHUD v0.19.0+1c183be
+- Updated to ModMenu v1.14.6+74200fb
+- Updated to ModUpdater v1.1.11+0bc2eb8
+- Updated to OptiFabric v1.5.1+d63825d
+- Updated to OptiFine 1.16.2 HD U G3
+- Updated to Phosphor v0.6.0+8bdc9ad
+- Updated to replaymod v2.4.4
+- Updated to ShulkerBoxTooltip v2.2.1+b1eb062
+- Updated to SkinSwapper v1.2.0+3df072c
+- Updated to Tweakeroo v0.10.0+9f1419a
+- Updated to WorldEdit v7.2.0+ea1a512
+
 ## [1.2.0] - 2020-08-29
 ### Added
 - Added Euclid 1.2.1+3b1a3e8 (Replaced WorldEditCUI)
