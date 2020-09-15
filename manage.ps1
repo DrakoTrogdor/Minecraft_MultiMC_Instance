@@ -1134,8 +1134,9 @@ class GitRepo {
         [System.Collections.Hashtable]$branchCommits = New-Object System.Collections.Hashtable
         [PSCustomObject[]]$compareAheadBehind = @()
         foreach ($branchA in $branches) {
-            if (((git rev-list "$branchA" -n 1 --date=unix --abbrev-commit --pretty=format:"%cd") `
-            -join "`r`n") -match '(?ms)(?:^commit (?<commit>[a-f0-9]+)\s*(?:(?<time>\d+))$)') {
+            [string]$commitA = $branchA -eq $local ? "refs/heads/$branchA" : "refs/remotes/$branchA"
+            if (((git rev-list "$commitA" -n 1 --date=unix --abbrev-commit --pretty=format:"%cd") `
+            -join "`r`n") -match '(?ms)(?:^commit (?<commit>[a-f0-9]+)\s*(?:(?<time>\d+))$)' ) {
                 [string]$tmpCommit = $Matches.commit.Trim()
                 [DateTime]$tmpTime = Convert-FromUnixTime $($Matches.time.Trim())
                 $branchCommits.$branchA = [PSCustomObject]@{ Commit = $tmpCommit; Time = $tmpTime }
@@ -1145,7 +1146,8 @@ class GitRepo {
                 if ($branchB -eq $branchA) { continue }
                 if ($compareAheadBehind.Where({$_.Left -eq $branchB -and $_.Right -eq $branchA})) { continue }
                 # Double quotes is required around the entire "A...B" in order to parse properly
-                if ((git rev-list --left-right --count "$($branchA)...$($branchB)") -match '^\s*(?<ahead>\d+)\s+(?<behind>\d+)\s*$') {
+                [string]$commitB = $branchB -eq $local ? "refs/heads/$branchB" : "refs/remotes/$branchB"
+                if ((git rev-list --left-right --count "$($commitA)...$($commitB)") -match '^\s*(?<ahead>\d+)\s+(?<behind>\d+)\s*$') {
                     [string]$left = $branchA
                     [string]$right = $branchB
                     [string]$ahead = $Matches.ahead
