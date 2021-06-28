@@ -1,0 +1,1 @@
+Download compiled "Autofish-?.?.?-fabric-mc?.??.jar" from https://www.curseforge.com/minecraft/mc-mods/autofish/files

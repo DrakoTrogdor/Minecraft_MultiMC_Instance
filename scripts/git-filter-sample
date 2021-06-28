@@ -1,0 +1,16 @@
+#!/bin/bash
+while IFS= read -r INPUT || [ -n "$INPUT" ]; do
+  INPUT=$(sed -E 's/lastLaunchTime=[0-9]+/lastLaunchTime=0/' <<< $INPUT)
+  INPUT=$(sed -E 's/totalTimePlayed=[0-9]+/totalTimePlayed=0/' <<< $INPUT)
+  if [[ $* == 'clean' ]]; then
+    INPUT=$(sed -E 's/JavaPath=.*/JavaPath=/' <<< $INPUT)
+  elif [[ $ == 'smudge' ]]; then
+    INPUT=$(sed -E 's/JavaPath=.*/JavaPath=/' <<< $INPUT)
+  fi
+  if [[ -z $OUTPUT ]]; then
+    OUTPUT="${INPUT}"
+  else
+    OUTPUT="${OUTPUT}\n${INPUT}"
+  fi
+done
+echo -e $OUTPUT
