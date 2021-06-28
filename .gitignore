@@ -1,0 +1,44 @@
+# Specific Minecraft folders/files
+/.minecraft/*_0.png
+/.minecraft/.fabric
+/.minecraft/.mixin.out
+/.minecraft/.optifine
+/.minecraft/backups
+/.minecraft/WailaErrorOutput.txt
+/.minecraft/config/euclid.properties
+/.minecraft/config/lightoverlay.properties
+/.minecraft/config/litematica
+/.minecraft/config/minihud
+/.minecraft/config/skinchange
+/.minecraft/config/worldedit/sessions
+/.minecraft/config/worldedit/.archive-unpack
+/.minecraft/coremods
+/.minecraft/craftpresence
+/.minecraft/crash-reports
+/.minecraft/hs_err_pid*.log
+/.minecraft/logs
+/.minecraft/mods/*.jar.disabled
+/.minecraft/mods/mamiyaotaru/voxelmap
+/.minecraft/replay_recordings
+/.minecraft/resourcepacks
+/.minecraft/saves
+/.minecraft/schematics
+/.minecraft/screenshots
+/.minecraft/server-resource-packs
+/.minecraft/servers.dat
+/.minecraft/servers.dat_old
+/.minecraft/skins
+/.minecraft/texturepacks
+/.minecraft/usercache.json
+/.minecraft/voxelmap
+
+# Root Files
+????-??-??@??-??-untracked.zip
+
+# Generic files
+Thumbs.db
+/natives
+
+# Gradle related
+build
+.gradle

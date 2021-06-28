@@ -1,0 +1,5 @@
+*.properties filter=gf-properties
+craftpresence.properties filter=gf-craftpresence_properties
+instance.cfg filter=gf-instance_cfg
+minihud.json filter=gf-minihud_json
+optionsshaders.txt filter=gf-properties
