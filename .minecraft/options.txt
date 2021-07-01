@@ -15,7 +15,7 @@ snooperEnabled:false
 showSubtitles:true
 touchscreen:false
 fullscreen:false
-bobView:false
+bobView:true
 toggleCrouch:false
 toggleSprint:false
 darkMojangStudiosBackground:false
@@ -34,8 +34,8 @@ graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:false
-resourcePacks:["vanilla","Fabric Mods"]
-incompatibleResourcePacks:["replaymod_lang","bbor","file/Baby yoda Totem.zip"]
+resourcePacks:["vanilla","Fabric Mods","file/Baby yoda Totem.zip","file/Infested_Blocks.zip","file/VanillaTweaks_r142417 mc1.17   [2021-06-28].zip"]
+incompatibleResourcePacks:["file/Baby yoda Totem.zip","file/Infested_Blocks.zip"]
 lastServer:
 lang:en_us
 chatVisibility:0
