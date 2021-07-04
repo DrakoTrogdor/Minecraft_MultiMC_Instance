@@ -22,6 +22,7 @@
 .minecraft/Goat_0.png
 .minecraft/Hoglin_0.png
 .minecraft/Husk_0.png
+.minecraft/ModTranslations
 .minecraft/Ocelot_0.png
 .minecraft/Pig_0.png
 .minecraft/Piglin_0.png
@@ -52,7 +53,6 @@
 .minecraft/config/canvas.json5
 .minecraft/config/cloth-config2
 .minecraft/config/fabric
-.minecraft/config/grid.json
 .minecraft/config/inventorysorter
 .minecraft/config/jmx.properties
 .minecraft/config/lambdynlights.toml
@@ -79,9 +79,7 @@
 .minecraft/modcore
 .minecraft/mods/BBOutlineReloaded-2.4.0-CUSTOM+608d8ff.jar.disabled
 .minecraft/mods/FabricAPI-0.36.0-CUSTOM+a722d8c.jar.disabled
-.minecraft/mods/Grid-1.6.5-CUSTOM+a3f4215.jar.disabled
 .minecraft/mods/HWYLA-1.9.23-CUSTOM+75a55f8.jar.disabled
-.minecraft/mods/InventorySorter-1.7.9-CUSTOM+60de698.jar.disabled
 .minecraft/mods/WTHIT-3.6.2-CUSTOM+a0258e4.jar.disabled
 .minecraft/mods/mamiyaotaru/voxelmap
 .minecraft/mods/modupdater-1.1.11+1.16.2-rc2+0bc2eb8.jar.disabled
@@ -94,9 +92,9 @@
 .minecraft/mods/sodium-fabric-mc1.16.2-0.1.0-SNAPSHOT+e87fd05.jar.disabled
 .minecraft/mods/tweakeroo-fabric-1.16.2-0.10.0-dev.20200819.003027+e77814c.jar.disabled
 .minecraft/mods/worldedit-fabric-mc1.16.2-7.2.0-SNAPSHOT-dist+61a5d7d.jar.disabled
-.minecraft/mods/wthit-fabric-3.6.0.jar.disabled
 .minecraft/pings_0.png
 .minecraft/replay_recordings
+.minecraft/resourcepacks/VanillaTweaks mc1.16.x [2020-10-17].zip
 .minecraft/resourcepacks/VanillaTweaks_r330416 mc1.16.x [2020-10-17].zip
 .minecraft/saves
 .minecraft/schematics

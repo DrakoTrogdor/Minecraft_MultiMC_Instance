@@ -44,10 +44,10 @@ Created by DrakoTrogdor on 2020-04-12
 ### Disabled
 These are still a part of the pack in case they are useful, just disabled for the reasons listed
 - Autofish (Included for end-users, but disabled by default)
-- BBOutlineReloaded (Waiting for updates from maintainer)
+- BBOutlineReloaded (Not included in release. Waiting for updates from maintainer)
 - Grid (Included for end-users, but disabled by default)
 - Inventory Sorter (Included for end-users, but disabled by default)
-- ReplayMod (Waiting for updates from maintainer)
+- ReplayMod (Not included in release. Waiting for updates from maintainer)
 - SkinSwapper (Included for end-users, but disabled by default)
 - WTHIT (Included for end-users, but disabled)
 - WorldEdit CUI (Included for end-users, but disabled by default)
