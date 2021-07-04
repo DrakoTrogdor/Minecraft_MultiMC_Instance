@@ -34,8 +34,8 @@ graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:false
-resourcePacks:["vanilla","Fabric Mods","file/Baby yoda Totem.zip","file/Infested_Blocks.zip","file/VanillaTweaks_r142417 mc1.17   [2021-06-28].zip"]
-incompatibleResourcePacks:["file/Baby yoda Totem.zip","file/Infested_Blocks.zip"]
+resourcePacks:["vanilla","Fabric Mods","file/VanillaTweaks mc1.17 [2021-06-28].zip","file/Shield_Corrections.zip","file/Infested_Blocks.zip","file/Baby_Yoda_Totem.zip"]
+incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
 chatVisibility:0
