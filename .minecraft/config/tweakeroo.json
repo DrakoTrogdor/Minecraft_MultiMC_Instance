@@ -65,6 +65,7 @@
     "snapAimPitchStep": 12.5,
     "snapAimYawStep": 45.0,
     "structureBlockMaxSize": 128,
+    "toolSwitchableSlots": "1-9",
     "zoomFov": 30.0
   },
   "GenericHotkeys": {

@@ -895,6 +895,7 @@
   "InfoOverlays": {
     "blockInfoLinesEnabled": true,
     "blockInfoOverlayEnabled": true,
+    "infoOverlaysTargetFluids": false,
     "statusInfoHud": false,
     "statusInfoHudAuto": true,
     "verifierOverlayEnabled": true,

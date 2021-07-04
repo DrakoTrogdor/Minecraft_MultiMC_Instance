@@ -79,10 +79,14 @@
 	path = src/tweakeroo
 	url = https://github.com/maruohon/tweakeroo
 	branch = fabric_1.16_snapshots_temp
-[submodule "src/Manage"]
+[submodule "Manage"]
 	path = src/Manage
 	url = https://github.com/DrakoTrogdor/MC_Manage_Submodules
-[submodule "src/wthit"]
+[submodule "wthit"]
 	path = src/wthit
 	url = https://github.com/badasintended/wthit
+	branch = 1.17
+[submodule "fabric-yarn"]
+	path = src/fabric-yarn
+	url = https://github.com/FabricMC/yarn
 	branch = 1.17

@@ -69,7 +69,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\appleskin-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -118,7 +119,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\CraftPresence-Fabric-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -144,7 +146,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\fabric-api-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "FabricAPI"
         },
@@ -175,7 +178,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\fabric-carpet-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 8,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "Carpet"
         },
@@ -322,6 +326,7 @@
             },
             "Build": {
                 "Type": "Gradle",
+                "InitCommand": "Write-Console 'Temp patching build.gradle for ModMenu repo' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -7,7 +7,8 @@ targetCompatibility = JavaVersion.VERSION_16\r\n\r\n repositories {\r\n     maven { url ''https:\/\/masa.dy.fi\/maven'' }\r\n-    maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    \/\/maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    mavenLocal()\r\n }\r\n\r\n ext.configFile = file \"build.properties\"\r\ndiff --git a\/build.properties b\/build.properties\r\n--- a\/build.properties\r\n+++ b\/build.properties\r\n@@ -17,4 +17,4 @@ minecraft_version = 1.17\r\n mappings_version = 1.17+build.13\r\n\r\n fabric_loader_version = 0.11.6\r\n-mod_menu_version = 2.0.2\r\n+mod_menu_version = v2.0.2+1.17.2035ad2'",
                 "Output": "build\\libs\\litematica-fabric-*.jar",
                 "JAVA_HOME": 16
             },
@@ -441,7 +446,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\modupdater-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 8,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -464,7 +470,8 @@
                 "Type": "Gradle",
                 "PreCommand": "java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
                 "Output": "build\\libs\\optifabric*.jar",
-                "JAVA_HOME": 14 
+                "JAVA_HOME": 14,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -486,7 +493,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\shulkerboxtooltip-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -508,7 +516,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\skin-swapper-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "SkinSwapper"
         },
@@ -533,8 +542,10 @@
             },
             "Build": {
                 "Type": "Gradle",
+                "InitCommand": "Write-Console 'Temp patching build.gradle for ModMenu repo' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -7,7 +7,8 @@ targetCompatibility = JavaVersion.VERSION_16\r\n\r\n repositories {\r\n     maven { url ''https:\/\/masa.dy.fi\/maven'' }\r\n-    maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    \/\/maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    mavenLocal()\r\n }\r\n\r\n ext.configFile = file \"build.properties\"\r\ndiff --git a\/build.properties b\/build.properties\r\n--- a\/build.properties\r\n+++ b\/build.properties\r\n@@ -17,4 +17,4 @@ minecraft_version = 1.17\r\n mappings_version = 1.17+build.13\r\n\r\n fabric_loader_version = 0.11.6\r\n-mod_menu_version = 2.0.2\r\n+mod_menu_version = v2.0.2+1.17.2035ad2'",
                 "Output": "build\\libs\\tweakeroo-fabric-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "Tweakeroo"
         },
@@ -567,7 +578,8 @@
                 "Command": "worldedit-fabric:build",
                 "VersionCommand": "worldedit-fabric:properties",
                 "Output": "worldedit-fabric\\build\\libs\\worldedit-fabric-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -584,7 +596,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\WorldEditCUI-*.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         }
     ]

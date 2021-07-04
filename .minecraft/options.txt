@@ -77,7 +77,7 @@ key_key.right:key.keyboard.d
 key_key.jump:key.keyboard.space
 key_key.sneak:key.keyboard.left.shift
 key_key.sprint:key.keyboard.left.control
-key_key.drop:key.keyboard.q
+key_key.drop:key.keyboard.backslash
 key_key.inventory:key.keyboard.e
 key_key.chat:key.keyboard.t
 key_key.playerlist:key.keyboard.tab
@@ -103,9 +103,6 @@ key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
 key_of.key.zoom:key.keyboard.c
-key_key.worldeditcui.toggle:key.keyboard.unknown
-key_key.worldeditcui.clear:key.keyboard.unknown
-key_key.worldeditcui.chunk:key.keyboard.unknown
 key_key.minimap.voxelmapmenu:key.keyboard.m
 key_key.minimap.waypointmenu:key.keyboard.unknown
 key_key.minimap.zoom:key.keyboard.z
