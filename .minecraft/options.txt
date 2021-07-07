@@ -27,7 +27,7 @@ gamma:1.0
 renderDistance:16
 entityDistanceScaling:1.0
 guiScale:2
-particles:2
+particles:0
 maxFps:260
 difficulty:2
 graphicsMode:1
@@ -110,7 +110,7 @@ key_key.minimap.togglefullscreen:key.keyboard.x
 key_key.minimap.waypointhotkey:key.keyboard.n
 key_key.minimap.togglemobs:key.keyboard.unknown
 key_key.minimap.toggleingamewaypoints:key.keyboard.unknown
-soundCategory_master:0.011589404
+soundCategory_master:0.12086093
 soundCategory_music:0.06964679
 soundCategory_record:0.30075374
 soundCategory_weather:0.15421985
