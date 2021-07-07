@@ -28,6 +28,9 @@ if (YesOrNo -Prompt "Link files in `"$commondir`" to the folder `"$instancedir`"
     Remove-Item "$instancedir\schematics" -ErrorAction Ignore -Force
     New-Item -ItemType SymbolicLink -Path "$instancedir\schematics" -Target "$commondir\Schematics\"
 
+    Remove-Item "$instancedir\shaderpacks" -ErrorAction Ignore -Force
+    New-Item -ItemType SymbolicLink -Path "$instancedir\shaderpacks" -Target "$commondir\Shaders\"
+
     Remove-Item "$instancedir\skins" -ErrorAction Ignore -Force
     New-Item -ItemType SymbolicLink -Path "$instancedir\skins" -Target "$commondir\Skins\"
 }

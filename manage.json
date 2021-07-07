@@ -505,7 +505,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/cobrasrock/Skin-Swapper",
-                        "DefaultBranch": "1.17",
+                        "DefaultBranch": "1.17-Fabric",
                         "IgnoreBranches": [
                             "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",

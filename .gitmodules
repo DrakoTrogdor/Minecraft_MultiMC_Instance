@@ -1,16 +1,27 @@
-
 [submodule "AppleSkin"]
 	path = src/AppleSkin
 	url = https://github.com/squeek502/AppleSkin
-	branch = 1.16-fabric
+	branch = 1.17-fabric
 [submodule "BoundingBoxOutlineReloaded"]
 	path = src/BoundingBoxOutlineReloaded
 	url = https://github.com/irtimaled/BoundingBoxOutlineReloaded
-	branch = 1.16.2-fabric
+	branch = 1.16.3-fabric
 [submodule "CraftPresence"]
 	path = src/CraftPresence
 	url = https://gitlab.com/CDAGaming/CraftPresence.git
-	branch = 1.16.x-Fabric
+	branch = 1.17.x-Fabric
+[submodule "fabric"]
+	path = src/fabric
+	url = https://github.com/FabricMC/fabric
+	branch = 1.17
+[submodule "fabric-carpet"]
+	path = src/fabric-carpet
+	url = https://github.com/gnembon/fabric-carpet
+	branch = 1.17
+[submodule "fabric-yarn"]
+	path = src/fabric-yarn
+	url = https://github.com/FabricMC/yarn
+	branch = 1.17
 [submodule "Grid"]
 	path = src/Grid
 	url = https://github.com/gbl/Grid
@@ -22,11 +33,30 @@
 [submodule "Inventory-Sorter"]
 	path = src/Inventory-Sorter
 	url = https://github.com/kyrptonaught/Inventory-Sorter
-	branch = 1.16
+	branch = 1.17
+[submodule "itemscroller"]
+	path = src/itemscroller
+	url = https://github.com/maruohon/itemscroller
+	branch = fabric_1.17_temp_features
+[submodule "litematica"]
+	path = src/litematica
+	url = https://github.com/maruohon/litematica
+	branch = fabric_1.17_update
+[submodule "malilib"]
+	path = src/malilib
+	url = https://github.com/maruohon/malilib
+	branch = fabric_1.17.x
+[submodule "Manage"]
+	path = src/Manage
+	url = https://github.com/DrakoTrogdor/MC_Manage_Submodules
+[submodule "minihud"]
+	path = src/minihud
+	url = https://github.com/maruohon/minihud
+	branch = fabric_1.17_snapshots_temp_features
 [submodule "ModMenu"]
 	path = src/ModMenu
 	url = https://github.com/Prospector/ModMenu
-	branch = 1.16
+	branch = 1.17
 [submodule "ModUpdater"]
 	path = src/ModUpdater
 	url = https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater.git
@@ -38,11 +68,15 @@
 [submodule "ShulkerBoxTooltip"]
 	path = src/ShulkerBoxTooltip
 	url = https://github.com/MisterPeModder/ShulkerBoxTooltip
-	branch = 1.16
+	branch = 1.17
 [submodule "Skin-Swapper"]
 	path = src/Skin-Swapper
 	url = https://github.com/cobrasrock/Skin-Swapper
-	branch = master
+	branch = 1.17-Fabric
+[submodule "tweakeroo"]
+	path = src/tweakeroo
+	url = https://github.com/maruohon/tweakeroo
+	branch = fabric_1.17_temp_features
 [submodule "WorldEdit"]
 	path = src/WorldEdit
 	url = https://github.com/enginehub/WorldEdit
@@ -50,43 +84,8 @@
 [submodule "WorldEditCUI"]
 	path = src/WorldEditCUI
 	url = https://github.com/mikroskeem/WorldEditCUI
-	branch = master
-[submodule "fabric"]
-	path = src/fabric
-	url = https://github.com/FabricMC/fabric
-	branch = 1.16
-[submodule "fabric-carpet"]
-	path = src/fabric-carpet
-	url = https://github.com/gnembon/fabric-carpet
-	branch = master
-[submodule "itemscroller"]
-	path = src/itemscroller
-	url = https://github.com/maruohon/itemscroller
-	branch = fabric_1.16_snapshots_temp
-[submodule "litematica"]
-	path = src/litematica
-	url = https://github.com/maruohon/litematica
-	branch = fabric_1.16_snapshots_temp
-[submodule "malilib"]
-	path = src/malilib
-	url = https://github.com/maruohon/malilib
-	branch = fabric_1.16_snapshots_temp
-[submodule "minihud"]
-	path = src/minihud
-	url = https://github.com/maruohon/minihud
-	branch = fabric_1.16_snapshots_temp
-[submodule "tweakeroo"]
-	path = src/tweakeroo
-	url = https://github.com/maruohon/tweakeroo
-	branch = fabric_1.16_snapshots_temp
-[submodule "Manage"]
-	path = src/Manage
-	url = https://github.com/DrakoTrogdor/MC_Manage_Submodules
+	branch = mc/1.17
 [submodule "wthit"]
 	path = src/wthit
 	url = https://github.com/badasintended/wthit
-	branch = 1.17
-[submodule "fabric-yarn"]
-	path = src/fabric-yarn
-	url = https://github.com/FabricMC/yarn
 	branch = 1.17
