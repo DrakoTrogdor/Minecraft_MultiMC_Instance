@@ -254,9 +254,10 @@
             },
             "Build": {
                 "Type": "Gradle",
-                "InitCommand": "$env:MOD_VERSION='3.6.2'",
-                "PreCommand": "java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
-                "Output": "fabric\\build\\libs\\wthit-*.jar",
+                "InitCommand": "$env:MOD_VERSION='3.7.0'",
+                "PreCommand": "# java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
+                "Command": "build sourcesJar",
+                "Output": "fabric\\build\\libs\\wthit-fabric-3.7.0.jar",
                 "JAVA_HOME": 16
             }
         },
@@ -469,7 +470,8 @@
             },
             "Build": {
                 "Type": "Gradle",
-                "PreCommand": "java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
+                "InitCommand": "Write-Console 'Temp patching build.gradle for correct Chocohead:Fabric-Loom commit' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -11,7 +11,7 @@ buildscript {\r\n                }\r\n        }\r\n        dependencies {\r\n-               classpath ''com.github.Chocohead.Fabric-Loom:fabric-loom:39abe59''\r\n+               classpath ''com.github.Chocohead.Fabric-Loom:fabric-loom:361cd1c''\r\n        }\r\n }'",
+                "PreCommand": "# java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
                 "Output": "build\\libs\\optifabric*.jar",
                 "JAVA_HOME": 14,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""

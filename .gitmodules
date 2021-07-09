@@ -89,3 +89,7 @@
 	path = src/wthit
 	url = https://github.com/badasintended/wthit
 	branch = 1.17
+[submodule "src/Chocohead_Fabric-Loom"]
+	path = src/Chocohead_Fabric-Loom
+	url = https://github.com/Chocohead/Fabric-Loom
+	branch = jeka'nt
