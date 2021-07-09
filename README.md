@@ -9,12 +9,10 @@ MultiMC instance for Minecraft 1.17 with Fabric, Optifine and a light selection 
 - CraftPresence
 - Fabric API
 - Grid
-- Hwyla
 - Inventory Sorter
 - Item Scroller
 - Litematica
 - MaLiLib
-- Minecraft Skin Change Mod
 - MiniHUD
 - Mod Menu
 - OptiFabric
@@ -24,6 +22,8 @@ MultiMC instance for Minecraft 1.17 with Fabric, Optifine and a light selection 
 > Downloads: https://optifine.net/downloads
 - Replay Mod
 - Shulker Box Tooltip
+- Skin Swapper
+- Simple Voice Chat
 - Tweakeroo
 - VoxelMap
 > Credit to MamiyaOtaru [Patreon](https://www.patreon.com/MamiyaOtaru).
@@ -31,7 +31,7 @@ MultiMC instance for Minecraft 1.17 with Fabric, Optifine and a light selection 
 > Downloads: https://www.curseforge.com/minecraft/mc-mods/voxelmap
 - WorldEdit
 - WorldEditCUI
-
+- WTHIT
 ## Resource Packs
 - Infested Blocks
 - Shield Corrections

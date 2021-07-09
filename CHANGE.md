@@ -3,7 +3,42 @@ Created by DrakoTrogdor on 2020-04-12
 # Changelog
 
 ## [Released]
-
+## [1.3.1 - 2021-07-09]
+### Added
+- Added Simple Voice Chat 1.0.1
+### Changed
+- Updated Minecraft to 1.17.1
+- Updated Fabric Loader to 0.11.6
+- Updated AppleSkin to 2.0.0+ef43c98
+- Updated Autofish to 0.9.3+fabric+mc1.17
+- Updated BoundingBox Outline Reloaded 2.4.0+608d8ff
+- Updated CraftPresence to 1.8.2+35e7c3e
+- Updated Fabric API to 0.36.1+5f02c96
+- Updated Grid to 1.6.5+96147e4
+- Updated Inventory Sorter to 1.7.9+60de698
+- Updated Item Scroller to 0.15.0+6d413b8
+- Updated Litematica to 0.0.0+75b5330
+- Updated MaLiLib to 0.10.0+941a982
+- Updated MiniHUD to 0.19.0-818954d
+- Updated Mod Menu to 2.0.2+2035ad2
+- Updated OptiFabric 1.11.9+587c607 (Fork by JohnFawkes)
+- Updated OptiFine to 1.17.1 HD U G9 pre26
+- Updated ReplayMod to 2.5.1+mc1.16.4
+- Updated Shulker Box Tooltip to 3.0.0+1d75e8c
+- Updated SkinSwapper to 2.1.0+07552ec
+- Updated Tweakeroo to 0.10.0+8c56a17
+- Updated VoxelMap to 1.10.15+fabric+mc1.17
+- Updated WorlEdit to 7.3.0+10410ac
+- Updated WorldEditCUI 1.17.0+d4e517d
+- Updated WTHIT 3.7.0+52c1798
+- Updated Sildurs Vibrant Shaders Extreme-VL to 1.29
+- Updated Vanilla Tweaks resource packs to latest [2020-08-28]
+### Disabled
+These are still a part of the pack in case they are useful, just disabled for the reasons listed
+- BBOutlineReloaded (Not included in release. Waiting for updates from maintainer)
+- Inventory Sorter (Included for end-users, but disabled by default)
+- ReplayMod (Not included in release. Waiting for updates from maintainer)
+- WorldEdit CUI (Included for end-users, but disabled by default)
 ## [1.3.0] - 2021-07-04
 ### Added
 - Added WorldEditCUI 1.17.0+ed6d762 (Readded to replace Euclid)
