@@ -525,6 +525,33 @@
             "FinalName": "SkinSwapper"
         },
         {
+            "Name": "simple-voice-chat",
+            "SubmoduleType": "Module",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL":  "https://github.com/henkelmax/simple-voice-chat",
+                        "DefaultBranch": "1.17.1-fabric",
+                        "IgnoreBranches": [
+                            "1.1[0-6](?:\\.[\\dx])?",
+                            "1.17-fabric",
+                            "1[2-9]w[0-5][0-9][a-f]",
+                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "bukkit"
+                        ]
+                    }
+                }
+            },
+            "Build": {
+                "Type": "Gradle",
+                "InitCommand": "Write-Console 'Patching build.gradle to remove forge-update' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -14,7 +14,7 @@ plugins {\r\n     id \"com.github.johnrengelman.shadow\" version \"7.0.0\"\r\n }\r\n\r\n-apply plugin: ''forge-update''\r\n+\/\/apply plugin: ''forge-update''\r\n\r\n sourceCompatibility = JavaVersion.VERSION_16\r\n targetCompatibility = JavaVersion.VERSION_16\r\n@@ -102,7 +102,7 @@ curseforge {\r\n     }\r\n }\r\n\r\n-forgeUpdate {\r\n+\/* forgeUpdate {\r\n     def messages = []\r\n     file(''changelog.md'').eachLine { String line ->\r\n         if (line.trim().startsWith(''-'')) {\r\n@@ -119,7 +119,7 @@ forgeUpdate {\r\n     updateMessages = messages\r\n     releaseType = curse_release_type\r\n     tags = recommended == ''true'' ? [''recommended''] : []\r\n-}\r\n+} *\/\r\n\r\n shadowJar {\r\n     configurations = [project.configurations.shadow]'",
+                "Output": "build\\libs\\voicechat-fabric-*.jar",
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
+            },
+            "FinalName": "VoiceChat"
+        },
+        {
             "Name": "tweakeroo",
             "SubmoduleType": "Module",
             "Repo": {

@@ -89,7 +89,11 @@
 	path = src/wthit
 	url = https://github.com/badasintended/wthit
 	branch = 1.17
-[submodule "src/Chocohead_Fabric-Loom"]
+[submodule "Chocohead_Fabric-Loom"]
 	path = src/Chocohead_Fabric-Loom
 	url = https://github.com/Chocohead/Fabric-Loom
 	branch = jeka'nt
+[submodule "simple-voice-chat"]
+	path = src/simple-voice-chat
+	url = https://github.com/henkelmax/simple-voice-chat
+	branch = 1.17.1-fabric
