@@ -737,7 +737,7 @@
     "debugSolidFaceEnabled": false,
     "debugWaterEnabled": false,
     "overlayBlockGrid": false,
-    "overlayLightLevel": true,
+    "overlayLightLevel": false,
     "overlayRandomTicksFixed": false,
     "overlayRandomTicksPlayer": false,
     "overlayRegionFile": false,
