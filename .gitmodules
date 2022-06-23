@@ -97,3 +97,7 @@
 	path = src/simple-voice-chat
 	url = https://github.com/henkelmax/simple-voice-chat
 	branch = 1.17.1-fabric
+[submodule "src/AutoFish"]
+	path = src/AutoFish
+	url = https://github.com/MrTroot/autofish
+	branch = fabric

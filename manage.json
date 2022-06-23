@@ -72,13 +72,35 @@
             }
         },
         {
+            "Name": "AutoFish",
+            "SubmoduleType": "ClientModule",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL": "https://github.com/MrTroot/autofish",
+                        "DefaultBranch": "fabric",
+                        "IgnoreBranches": [
+                            "1\\.1[0-7](?:\\.[\\dx])?",
+                            "forge"
+                        ]
+                    }
+                }
+            },
+            "Build": {
+                "Type": "Gradle",
+                "Output": "build\\libs\\autofish-*.jar",
+                "JAVA_HOME": 17,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
+            }
+        },
+        {
             "Name": "BoundingBoxOutlineReloaded",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/irtimaled/BoundingBoxOutlineReloaded",
-                        "DefaultBranch": "1.17.1-fabric-dev",
+                        "DefaultBranch": "1.18.2-fabric-dev",
                         "IgnoreBranches": [
                             "1\\.1[0-6](?:\\.[\\dx])?",
                             "bukkit",
@@ -128,7 +150,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/FabricMC/fabric",
-                        "DefaultBranch": "1.18",
+                        "DefaultBranch": "1.18.2",
                         "IgnoreBranches": [
                             "1.1[0-7](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
@@ -157,7 +179,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/gnembon/fabric-carpet",
-                        "DefaultBranch": "future",
+                        "DefaultBranch": "master",
                         "IgnoreBranches": [
                             "1.1[0-7](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
@@ -247,7 +269,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/badasintended/wthit",
-                        "DefaultBranch": "1.18",
+                        "DefaultBranch": "1.18.2",
                         "IgnoreBranches": [
                             "1.1[0-7](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
@@ -343,7 +365,6 @@
             },
             "Build": {
                 "Type": "Gradle",
-                "InitCommand": "Write-Console 'Temp patching build.gradle for ModMenu repo' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -7,7 +7,8 @@ targetCompatibility = JavaVersion.VERSION_16\r\n\r\n repositories {\r\n     maven { url ''https:\/\/masa.dy.fi\/maven'' }\r\n-    maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    \/\/maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    mavenLocal()\r\n }\r\n\r\n ext.configFile = file \"build.properties\"\r\ndiff --git a\/build.properties b\/build.properties\r\n--- a\/build.properties\r\n+++ b\/build.properties\r\n@@ -17,4 +17,4 @@ minecraft_version = 1.17\r\n mappings_version = 1.17+build.13\r\n\r\n fabric_loader_version = 0.11.6\r\n-mod_menu_version = 2.0.2\r\n+mod_menu_version = v2.0.2+1.17.2035ad2'",
                 "Output": "build\\libs\\litematica-fabric-*.jar",
                 "JAVA_HOME": 17
             },
@@ -382,7 +403,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/maruohon/minihud",
-                        "DefaultBranch": "fabric_1.17_snapshots_temp_features",
+                        "DefaultBranch": "fabric_1.18_temp_features",
                         "IgnoreBranches": [
                             "1.1[0-6](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
@@ -397,28 +418,6 @@
             },
             "Build": {
                 "Type": "Gradle",
-                "PreCommand": [
-                    "# Minihud as it stands will not compile unless either:",
-                    "#    Download:",
-                    "#        https://masa.dy.fi/mcmods/malilib/malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21%2Bbeta.1.jar",
-                    "#        malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21+beta.1.jar => malilib-fabric-1.16-snap-20w21a.jar",
-                    "#    Change build.properties and fix issues (why doesn't this just get updated):",
-                    "#        minecraft_version_out = 1.16-snap-20w21a => 1.16.2",
-                    "#        minecraft_version     = 20w21a           => 1.16.2",
-                    "#        mappings_version      = 20w21a+build.7   => 1.16.2+build.1",
-                    "#        fabric_loader_version = 0.8.4+build.198  => 0.9.1+build.205",
-                    "#        mod_menu_version      = 1.11.5+build.10  => 1.14.6+build.31",
-                    "#[string]$file = '.\\build\\loom-cache\\malilib-fabric-1.16-snap-20w21a.jar'",
-                    "#if (-not (Test-Path -Path $file)) {",
-                    "#    [string]$folder = Split-Path -Path $file -Parent",
-                    "#    [string]$leaf = Split-Path -Path $file -Leaf",
-                    "#    Write-Log \"Downloading $leaf dependancy...\"",
-                    "#    if (-not (Test-Path -Path $folder)) { New-Item -Type Directory -Path $folder -Force }",
-	                "#    $url = 'https://masa.dy.fi/mcmods/malilib/malilib-fabric-1.16-snap-20w21a-0.10.0-dev.21%2Bbeta.1.jar'",
-	                "#    Invoke-WebRequest -Uri $url -OutFile $file",
-                    "#    Write-Log \"$leaf dependancy downloaded.\"",
-                    "#}"
-                ],
                 "Output": "build\\libs\\minihud-fabric-*.jar",
                 "PerformBuild": true,
                 "JAVA_HOME": 17
@@ -505,7 +504,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/cobrasrock/Skin-Swapper",
-                        "DefaultBranch": "1.18-Fabric",
+                        "DefaultBranch": "1.18-fabric",
                         "IgnoreBranches": [
                             "1.1[0-7](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
@@ -529,7 +528,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/henkelmax/simple-voice-chat",
-                        "DefaultBranch": "1.18",
+                        "DefaultBranch": "1.18.2",
                         "IgnoreBranches": [
                             "1.1[0-7](?:\\.[\\dx])?",
                             "1.17-fabric",
@@ -559,7 +558,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/maruohon/tweakeroo",
-                        "DefaultBranch": "fabric_1.17_temp_features",
+                        "DefaultBranch": "fabric_1.18_temp_features",
                         "IgnoreBranches": [
                             "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
@@ -573,7 +572,6 @@
             },
             "Build": {
                 "Type": "Gradle",
-                "InitCommand": "Write-Console 'Temp patching build.gradle for ModMenu repo' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -7,7 +7,8 @@ targetCompatibility = JavaVersion.VERSION_16\r\n\r\n repositories {\r\n     maven { url ''https:\/\/masa.dy.fi\/maven'' }\r\n-    maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    \/\/maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    mavenLocal()\r\n }\r\n\r\n ext.configFile = file \"build.properties\"\r\ndiff --git a\/build.properties b\/build.properties\r\n--- a\/build.properties\r\n+++ b\/build.properties\r\n@@ -17,4 +17,4 @@ minecraft_version = 1.17\r\n mappings_version = 1.17+build.13\r\n\r\n fabric_loader_version = 0.11.6\r\n-mod_menu_version = 2.0.2\r\n+mod_menu_version = v2.0.2+1.17.2035ad2'",
                 "Output": "build\\libs\\tweakeroo-fabric-*.jar",
                 "JAVA_HOME": 17,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
@@ -621,7 +619,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/mikroskeem/WorldEditCUI",
-                        "DefaultBranch": "master"
+                        "DefaultBranch": "mc/1.18"
                     }
                 }
             },

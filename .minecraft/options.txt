@@ -1,4 +1,4 @@
-version:2860
+version:2865
 autoJump:false
 autoSuggestions:true
 chatColors:true
@@ -107,6 +107,16 @@ key_key.hotbar.6:key.keyboard.6
 key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
+key_of.key.zoom:key.keyboard.c
+key_key.worldeditcui.toggle:key.keyboard.unknown
+key_key.worldeditcui.clear:key.keyboard.unknown
+key_key.worldeditcui.chunk:key.keyboard.unknown
+key_key.autofish.open_gui:key.keyboard.v
+key_key.grid.showhide:key.keyboard.b
+key_key.grid.here:key.keyboard.unknown
+key_key.grid.fixy:key.keyboard.y
+key_key.grid.spawns:key.keyboard.l
+key_key.grid.settings:key.keyboard.g
 key_key.push_to_talk:key.keyboard.caps.lock
 key_key.whisper:key.keyboard.unknown
 key_key.mute_microphone:key.keyboard.unknown
