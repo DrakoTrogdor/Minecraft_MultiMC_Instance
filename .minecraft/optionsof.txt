@@ -60,7 +60,7 @@ ofDynamicFov:false
 ofAlternateBlocks:true
 ofDynamicLights:2
 ofScreenshotSize:1
-ofCustomEntityModels:true
+ofCustomEntityModels:false
 ofCustomGuis:true
 ofShowGlErrors:false
 ofFastMath:true

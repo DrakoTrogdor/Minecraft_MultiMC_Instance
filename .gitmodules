@@ -11,14 +11,6 @@
 	path = src/CraftPresence
 	url = https://gitlab.com/CDAGaming/CraftPresence.git
 	branch = 1.16.x-Fabric
-[submodule "Euclid"]
-	path = src/Euclid
-	url = https://github.com/bermudalocket/Euclid
-	branch = master
-[submodule "Fabric-Autoswitch"]
-	path = src/Fabric-Autoswitch
-	url = https://github.com/dexman545/Fabric-Autoswitch
-	branch = master
 [submodule "Grid"]
 	path = src/Grid
 	url = https://github.com/gbl/Grid
@@ -31,10 +23,6 @@
 	path = src/Inventory-Sorter
 	url = https://github.com/kyrptonaught/Inventory-Sorter
 	branch = 1.16
-[submodule "LambDynamicLights"]
-	path = src/LambDynamicLights
-	url = https://github.com/LambdAurora/LambDynamicLights
-	branch = mc1.16
 [submodule "ModMenu"]
 	path = src/ModMenu
 	url = https://github.com/Prospector/ModMenu
@@ -63,18 +51,6 @@
 	path = src/WorldEditCUI
 	url = https://github.com/mikroskeem/WorldEditCUI
 	branch = master
-[submodule "canvas"]
-	path = src/canvas
-	url = https://github.com/grondag/canvas
-	branch = one
-[submodule "cloth-config"]
-	path = src/cloth-config
-	url = https://github.com/shedaniel/cloth-config
-	branch = v4
-[submodule "connected-block-textures"]
-	path = src/connected-block-textures
-	url = https://github.com/Nuclearfarts/connected-block-textures
-	branch = 1.16
 [submodule "fabric"]
 	path = src/fabric
 	url = https://github.com/FabricMC/fabric
@@ -91,10 +67,6 @@
 	path = src/litematica
 	url = https://github.com/maruohon/litematica
 	branch = fabric_1.16_snapshots_temp
-[submodule "lithium-fabric"]
-	path = src/lithium-fabric
-	url = https://github.com/jellysquid3/lithium-fabric
-	branch = 1.16.x/dev
 [submodule "malilib"]
 	path = src/malilib
 	url = https://github.com/maruohon/malilib
@@ -103,22 +75,18 @@
 	path = src/minihud
 	url = https://github.com/maruohon/minihud
 	branch = fabric_1.16_snapshots_temp
-[submodule "phosphor-fabric"]
-	path = src/phosphor-fabric
-	url = https://github.com/jellysquid3/phosphor-fabric
-	branch = 1.16.x/dev
-[submodule "soaring-clouds"]
-	path = src/soaring-clouds
-	url = https://github.com/Draylar/soaring-clouds
-	branch = 1.16
-[submodule "sodium-fabric"]
-	path = src/sodium-fabric
-	url = https://github.com/jellysquid3/sodium-fabric
-	branch = master
 [submodule "tweakeroo"]
 	path = src/tweakeroo
 	url = https://github.com/maruohon/tweakeroo
 	branch = fabric_1.16_snapshots_temp
-[submodule "src/Manage"]
+[submodule "Manage"]
 	path = src/Manage
 	url = https://github.com/DrakoTrogdor/MC_Manage_Submodules
+[submodule "wthit"]
+	path = src/wthit
+	url = https://github.com/badasintended/wthit
+	branch = 1.17
+[submodule "fabric-yarn"]
+	path = src/fabric-yarn
+	url = https://github.com/FabricMC/yarn
+	branch = 1.17

@@ -4,6 +4,54 @@ Created by DrakoTrogdor on 2020-04-12
 
 ## [Released]
 
+## [1.3.0] - 2021-07-04
+### Added
+- Added WorldEditCUI 1.17.0+ed6d762 (Readded to replace Euclid)
+- Added WTHIT 3.6.0
+### Changed
+- Updated Minecraft to 1.17
+- Updated Fabric Loader to 0.11.6
+- Updated AppleSkin to 2.0.0+ef43c98
+- Updated Autofish to 0.9.3+fabric+mc1.17
+- Updated BoundingBox Outline Reloaded 2.4.0+608d8ff
+- Updated CraftPresence to 1.8.2+958fde1
+- Updated Fabric API to 0.36.0+a722d8c
+- Updated Grid to 1.6.5+a3f4215
+- Updated Hwyla to 1.9.23+75a55f8
+- Updated Inventory Sorter to 1.7.9+60de698
+- Updated Item Scroller to 0.15.0+60de698
+- Updated Litematica to 0.0.0+4b6051b
+- Updated MaLiLib to 0.10.0+f153cac
+- Updated MiniHUD to 0.19.0-d3076d1
+- Updated Mod Menu to 2.0.2+2035ad2
+- Updated OptiFabric 1.11.9+d4e22bc
+- Updated OptiFine to 1.17 HD U G9 pre24
+- Updated ReplayMod to 2.5.1+mc1.16.4
+- Updated Shulker Box Tooltip to 3.0.0+1d75e8c
+- Updated SkinSwapper to 2.1.0+07552ec
+- Updated Tweakeroo to 0.10.0+a6f4596
+- Updated VoxelMap to 1.10.15+fabric+mc1.17
+- Updated WorlEdit to 7.3.0+10410ac
+- Updated Sildurs Vibrant Shaders Extreme-VL to 1.28
+- Updated Vanilla Tweaks resource packs to latest [2020-08-28]
+### Removed
+- Removed AutoSwitch (Not being used)
+- Removed Cloth Config v4 (Not being used)
+- Remove Hwyla (No longer being maintained since 1.16.4)
+- Removed Euclid (Changed back to WorldEditCUI)
+- Removed Lithium (Only using OptiFine)
+- Removed Phosphor (Only using OptiFine)
+### Disabled
+These are still a part of the pack in case they are useful, just disabled for the reasons listed
+- Autofish (Included for end-users, but disabled by default)
+- BBOutlineReloaded (Not included in release. Waiting for updates from maintainer)
+- Grid (Included for end-users, but disabled by default)
+- Inventory Sorter (Included for end-users, but disabled by default)
+- ReplayMod (Not included in release. Waiting for updates from maintainer)
+- SkinSwapper (Included for end-users, but disabled by default)
+- WTHIT (Included for end-users, but disabled)
+- WorldEdit CUI (Included for end-users, but disabled by default)
+
 ## [1.2.0] - 2020-08-29
 ### Added
 - Added Euclid 1.2.1+3b1a3e8 (Replaced WorldEditCUI)
@@ -34,9 +82,9 @@ Created by DrakoTrogdor on 2020-04-12
 - Updated VoxelMap to 1.10.10
 - Updated WorlEdit to 7.2.0+3996998
 - Updated Sildurs Vibrant Shaders Extreme-VL to 1.28
-- Updated Vanilla Tweaks resource packs to latest [2020-08-28]
+- Updated Vanilla Tweaks resource packs to latest [2021-06-28]
 ### Fixed
-- Fixed Resource Packs (updated pack format to 6 in pack.mcmeta)
+- Fixed Resource Packs (updated pack format to 7 in pack.mcmeta)
 ### Disalbed
 These are still a part of the pack in case they are useful, just disabled for the reasons listed
 - Updated Carpet Mod to 1.4.9+a35d14e (Disabled due to issue with entities)

@@ -9,10 +9,13 @@
             {"11": "C:\\Program Files\\AdoptOpenJDK\\jdk-11.0.8.10-hotspot"},
             {"12": "C:\\Program Files\\AdoptOpenJDK\\jdk-12.0.2.10-hotspot"},
             {"13": "C:\\Program Files\\AdoptOpenJDK\\jdk-13.0.2.8-hotspot"},
-            {"14": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.2.12-hotspot"}
+            {"14": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.2.12-hotspot"},
+            {"16": "C:\\Program Files\\AdoptOpenJDK\\jdk-16.0.1.9-hotspot"}
         ],
+        "Java_Default": 16,
         "ShowDebugInfo": false,
         "ArchiveExceptions": [
+            ".minecraft/*_0.png",
             ".minecraft/.fabric/",
             ".minecraft/.mixin.out/",
             ".minecraft/.optifine/",
@@ -28,14 +31,15 @@
             "*.old"
         ],
         "CleanExceptions": [
+            ".minecraft/*_0.png",
             ".minecraft/config/",
             ".minecraft/craftpresence/",
             ".minecraft/coremods/",
             ".minecraft/mods/*.jar.disabled",
             ".minecraft/replay_recordings/",
             ".minecraft/modcore/",
-            ".minecraft/resourcepacks/",
-            ".minecraft/saves/",
+            ".minecraft/resourcepacks",
+            ".minecraft/saves",
             ".minecraft/schematics",
             ".minecraft/screenshots",
             ".minecraft/server-resource-packs",
@@ -54,9 +58,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL": "https://github.com/squeek502/AppleSkin",
-                        "DefaultBranch": "1.16-fabric",
+                        "DefaultBranch": "1.17-fabric",
                         "IgnoreBranches": [
-                            "1\\.1[0-5](?:\\.[\\dx])?",
+                            "1\\.1[0-6](?:\\.[\\dx])?",
                             "forge"
                         ]
                     }
@@ -65,7 +69,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\appleskin-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -93,77 +98,15 @@
             "FinalName": "BBOutlineReloaded"
         },
         {
-            "Name": "canvas",
-            "Ignore": true,
-            "Comment": "Ignored as OptiFine is working.",
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/grondag/canvas",
-                        "DefaultBranch": "one"
-                    }
-                },
-                "Pull": false
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\canvas-*.jar",
-                "PerformBuild": false,
-                "JAVA_HOME": 8
-            },
-            "FinalName": "Canvas"
-        },
-        {
-            "Name": "cloth-config",
-            "Ignore": true,
-            "Comment": "Ignored as it is only required if designing a mod",
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/shedaniel/cloth-config",
-                        "DefaultBranch": "v4"
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\config-2-*.jar",
-                "JAVA_HOME": 8
-            },
-            "FinalName": "ClothConfig"
-        },
-        {
-            "Name": "connected-block-textures",
-            "Ignore": true,
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/Nuclearfarts/connected-block-textures",
-                        "DefaultBranch": "1.16"
-                    }
-                },
-                "Pull": false
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\connected-block-textures-*.jar",
-                "PerformBuild": false
-            },
-            "FinalName": "ConnectedBlockTextures"
-        },
-        {
             "Name": "CraftPresence",
             "SubmoduleType": "Module",
             "Repo": {
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://gitlab.com/CDAGaming/CraftPresence.git",
-                        "DefaultBranch": "1.16.x-Fabric",
+                        "DefaultBranch": "1.17.x-Fabric",
                         "IgnoreBranches": [
-                            "1\\.1[0-5](?:\\.[\\dx])?",
+                            "1\\.1[0-6](?:\\.[\\dx])?",
                             "1\\.1\\.0",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "experiment",
@@ -176,22 +119,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\CraftPresence-Fabric-*.jar",
-                "JAVA_HOME": 8
-            }
-        },
-        {
-            "Name": "Euclid",
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/bermudalocket/Euclid"
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\euclid-*.jar"
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -201,14 +130,15 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/FabricMC/fabric",
-                        "DefaultBranch": "1.16",
+                        "DefaultBranch": "1.17",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "1\\.16\\.1",
                             "20w(0[0-9]|1[0-4])[a-f]",
                             "20w14infinite",
-                            "dev/0\\.2"
+                            "dev/0\\.2",
+                            "master"
                         ]
                     }
                 }
@@ -216,55 +146,10 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\fabric-api-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "FabricAPI"
-        },
-        {
-            "Name": "Fabric-Autoswitch",
-            "Ignore": true,
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/dexman545/Fabric-Autoswitch",
-                        "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
-                            "modmeu-feature",
-                            "event-system",
-                            "refactor-4"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "InitCommand": [
-                    "[string]$file = '.\\build\\loom-cache\\ModUpdater-1.1.11+1.16.2.jar'",
-                    "if (-not (Test-Path -Path $file)) {",
-                    "    [string]$folder = Split-Path -Path $file -Parent",
-                    "    [string]$leaf = Split-Path -Path $file -Leaf",
-                    "    Write-Log \"Copying $leaf dependancy from mods folder...\"",
-                    "    $source = (Get-ChildItem -Path ..\\..\\.minecraft\\mods\\ModUpdater*1.1.11*.jar* | Select -First 1)",
-                    "    if (Test-Path -Path $source) {",
-                    "        if (-not (Test-Path -Path $folder)) { New-Item -Type Directory -Path $folder -Force }",
-                    "        Copy-Item -Path $source -Destination $file -Recurse -Force",
-                    "        Write-Log \"$leaf dependancy copied.\"",
-                    "",
-                    "        Write-Log \"Adjusting MopUpdater dependancy...\"",
-                    "        $file = '.\\gradle.properties'",
-                    "        $content = (Get-Content -Path $file -Raw)",
-                    "        $content = $content -replace 'modupdater_version = 1\\.1\\.9\\+1\\.16\\.1','modupdater_version = 1.1.11+1.16.2'",
-                    "        Set-Content -Path $file -Value $content -NoNewline",
-                    "        Write-Log \"Adjusted ModUpdater dependancy.\"",
-                    "    }",
-                    "    else { Write-Log \"Unable to find ModUpdater in mods folder.\" }",
-                    "}"
-                ],
-                "Output": "build\\libs\\autoswitch-*.jar",
-                "JAVA_HOME": 14
-            },
-            "FinalName": "Autoswitch"
         },
         {
             "Name": "fabric-carpet",
@@ -293,7 +178,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\fabric-carpet-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 8,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "Carpet"
         },
@@ -304,9 +190,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/gbl/Grid",
-                        "DefaultBranch": "fabric_1_16",
+                        "DefaultBranch": "fabric_1_17",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
@@ -318,11 +204,12 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\grid-*-fabric*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16
             }
         },
         {
             "Name": "HWYLA",
+            "Ignore": true,
             "SubmoduleType": "Module",
             "Repo": {
                 "Remotes": {
@@ -342,7 +229,35 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\Hwyla-fabric-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16
+            }
+        },
+        {
+            "Name": "WTHIT",
+            "SubmoduleType": "Module",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL":  "https://github.com/badasintended/wthit",
+                        "DefaultBranch": "1.17",
+                        "IgnoreBranches": [
+                            "1.1[0-6](?:\\.[\\dx])?",
+                            "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
+                            "1[2-9]w[0-5][0-9][a-f]",
+                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "forge",
+                            "docs",
+                            "gh-pages"
+                        ]
+                    }
+                }
+            },
+            "Build": {
+                "Type": "Gradle",
+                "InitCommand": "$env:MOD_VERSION='3.6.2'",
+                "PreCommand": "java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
+                "Output": "fabric\\build\\libs\\wthit-*.jar",
+                "JAVA_HOME": 16
             }
         },
         {
@@ -352,14 +267,14 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/kyrptonaught/Inventory-Sorter",
-                        "DefaultBranch": "master"
+                        "DefaultBranch": "1.17"
                     }
                 }
             },
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\InventorySorter-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16
             },
             "FinalName": "InventorySorter"
         },
@@ -370,48 +285,26 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/maruohon/itemscroller",
-                        "DefaultBranch": "fabric_1.16_snapshots_temp",
+                        "DefaultBranch": "fabric_1.17_temp_features",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
                             "rift",
-                            "liteloader"
+                            "liteloader",
+                            "master"
                         ]
                     }
                 }
             },
             "Build": {
                 "Type": "Gradle",
-                "Output": "build\\libs\\itemscroller-fabric-*.jar"
+                "Output": "build\\libs\\itemscroller-fabric-*.jar",
+                "JAVA_HOME": 16
             },
             "FinalName": "ItemScroller"
-        },
-        {
-            "Name": "LambDynamicLights",
-            "Ignore": true,
-            "Comment": "Ignored as OptiFine is working.",
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/LambdAurora/LambDynamicLights",
-                        "DefaultBranch": "mc1.16",
-                        "IgnoreBranches": [
-                            "mc1\\.15"
-                        ]
-                    }
-                },
-                "Pull": false
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Command": "ShadowRemapJar",
-                "Output": "build\\libs\\lambdynamiclights-fabric-*.jar",
-                "PerformBuild": false
-            }
         },
         {
             "Name": "litematica",
@@ -420,45 +313,25 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/maruohon/litematica",
-                        "DefaultBranch": "fabric_1.16_temp_features",
+                        "DefaultBranch": "temp_1.17_update",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
-                            "rift"
+                            "rift",
+                            "optifine-fix-test"
                         ]
                     }
                 }
             },
             "Build": {
                 "Type": "Gradle",
-                "Output": "build\\libs\\litematica-fabric-*.jar"
+                "InitCommand": "Write-Console 'Temp patching build.gradle for ModMenu repo' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -7,7 +7,8 @@ targetCompatibility = JavaVersion.VERSION_16\r\n\r\n repositories {\r\n     maven { url ''https:\/\/masa.dy.fi\/maven'' }\r\n-    maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    \/\/maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    mavenLocal()\r\n }\r\n\r\n ext.configFile = file \"build.properties\"\r\ndiff --git a\/build.properties b\/build.properties\r\n--- a\/build.properties\r\n+++ b\/build.properties\r\n@@ -17,4 +17,4 @@ minecraft_version = 1.17\r\n mappings_version = 1.17+build.13\r\n\r\n fabric_loader_version = 0.11.6\r\n-mod_menu_version = 2.0.2\r\n+mod_menu_version = v2.0.2+1.17.2035ad2'",
+                "Output": "build\\libs\\litematica-fabric-*.jar",
+                "JAVA_HOME": 16
             },
             "FinalName": "Litematica"
-        },
-        {
-            "Name": "lithium-fabric",
-            "Ignore": true,
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/jellysquid3/lithium-fabric",
-                        "DefaultBranch": "1.16.x/dev",
-                        "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
-                            "1[2-9]w[0-5][0-9][a-f]",
-                            "2[0-9]w(0[0-9]|1[0-4])[a-f]"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\lithium-fabric-*.jar"
-            },
-            "FinalName": "Lithium"
         },
         {
             "Name": "malilib",
@@ -467,9 +340,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/maruohon/malilib",
-                        "DefaultBranch": "arne_1.16.x",
+                        "DefaultBranch": "fabric_1.17.x",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
@@ -482,7 +355,7 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\malilib-fabric-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16
             },
             "FinalName": "MaliLib"
         },
@@ -493,9 +366,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/maruohon/minihud",
-                        "DefaultBranch": "fabric_1.16_snapshots_temp_features",
+                        "DefaultBranch": "fabric_1.17_snapshots_temp_features",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
@@ -532,7 +405,7 @@
                 ],
                 "Output": "build\\libs\\minihud-fabric-*.jar",
                 "PerformBuild": true,
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16
             },
             "FinalName": "MiniHUD"
         },
@@ -543,9 +416,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/Prospector/ModMenu",
-                        "DefaultBranch": "1.16",
+                        "DefaultBranch": "1.17",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "1\\.16\\.1",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]"
@@ -556,7 +429,7 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\modmenu-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16
             }
         },
         {
@@ -574,7 +447,8 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\modupdater-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 8,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -586,39 +460,20 @@
                         "URL":  "https://github.com/Chocohead/OptiFabric",
                         "DefaultBranch": "llama",
                         "IgnoreBranches": [
-                            "optisine"
+                            "alpaca",
+                            "optisine",
+                            "master"
                         ]
                     }
                 }
             },
             "Build": {
                 "Type": "Gradle",
-                "Output": "build\\libs\\optifabric*.jar"
+                "PreCommand": "java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
+                "Output": "build\\libs\\optifabric*.jar",
+                "JAVA_HOME": 14,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
-        },
-        {
-            "Name": "phosphor-fabric",
-            "Ignore": true,
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/jellysquid3/phosphor-fabric",
-                        "DefaultBranch": "1.16.x/dev",
-                        "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
-                            "1[2-9]w[0-5][0-9][a-f]",
-                            "2[0-9]w(0[0-9]|1[0-4])[a-f]"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\phosphor-fabric-*.jar",
-                "JAVA_HOME": 8
-            },
-            "FinalName": "Phosphor"
         },
         {
             "Name": "ShulkerBoxTooltip",
@@ -627,9 +482,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/MisterPeModder/ShulkerBoxTooltip",
-                        "DefaultBranch": "1.16",
+                        "DefaultBranch": "1.17",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]"
                         ]
@@ -638,7 +493,9 @@
             },
             "Build": {
                 "Type": "Gradle",
-                "Output": "build\\libs\\shulkerboxtooltip-*.jar"
+                "Output": "build\\libs\\shulkerboxtooltip-*.jar",
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -647,65 +504,23 @@
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/cobrasrock/Skin-Swapper"
+                        "URL":  "https://github.com/cobrasrock/Skin-Swapper",
+                        "DefaultBranch": "1.17",
+                        "IgnoreBranches": [
+                            "1.1[0-6](?:\\.[\\dx])?",
+                            "1[2-9]w[0-5][0-9][a-f]",
+                            "2[0-9]w(0[0-9]|1[0-4])[a-f]"
+                        ]
                     }
                 }
             },
             "Build": {
                 "Type": "Gradle",
-                "Output": "build\\libs\\Skin_Swapper_*.jar",
-                "JAVA_HOME": 8
+                "Output": "build\\libs\\skin-swapper-*.jar",
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "SkinSwapper"
-        },
-        {
-            "Name": "soaring-clouds",
-            "Ignore": true,
-            "Comment": "Ignored as OptiFine is working.",
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/Draylar/soaring-clouds",
-                        "DefaultBranch": "1.16",
-                        "IgnoreBranches": [
-                            "1\\.15"
-                        ]
-                    }
-                },
-                "Pull": false
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\soaring-clouds-*.jar",
-                "PerformBuild": false,
-                "JAVA_HOME": 8
-            },
-            "FinalName": "SoaringClouds"
-        },
-        {
-            "Name": "sodium-fabric",
-            "Ignore": true,
-            "Comment": "Ignored as OptiFine is working.",
-            "SubmoduleType": "Module",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/jellysquid3/sodium-fabric",
-                        "DefaultBranch": "1.16.x/dev",
-                        "IgnoreBranches": [
-                            "1\\.15\\.x"
-                        ]
-                    }
-                },
-                "Pull": false
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\sodium-fabric-*.jar",
-                "PerformBuild": false
-            },
-            "FinalName": "Sodium"
         },
         {
             "Name": "tweakeroo",
@@ -714,9 +529,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/maruohon/tweakeroo",
-                        "DefaultBranch": "fabric_1.16_temp_features",
+                        "DefaultBranch": "fabric_1.17_temp_features",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
@@ -728,8 +543,10 @@
             },
             "Build": {
                 "Type": "Gradle",
+                "InitCommand": "Write-Console 'Temp patching build.gradle for ModMenu repo' -Title 'Message';GitApplyPatch -PatchString 'diff --git a\/build.gradle b\/build.gradle\r\n--- a\/build.gradle\r\n+++ b\/build.gradle\r\n@@ -7,7 +7,8 @@ targetCompatibility = JavaVersion.VERSION_16\r\n\r\n repositories {\r\n     maven { url ''https:\/\/masa.dy.fi\/maven'' }\r\n-    maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    \/\/maven { url ''https:\/\/maven.terraformersmc.com\/releases\/'' }\r\n+    mavenLocal()\r\n }\r\n\r\n ext.configFile = file \"build.properties\"\r\ndiff --git a\/build.properties b\/build.properties\r\n--- a\/build.properties\r\n+++ b\/build.properties\r\n@@ -17,4 +17,4 @@ minecraft_version = 1.17\r\n mappings_version = 1.17+build.13\r\n\r\n fabric_loader_version = 0.11.6\r\n-mod_menu_version = 2.0.2\r\n+mod_menu_version = v2.0.2+1.17.2035ad2'",
                 "Output": "build\\libs\\tweakeroo-fabric-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "Tweakeroo"
         },
@@ -741,7 +558,7 @@
                     "Origin": {
                         "URL":  "https://github.com/enginehub/WorldEdit",
                         "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
+                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "feature",
@@ -752,7 +569,7 @@
                             "test-commands",
                             "groupmanager",
                             "temp-docprinter-hack",
-                            "version/5\\.x"
+                            "version/(?:5|7\\.2)\\.x"
                         ]
                     }
                 }
@@ -762,7 +579,8 @@
                 "Command": "worldedit-fabric:build",
                 "VersionCommand": "worldedit-fabric:properties",
                 "Output": "worldedit-fabric\\build\\libs\\worldedit-fabric-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         },
         {
@@ -771,14 +589,16 @@
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/mikroskeem/WorldEditCUI"
+                        "URL":  "https://github.com/mikroskeem/WorldEditCUI",
+                        "DefaultBranch": "mc/1.17"
                     }
                 }
             },
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\WorldEditCUI-*.jar",
-                "JAVA_HOME": 8
+                "JAVA_HOME": 16,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         }
     ]
