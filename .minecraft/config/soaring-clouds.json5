@@ -1,0 +1,10 @@
+{ 
+	/* Configures cloud height for each dimension type.
+	   Overworld: minecraft:overworld
+	   End: minecraft:the_end
+	   Nether: minecraft:the_nether
+	*/
+	"cloudHeights": { 
+		"minecraft:overworld": 255
+	}
+}

@@ -1,0 +1,1 @@
+./src/Manage/manage.ps1
