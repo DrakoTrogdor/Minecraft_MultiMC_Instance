@@ -17,6 +17,8 @@
 .minecraft/Creeper_0.png
 .minecraft/Dolphin_0.png
 .minecraft/Drowned_0.png
+.minecraft/Endermite_0.png
+.minecraft/Evoker_0.png
 .minecraft/Fox_0.png
 .minecraft/Glow_Squid_0.png
 .minecraft/Goat_0.png
@@ -24,14 +26,20 @@
 .minecraft/Husk_0.png
 .minecraft/ModTranslations
 .minecraft/Ocelot_0.png
+.minecraft/Panda_0.png
 .minecraft/Pig_0.png
 .minecraft/Piglin_0.png
 .minecraft/Pillager_0.png
+.minecraft/Player_0.png
+.minecraft/Polar_Bear_0.png
 .minecraft/Rabbit_0.png
+.minecraft/Ravager_0.png
 .minecraft/Sheep_0.png
 .minecraft/Skeleton_0.png
+.minecraft/Snow_Golem_0.png
 .minecraft/Spider_0.png
 .minecraft/Squid_0.png
+.minecraft/Stray_0.png
 .minecraft/Strider_0.png
 .minecraft/Turtle_0.png
 .minecraft/Unknown_0.png
@@ -94,6 +102,7 @@
 .minecraft/mods/worldedit-fabric-mc1.16.2-7.2.0-SNAPSHOT-dist+61a5d7d.jar.disabled
 .minecraft/pings_0.png
 .minecraft/replay_recordings
+.minecraft/resourcepacks/Obvious_Debris.zip
 .minecraft/resourcepacks/VanillaTweaks mc1.16.x [2020-10-17].zip
 .minecraft/resourcepacks/VanillaTweaks_r330416 mc1.16.x [2020-10-17].zip
 .minecraft/saves
@@ -102,11 +111,23 @@
 .minecraft/server-resource-packs
 .minecraft/servers.dat
 .minecraft/servers.dat_old
+.minecraft/shaderpacks/BSL_v7.1.04.1.zip
+.minecraft/shaderpacks/Chocapic13_V8_Ultra.zip
+.minecraft/shaderpacks/Kappa_v2.1.zip
+.minecraft/shaderpacks/Sildurs Enhanced Default v1.10.zip
+.minecraft/shaderpacks/Sildurs Vibrant Shaders v1.262 Extreme-VL.zip
+.minecraft/shaderpacks/Sildurs Vibrant Shaders v1.262 Extreme.zip
+.minecraft/shaderpacks/Sildurs Vibrant Shaders v1.27 Extreme-VL.zip
+.minecraft/shaderpacks/Sildurs Vibrant Shaders v1.27 Extreme.zip
+.minecraft/shaderpacks/Sildurs Vibrant Shaders v1.28 Extreme-VL.zip
+.minecraft/shaderpacks/Sildurs fabulous shaders v1.0.zip
+.minecraft/shaderpacks/Voyager+shader+1.4.2.zip
 .minecraft/skins
 .minecraft/texturepacks
 .minecraft/usercache.json
 .minecraft/voxelmap/cache
 .minecraft/voxelmap/drakotrogdor.com.points
+.minecraft/voxelmap/toptiergameplay.mcserver.us.points
 .minecraft/waypoints_0.png
 .packignore
 .vscode

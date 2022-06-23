@@ -15,15 +15,21 @@
     "areaSelectionsPerWorld": true,
     "changeSelectedCornerOnMove": true,
     "debugLogging": false,
-    "easyPlaceMode": false,
+    "easyPlaceFirst": true,
     "easyPlaceHoldEnabled": false,
+    "easyPlaceMode": false,
+    "easyPlaceSinglePlayerHandling": true,
+    "easyPlaceProtocolV3": true,
     "executeRequireHoldingTool": true,
     "fixRailRotation": true,
+    "generateLowercaseNames": true,
     "highlightBlockInInventory": false,
     "layerModeFollowsPlayer": false,
     "loadEntireSchematics": false,
+    "pasteIgnoreEntities": false,
     "pasteIgnoreInventories": false,
     "pasteNbtRestoreBehavior": "none",
+    "pasteToMcFunctionFiles": false,
     "pickBlockEnabled": true,
     "pickBlockShulkers": false,
     "placementRestriction": false,
@@ -75,16 +81,16 @@
         "cancel": true
       }
     },
-    "easyPlaceActivation": {
-      "keys": "",
+    "easyPlaceUseKey": {
+      "keys": "BUTTON_2",
       "settings": {
         "activate_on": "PRESS",
         "context": "INGAME",
-        "allow_empty": true,
-        "allow_extra_keys": true,
-        "order_sensitive": false,
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
         "exclusive": false,
-        "cancel": false
+        "cancel": true
       }
     },
     "easyPlaceToggle": {
@@ -496,7 +502,7 @@
       }
     },
     "schematicRebuildReplaceAll": {
-      "keys": "",
+      "keys": "R",
       "settings": {
         "activate_on": "PRESS",
         "context": "INGAME",
@@ -895,7 +901,7 @@
   "InfoOverlays": {
     "blockInfoLinesEnabled": true,
     "blockInfoOverlayEnabled": true,
-    "infoOverlaysTargetFluids": false,
+    "infoOverlaysTargetFluids": true,
     "statusInfoHud": false,
     "statusInfoHudAuto": true,
     "verifierOverlayEnabled": true,
@@ -930,7 +936,7 @@
     "ignoreExistingFluids": false,
     "overlayReducedInnerSides": false,
     "renderAreaSelectionBoxSides": true,
-    "renderBlocksAsTranslucent": false,
+    "renderBlocksAsTranslucent": true,
     "renderCollidingSchematicBlocks": false,
     "renderErrorMarkerConnections": false,
     "renderErrorMarkerSides": true,
@@ -946,7 +952,7 @@
     "schematicOverlayTypeExtra": true,
     "schematicOverlayTypeMissing": true,
     "schematicOverlayTypeWrongBlock": true,
-    "schematicOverlayTypeWrongState": true,
+    "schematicOverlayTypeWrongState": false,
     "schematicVerifierUseBlockModels": false,
     "ghostBlockAlpha": 0.5,
     "placementBoxSideAlpha": 0.2,

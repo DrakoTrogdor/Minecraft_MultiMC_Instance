@@ -1,0 +1,8 @@
+{
+  "grabcraft-litematic.config.expertmode": {
+    "key": "grabcraft-litematic.config.expertmode",
+    "toolTip": "grabcraft-litematic.config.tt.expertmode",
+    "value": false,
+    "defaultValue": false
+  }
+}

@@ -1,5 +1,5 @@
 # Minecraft_MultiMC_Instance
-MultiMC instance for Minecraft 1.17 with Fabric, Optifine and a light selection of mods.
+MultiMC instance for Minecraft 1.17.1 with Fabric, Optifine and a light selection of mods.
 
 ## Mods
 - AppleSkin
@@ -9,12 +9,10 @@ MultiMC instance for Minecraft 1.17 with Fabric, Optifine and a light selection 
 - CraftPresence
 - Fabric API
 - Grid
-- Hwyla
-- Inventory Sorter
+- Inventory Sorter (Currently Disabled)
 - Item Scroller
 - Litematica
 - MaLiLib
-- Minecraft Skin Change Mod
 - MiniHUD
 - Mod Menu
 - OptiFabric
@@ -22,16 +20,18 @@ MultiMC instance for Minecraft 1.17 with Fabric, Optifine and a light selection 
 > Credit to sp614x [Donate](https://optifine.net/donate).
 > 
 > Downloads: https://optifine.net/downloads
-- Replay Mod
+- Replay Mod (Currently Disabled)
 - Shulker Box Tooltip
+- Skin Swapper
+- Simple Voice Chat
 - Tweakeroo
 - VoxelMap
 > Credit to MamiyaOtaru [Patreon](https://www.patreon.com/MamiyaOtaru).
 > 
 > Downloads: https://www.curseforge.com/minecraft/mc-mods/voxelmap
 - WorldEdit
-- WorldEditCUI
-
+- WorldEditCUI (Currently Disabled)
+- WTHIT
 ## Resource Packs
 - Infested Blocks
 - Shield Corrections

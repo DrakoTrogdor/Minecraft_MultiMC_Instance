@@ -31,7 +31,7 @@ ofLagometer:false
 ofShowFps:false
 ofAutoSaveTicks:4000
 ofBetterGrass:2
-ofConnectedTextures:1
+ofConnectedTextures:2
 ofWeather:true
 ofSky:true
 ofStars:true
@@ -60,7 +60,7 @@ ofDynamicFov:false
 ofAlternateBlocks:true
 ofDynamicLights:2
 ofScreenshotSize:1
-ofCustomEntityModels:false
+ofCustomEntityModels:true
 ofCustomGuis:true
 ofShowGlErrors:false
 ofFastMath:true

@@ -13,7 +13,7 @@
   },
   "overlay": {
     "position": {
-      "x": 125,
+      "x": 0,
       "y": 0,
       "alignX": "CENTER",
       "alignY": "TOP",

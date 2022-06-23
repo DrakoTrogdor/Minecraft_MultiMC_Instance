@@ -122,6 +122,10 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="dropspread">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="euclid">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
@@ -192,11 +196,16 @@
                 <RegexFilter regex="\[OptiFine\] Unknown resource pack file: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <RegexFilter regex="\[OptiFine\] java\.lang\.ClassNotFoundException: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <RegexFilter regex="\[OptiFine\] java\.lang\.reflect\.InaccessibleObjectException: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="\[OptiFine\] .* texture not found: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
             </Filters>
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
         <Logger additivity="false" level="WARN" name="replaymod">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="recording.ReplayModRecording">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
@@ -224,7 +233,18 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="voicechat">
+            <Filters>
+                <RegexFilter regex="Connecting to server: \'.*\'" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Server acknowledged authentication" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="Waila">
+            <Filters>
+                <RegexFilter regex="WTHIT is not found on the server, all syncable config will reset to their default value\." onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>

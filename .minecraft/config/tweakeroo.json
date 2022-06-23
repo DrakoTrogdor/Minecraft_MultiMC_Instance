@@ -477,6 +477,18 @@
         "cancel": true
       }
     },
+    "sitDownNearbyPets": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
     "skipAllRendering": {
       "keys": "",
       "settings": {
@@ -490,6 +502,18 @@
       }
     },
     "skipWorldRendering": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
+    "standUpNearbyPets": {
       "keys": "",
       "settings": {
         "activate_on": "PRESS",
@@ -526,6 +550,18 @@
       }
     },
     "toolPick": {
+      "keys": "",
+      "settings": {
+        "activate_on": "PRESS",
+        "context": "INGAME",
+        "allow_empty": false,
+        "allow_extra_keys": false,
+        "order_sensitive": true,
+        "exclusive": false,
+        "cancel": true
+      }
+    },
+    "writeMapsAsImages": {
       "keys": "",
       "settings": {
         "activate_on": "PRESS",
