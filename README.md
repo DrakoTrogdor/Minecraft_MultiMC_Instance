@@ -1,15 +1,14 @@
 # Minecraft_MultiMC_Instance
-MultiMC instance for Minecraft 1.17.1 with Fabric, Optifine and a light selection of mods.
+MultiMC instance for Minecraft 1.19 with Fabric, Sodium or Optifine and a light selection of mods.
 
 ## Mods
 - AppleSkin
 - Autofish
-> https://www.curseforge.com/minecraft/mc-mods/autofish
 - BoundingBox OutlineReloaded
 - CraftPresence
 - Fabric API
 - Grid
-- Inventory Sorter (Currently Disabled)
+- Inventory Sorter
 - Item Scroller
 - Litematica
 - MaLiLib
@@ -100,8 +99,8 @@ Add the following to the git config file in order to prevent personal informatio
     clean = sed -E -e 's/lastLaunchTime=[0-9]+/lastLaunchTime=0/' -e 's/totalTimePlayed=[0-9]+/totalTimePlayed=0/' -e 's/^JavaPath=.*$/JavaPath=/'
     smudge = sed -E -e 's/lastLaunchTime=[0-9]+/lastLaunchTime=0/' -e 's/totalTimePlayed=[0-9]+/totalTimePlayed=0/' -e 's/^JavaPath=.*$/JavaPath=/'
 [filter "gf-craftpresence_properties"]
-    clean = sed -E -e 's/(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [A-Z]{3} [0-9]{4}/Sun Jan 1 00:00:00 GMT 2020/' -e 's/^Client_ID=748976419190603806$/Client_ID=/'
-    smudge = sed -E -e 's/(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [A-Z]{3} [0-9]{4}/Sun Jan 1 00:00:00 GMT 2020/' -e 's/^Client_ID=$/Client_ID=748976419190603806/'
+    clean = sed -E -e 's/(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [A-Z]{3} [0-9]{4}/Sun Jan 1 00:00:00 GMT 2020/' -e 's/^Client_ID=[0-9]+$/Client_ID=/'
+    smudge = sed -E -e 's/(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [A-Z]{3} [0-9]{4}/Sun Jan 1 00:00:00 GMT 2020/' -e 's/^Client_ID=$/Client_ID=123456789012345678/'
 [filter "gf-minihud_json"]
     clean = sed   -E 's/    "infoLightLevel": true,/    "infoLightLevel": false,/'
     smudge = sed   -E 's/    "infoLightLevel": true,/    "infoLightLevel": false,/'

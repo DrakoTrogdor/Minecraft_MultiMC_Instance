@@ -4,6 +4,24 @@ Created by DrakoTrogdor on 2020-04-12
 
 ## [Unreleased]
 
+## [1.4.0] - 2022-06-23 (WIP)
+
+### Added
+
+- Added <mod|resource|shader|config> <version>
+
+### Changed
+
+- Updated <mod|resource|shader|config> to <version>
+
+### Fixed
+
+- Fixed <mod|resource|shader|config> (<reason>)
+
+### Removed
+
+- Removed <mod|resource|shader|config> (<reason>)
+
 ## [1.3.3 - 2021-08-02]
 
 ### Added

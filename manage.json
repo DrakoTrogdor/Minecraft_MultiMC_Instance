@@ -56,9 +56,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL": "https://github.com/squeek502/AppleSkin",
-                        "DefaultBranch": "1.18-fabric",
+                        "DefaultBranch": "1.19-fabric",
                         "IgnoreBranches": [
-                            "1\\.1[0-7](?:\\.[\\dx])?",
+                            "1\\.1[0-8](?:\\.[\\dx])?",
                             "forge"
                         ]
                     }
@@ -124,9 +124,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://gitlab.com/CDAGaming/CraftPresence.git",
-                        "DefaultBranch": "1.18.x-Fabric",
+                        "DefaultBranch": "1.19.x-Fabric",
                         "IgnoreBranches": [
-                            "1\\.1[0-7](?:\\.[\\dx])?",
+                            "1\\.1[0-8](?:\\.[\\dx])?",
                             "1\\.1\\.0",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "experiment",
@@ -150,9 +150,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/FabricMC/fabric",
-                        "DefaultBranch": "1.18.2",
+                        "DefaultBranch": "1.19",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "1\\.16\\.1",
                             "20w(0[0-9]|1[0-4])[a-f]",
@@ -165,6 +165,7 @@
             },
             "Build": {
                 "Type": "Gradle",
+                "Command": "remapJar",
                 "Output": "build\\libs\\fabric-api-*.jar",
                 "JAVA_HOME": 17,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
@@ -179,9 +180,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/gnembon/fabric-carpet",
-                        "DefaultBranch": "master",
+                        "DefaultBranch": "1.19.0",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "20w14inf",
                             "expression_optimizer",
@@ -217,9 +218,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/gbl/Grid",
-                        "DefaultBranch": "fabric_1_18",
+                        "DefaultBranch": "fabric_1_19",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
@@ -238,40 +239,15 @@
             }
         },
         {
-            "Name": "HWYLA",
-            "Ignore": true,
-            "SubmoduleType": "ClientModule",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/TehNut/HWYLA",
-                        "DefaultBranch": "1.16_fabric",
-                        "IgnoreBranches": [
-                            "1.1[0-5](?:\\.[\\dx])?",
-                            "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
-                            "1[2-9]w[0-5][0-9][a-f]",
-                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
-                            "forge"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\Hwyla-fabric-*.jar",
-                "JAVA_HOME": 17
-            }
-        },
-        {
             "Name": "WTHIT",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/badasintended/wthit",
-                        "DefaultBranch": "1.18.2",
+                        "DefaultBranch": "dev/master",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
@@ -299,9 +275,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/kyrptonaught/Inventory-Sorter",
-                        "DefaultBranch": "1.18",
+                        "DefaultBranch": "1.19",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]"
@@ -325,7 +301,7 @@
                         "URL":  "https://github.com/maruohon/itemscroller",
                         "DefaultBranch": "fabric_1.18_temp_features",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
@@ -353,7 +329,7 @@
                         "URL":  "https://github.com/maruohon/litematica",
                         "DefaultBranch": "temp_1.18_update",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
@@ -379,7 +355,7 @@
                         "URL":  "https://github.com/maruohon/malilib",
                         "DefaultBranch": "fabric_1.18.x",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
@@ -431,9 +407,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/Prospector/ModMenu",
-                        "DefaultBranch": "1.18",
+                        "DefaultBranch": "1.19",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "1\\.16\\.1",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
@@ -481,9 +457,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/MisterPeModder/ShulkerBoxTooltip",
-                        "DefaultBranch": "1.18",
+                        "DefaultBranch": "1.19",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]"
                         ]
@@ -504,9 +480,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/cobrasrock/Skin-Swapper",
-                        "DefaultBranch": "1.18-fabric",
+                        "DefaultBranch": "1.19-fabric",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]"
                         ]
@@ -528,9 +504,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/henkelmax/simple-voice-chat",
-                        "DefaultBranch": "1.18.2",
+                        "DefaultBranch": "1.19",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1.17-fabric",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
@@ -585,9 +561,9 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/enginehub/WorldEdit",
-                        "DefaultBranch": "version/7.2.x",
+                        "DefaultBranch": "master",
                         "IgnoreBranches": [
-                            "1.1[0-7](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "feature",
@@ -618,8 +594,8 @@
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/mikroskeem/WorldEditCUI",
-                        "DefaultBranch": "mc/1.18"
+                        "URL":  "https://github.com/EngineHub/WorldEditCUI",
+                        "DefaultBranch": "mc/1.19"
                     }
                 }
             },
