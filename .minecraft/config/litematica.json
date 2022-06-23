@@ -30,6 +30,7 @@
     "generateLowercaseNames": true,
     "highlightBlockInInventory": false,
     "layerModeFollowsPlayer": false,
+    "loadEntireSchematics": false,
     "pasteIgnoreEntities": false,
     "pasteIgnoreInventories": false,
     "pasteNbtRestoreBehavior": "none",
