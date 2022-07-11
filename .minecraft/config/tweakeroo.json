@@ -13,6 +13,7 @@
     "freeCameraPlayerMovement": false,
     "handRestockPre": true,
     "hangableEntityBypassInverse": false,
+    "itemUsePacketCheckBypass": true,
     "permanentSneakAllowInGUIs": false,
     "placementRestrictionTiedToFast": true,
     "potionWarningBeneficialOnly": true,

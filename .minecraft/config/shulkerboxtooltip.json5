@@ -13,11 +13,11 @@
 		   If true, pressing the preview key will show the full preview instead.
 		   (default value: false)
 		*/
-		"swapModes": false,
+		"swapModes": true,
 		/* If on, the preview is always displayed, regardless of the preview key being pressed.
 		   (default value: false)
 		*/
-		"alwaysOn": false,
+		"alwaysOn": true,
 		/* In compact mode, how should items with the same ID but different NBT data be compacted?
 		   IGNORE: Ignores NBT data
 		   FIRST_ITEM: Items are displayed as all having the same NBT as the first item

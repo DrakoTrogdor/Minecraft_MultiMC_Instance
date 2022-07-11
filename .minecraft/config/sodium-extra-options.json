@@ -30,7 +30,7 @@
     "sky": true,
     "sun_moon": true,
     "stars": true,
-    "rain_snow": true,
+    "rain_snow": false,
     "biome_colors": true,
     "sky_colors": true
   },

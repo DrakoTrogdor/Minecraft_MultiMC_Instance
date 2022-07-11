@@ -3,6 +3,9 @@
     "carpetCtrlQCraftingEnabledOnServer": false,
     "clientCraftingFixOn1.12": true,
     "craftingRenderRecipeItems": true,
+    "massCraftInterval": 2,
+    "massCraftIterations": 36,
+    "massCraftSwaps": true,
     "modMainToggle": true,
     "packetRateLimit": 4,
     "rateLimitClickPackets": false,
@@ -11,6 +14,7 @@
     "reverseScrollDirectionSingle": false,
     "reverseScrollDirectionStacks": false,
     "useSlotPositionAwareScrollDirection": false,
+    "useRecipeCaching": true,
     "villagerTradeUseGlobalFavorites": true,
     "villagerTradeListRememberScrollPosition": true
   },

@@ -102,7 +102,7 @@
                         "URL":  "https://github.com/irtimaled/BoundingBoxOutlineReloaded",
                         "DefaultBranch": "1.18.2-fabric-dev",
                         "IgnoreBranches": [
-                            "1\\.1[0-6](?:\\.[\\dx])?",
+                            "1\\.1[0-8](?:\\.[\\dx])?",
                             "bukkit",
                             "forge",
                             "master"
@@ -113,7 +113,7 @@
             "Build": {
                 "Type": "Gradle",
                 "Output": "build\\libs\\BBOutlineReloaded-*-fabric.jar",
-                "JAVA_HOME": 16
+                "JAVA_HOME": 17
             },
             "FinalName": "BBOutlineReloaded"
         },
@@ -232,10 +232,12 @@
             "Build": {
                 "Type": "Gradle",
                 "InitCommand": [
+                    "Set-Content -Path gradle.properties -Value 'org.gradle.jvmargs=-Xmx4096m'",
                     "gradle.bat wrapper"
                 ],
                 "Output": "build\\libs\\grid-*-fabric*.jar",
-                "JAVA_HOME": 17
+                "JAVA_HOME": 17,
+                "JAVA_OPTS": "\"-Xmx4096m\" \"-Xms4096m\""
             }
         },
         {
@@ -260,10 +262,10 @@
             },
             "Build": {
                 "Type": "Gradle",
-                "InitCommand": "$env:MOD_VERSION='3.7.0'",
+                "InitCommand": "$env:MOD_VERSION=$(git describe --tags --abbrev=0)",
                 "PreCommand": "# java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
                 "VersionCommand": "fabric:properties",
-                "Command": "build sourcesJar",
+                "Command": "fabric:build",
                 "Output": "platform\\fabric\\build\\libs\\wthit-fabric-*.jar",
                 "JAVA_HOME": 17
             }

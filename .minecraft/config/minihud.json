@@ -55,6 +55,7 @@
     "beaconRangeLvl3": "#20FFF040",
     "beaconRangeLvl4": "#2060FF40",
     "blockGridOverlayColor": "#80FFFFFF",
+    "conduitRange": "#2030FFFF",
     "lightLevelMarkerBlockLit": "#FF209040",
     "lightLevelMarkerDark": "#FFFF4848",
     "lightLevelMarkerDim": "#FFC0C040",
@@ -91,7 +92,6 @@
     "axolotlTooltipsTooltips": false,
     "beeTooltips": false,
     "honeyTooltips": false,
-    "beaconRangeAutoUpdate": false,
     "biomeOverlaySingleColor": true,
     "debugMessages": false,
     "debugRendererPathFindingEnablePointWidth": true,
@@ -105,6 +105,7 @@
     "lightLevelSkipBlockCheck": false,
     "lightLevelUnderWater": false,
     "mapPreview": false,
+    "offsetSubtitleHud": true,
     "requireSneak": false,
     "shulkerBoxPreview": false,
     "shulkerDisplayBgColor": true,
@@ -363,6 +364,7 @@
     "overlayBeaconRange": false,
     "overlayBiomeBorder": false,
     "overlayBlockGrid": false,
+    "overlayConduitRange": false,
     "overlayLightLevel": false,
     "overlayRandomTicksFixed": false,
     "overlayRandomTicksPlayer": false,
@@ -390,6 +392,9 @@
       "keys": ""
     },
     "overlayBlockGrid": {
+      "keys": ""
+    },
+    "overlayConduitRange": {
       "keys": ""
     },
     "overlayLightLevel": {

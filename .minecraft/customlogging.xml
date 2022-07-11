@@ -86,7 +86,8 @@
 
                 <!-- Minecraft General spam -->
                 <RegexFilter regex="\[STDOUT\]:.*" onMatch="DENY" onMismatch="NEUTRAL"/>
-
+                <RegexFilter regex="Couldn't look up profile properties for com\.mojang\.authlib\.GameProfile.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                
                 <!-- <RegexFilter regex="" onMatch="DENY" onMismatch="NEUTRAL"/> -->
             </Filters>
             
