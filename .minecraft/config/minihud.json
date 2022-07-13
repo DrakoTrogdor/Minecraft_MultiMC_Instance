@@ -373,7 +373,7 @@
     "overlaySpawnableColumnHeights": false,
     "overlaySpawnChunkReal": false,
     "overlaySpawnChunkPlayer": false,
-    "overlayStructureMainToggle": true,
+    "overlayStructureMainToggle": false,
     "shapeRenderer": true,
     "debugChunkBorder": false,
     "debugChunkInfo": false,
@@ -516,7 +516,7 @@
       "keys": ""
     },
     "Toggle Nether Fortress": {
-      "keys": ""
+      "keys": "H,1"
     },
     "Toggle Nether Fossil": {
       "keys": ""

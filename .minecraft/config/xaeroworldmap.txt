@@ -30,5 +30,8 @@ onlyCurrentMapWaypoints:false
 minZoomForLocalWaypoints:0.0
 arrowColour:-2
 minimapRadar:true
+pacPlayers:true
 renderWaypoints:true
+displayClaims:true
+claimsOpacity:80
 globalVersion:1

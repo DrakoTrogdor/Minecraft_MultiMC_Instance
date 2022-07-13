@@ -18,7 +18,7 @@ oldDeathpoints:true
 distance:1
 showCoords:true
 lockNorth:false
-zoom:1
+zoom:2
 minimapSize:0
 chunkGrid:-1
 slimeChunks:false
@@ -99,6 +99,10 @@ hideMinimapUnderF3:true
 manualCaveModeStartAuto:true
 manualCaveModeStart:-1
 chunkGridLineWidth:1
+displayPacPlayers:true
+displayClaims:true
+displayCurrentClaim:true
+claimsOpacity:80
 interface:dummy:0:36:true:false:false:false
 interface:dummy:0:10000:true:false:false:false
 interface:dummy:0:0:false:false:true:false

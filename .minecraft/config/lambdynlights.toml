@@ -69,6 +69,7 @@ mode = "fancy"
 				creeper = true
 				lightning_bolt = true
 				enderman = true
+				tadpole = true
 				chicken = true
 				trader_llama = true
 				donkey = true

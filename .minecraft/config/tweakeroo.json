@@ -5,11 +5,11 @@
     "ravagerClientBlockBreakFix": false
   },
   "Generic": {
-    "carpetAccuratePlacementProtocol": true,
+    "carpetAccuratePlacementProtocol": false,
     "clientPlacementRotation": true,
     "fastLeftClickAllowTools": false,
     "fastPlacementRememberOrientation": true,
-    "freeCameraPlayerInputs": true,
+    "freeCameraPlayerInputs": false,
     "freeCameraPlayerMovement": false,
     "handRestockPre": true,
     "hangableEntityBypassInverse": false,
@@ -197,7 +197,7 @@
       "keys": ""
     },
     "toggleCarpetAccuratePlacementProtocol": {
-      "keys": ""
+      "keys": "X,P"
     },
     "toggleGrabCursor": {
       "keys": ""
@@ -715,7 +715,7 @@
     "tweakFastRightClick": false,
     "tweakFillCloneLimit": false,
     "tweakFlySpeed": false,
-    "tweakFlexibleBlockPlacement": true,
+    "tweakFlexibleBlockPlacement": false,
     "tweakFreeCamera": false,
     "tweakGammaOverride": false,
     "tweakHandRestock": true,

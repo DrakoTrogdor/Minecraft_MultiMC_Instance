@@ -100,7 +100,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/irtimaled/BoundingBoxOutlineReloaded",
-                        "DefaultBranch": "1.18.2-fabric-dev",
+                        "DefaultBranch": "1.19.1-fabric-dev",
                         "IgnoreBranches": [
                             "1\\.1[0-8](?:\\.[\\dx])?",
                             "bukkit",

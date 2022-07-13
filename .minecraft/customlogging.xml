@@ -18,12 +18,15 @@
     <Appenders>
         <!-- Output to windows compatable console -->
         <Console name="SysOut" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%d{HH:mm:ss}] [%level/%c{2}]: %msg%n" /><!-- https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout -->
-            <!--
-            Use %c to see the name of the logger that is publishing the event.
-            Use %t to see the name of the thread that is publishing the event.
-            <PatternLayout pattern="[%d{HH:mm:ss}] [%c/%t/%level]: %msg%n" />
-            -->
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%level/%c]: %msg%n">
+              <replace regex=" - Mod .* recommends version .* or later of mod 'Mod Menu' \(modmenu\), but only the wrong version is present.*[\r\n]+\s*- You should install version .* or later of mod 'Mod Menu' \(modmenu\) for the optimal experience.[\r\n]+" replacement="" />
+              <!--
+              https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout
+                Use %c to see the name of the logger that is publishing the event.
+                Use %t to see the name of the thread that is publishing the event.
+                <PatternLayout pattern="[%d{HH:mm:ss}] [%c/%t/%level]: %msg%n" />
+              -->
+            </PatternLayout>
         </Console>
         
         <!-- Output to terminal console -->
@@ -66,19 +69,22 @@
                 -->
 
                 <!-- Minecraft Startup spam -->
-                <RegexFilter regex="Reloading ResourceManager: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Backend library: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Building optimized datafixer" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <RegexFilter regex="Created: \d+x\d+(?:x\d+)? .*" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <RegexFilter regex="Environment: authHost='.*', accountsHost='.*', sessionHost='.*', name='.*'" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <RegexFilter regex="Backend library: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Missing sound for event: minecraft:.*" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <RegexFilter regex="Narrator library for .* successfully loaded" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <RegexFilter regex="OpenAL initialized\." onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="OpenAL initialized.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Reloading ResourceManager: .*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program\." onMatch="DENY" onMismatch="NEUTRAL"/>
                 <RegexFilter regex="Sound engine started" onMatch="DENY" onMismatch="NEUTRAL"/>
 
                 <!-- Minecraft Connect to World spam -->
                 <RegexFilter regex="Loaded \d+ advancements" onMatch="DENY" onMismatch="NEUTRAL"/>
 
                 <!-- Minecraft Playing spam -->
-                <!-- <RegexFilter regex="\[CHAT\].*" onMatch="DENY" onMismatch="NEUTRAL"/> -->
+                <RegexFilter regex="\[CHAT\] .* joined the game" onMatch="DENY" onMismatch="NEUTRAL"/> -->
 
                 <!-- Minecraft Disconnect from World spam -->
                 <RegexFilter regex="Unable to read property: .* with value: .* for blockstate: \{.*\}" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -104,7 +110,35 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="FabricLoader/Metadata">
+            <Filters>
+                <RegexFilter regex="Mod .* SemVer is recommended for reliably evaluating dependencies and prioritizing newer version" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="FabricLoader/Mixin">
+            <Filters>
+                <RegexFilter regex="@ModifyConstant conflict\. Skipping .* from mod (tweakeroo).*already redirected by .* from mod (carpet).*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="@Redirect conflict\. Skipping .* from mod (carpet-extra|tweakeroo).*already redirected by .* from mod (litematica).*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="@Inject.*Shift\.BY=2 on mixins\.iris\.json:texture\.MixinAbstractTexture from mod iris::handler.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="@Mixin target.* was not found .* from mod (bobby)" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Method overwrite conflict for .* in .* from mod (sodium|worldedit), previously written by .* Skipping method\." onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Static binding violation: PRIVATE @Overwrite method .* from mod (sodium) cannot reduce visibiliy of PUBLIC target method, visibility will be upgraded\." onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Error loading class: (dev/tr7zw/skinlayers/Config|ca/spottedleaf/starlight/common/light/StarLightInterface).*" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="FabricLoader/Resolution">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="AutoSwitch">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="betterf3">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
@@ -112,13 +146,36 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="INFO" name="ChunkBuilder">
+            <Filters>
+                <RegexFilter regex="Started \d+ worker threads" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Stopping worker threads" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="ConnectedBlockTextures">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="INFO" name="com.mojang.datafixers.DataFixerBuilder">
+            <Filters>
+                <RegexFilter regex="\d+ Datafixer optimizations took \d+ milliseconds" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="INFO" name="com.mojang.text2speech.NarratorWindows">
+            <Filters>
+                <RegexFilter regex="Failed to load Narrator libraries" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="(32|64)-bit version failed to load.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
         <Logger additivity="false" level="WARN" name="craftpresence">
             <Filters>
-                <RegexFilter regex="Unable to get Curse Manifest Data \(Ignore if Not using a Twitch/CursePack\)" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="(?i)Unable to get Curse manifest data \(ignore if not using a Twitch/CursePack\)" onMatch="DENY" onMismatch="NEUTRAL"/>
             </Filters>
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
@@ -139,7 +196,18 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="Iris">
+            <Filters>
+                <RegexFilter regex="\[Iris Update Check\] Unable to download https://github\.com/IrisShaders/Iris-Update-Index/releases/download/test/updateIndex\.json" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="itemscroller">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="lambdynlights">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
@@ -202,6 +270,27 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="oshi.util.FileUtil">
+            <Filters>
+                <RegexFilter regex="Configuration conflict: there is more than one oshi.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="oshi.util.platform.windows.PerfDataUtil">
+            <Filters>
+                <RegexFilter regex="Failed to update counter\. Error code: 0x800007D5" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="oshi.util.platform.windows.PerfCounterQuery">
+            <Filters>
+                <RegexFilter regex="Disabling further attempts to query Paging File\." onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="replaymod">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
@@ -223,10 +312,17 @@
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
         <Logger additivity="false" level="WARN" name="Sodium">
+            <Filters>
+                <RegexFilter regex="Force-disabling mixin.*disables it and children" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
         <Logger additivity="false" level="WARN" name="SodiumConfig">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="Sodium Extra Config">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
@@ -249,11 +345,34 @@
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="WTHIT">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="com.sk89q.worldedit.extension.platform.PlatformManager">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="com.sk89q.worldedit.fabric.FabricWorldEdit">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
+        <Logger additivity="false" level="WARN" name="com.sk89q.worldedit.fabric.internal.MixinConfigPlugin">
+            <Filters>
+                <RegexFilter regex="\[carpet\] detected, disabling UPDATE mixin com\.sk89q\.worldedit\.fabric\.mixin\.MixinLevelChunkSetBlockHook" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
         <Logger additivity="false" level="WARN" name="worldeditcui">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="xaero.common.MinimapLogs">
+            <AppenderRef ref="SysOut"/>
+            <AppenderRef ref="ServerGuiConsole"/>
+        </Logger>
+        <Logger additivity="false" level="WARN" name="xaero.map.WorldMap">
             <AppenderRef ref="SysOut"/>
             <AppenderRef ref="ServerGuiConsole"/>
         </Logger>
