@@ -66,4 +66,5 @@ ofFastMath:true
 ofFastRender:true
 ofChatBackground:0
 ofChatShadow:true
+ofTelemetry:0
 key_of.key.zoom:key.keyboard.c

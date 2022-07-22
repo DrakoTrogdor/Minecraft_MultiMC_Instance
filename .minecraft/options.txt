@@ -37,7 +37,7 @@ ao:2
 prioritizeChunkUpdates:0
 biomeBlendRadius:2
 renderClouds:"false"
-resourcePacks:["vanilla","Fabric Mods","Black Icons","file/VanillaTweaks mc1.19 [2022-07-06].zip","continuity/glass_pane_culling_fix","continuity/default","file/Obvious_Debris.zip","file/Infested_Blocks.zip","file/Shield_Corrections.zip","file/Baby_Yoda_Totem.zip"]
+resourcePacks:["vanilla","Fabric Mods","Black Icons","file/VanillaTweaks mc1.19 [2022-07-06].zip","file/Obvious_Debris.zip","file/Infested_Blocks.zip","file/Shield_Corrections.zip","file/Baby_Yoda_Totem.zip"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us
@@ -111,15 +111,17 @@ key_key.hotbar.6:key.keyboard.6
 key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
+key_of.key.zoom:key.keyboard.c
 key_key.worldeditcui.toggle:key.keyboard.unknown
 key_key.worldeditcui.clear:key.keyboard.unknown
 key_key.worldeditcui.chunk:key.keyboard.unknown
 key_key.autofish.open_gui:key.keyboard.v
 key_key.grid.showhide:key.keyboard.b
-key_key.grid.here:key.keyboard.c
+key_key.grid.here:key.keyboard.unknown
 key_key.grid.fixy:key.keyboard.y
 key_key.grid.spawns:key.keyboard.l
 key_key.grid.settings:key.keyboard.g
+key_key.craftpresence.config_keycode.name:key.keyboard.grave.accent
 key_key.modmenu.open_menu:key.keyboard.unknown
 key_key.push_to_talk:key.keyboard.caps.lock
 key_key.whisper:key.keyboard.unknown
@@ -153,20 +155,19 @@ key_gui.xaero_toggle_light_overlay:key.keyboard.unknown
 key_gui.xaero_toggle_entity_radar:key.keyboard.unknown
 key_gui.xaero_reverse_entity_radar:key.keyboard.unknown
 key_gui.xaero_toggle_manual_cave_mode:key.keyboard.semicolon
+key_gui.xaero_toggle_pac_players:key.keyboard.unknown
+key_gui.xaero_toggle_pac_chunk_claims:key.keyboard.unknown
 key_gui.xaero_minimap_settings:key.keyboard.y
 key_gui.xaero_open_map:key.keyboard.m
 key_gui.xaero_open_settings:key.keyboard.right.bracket
 key_gui.xaero_map_zoom_in:key.keyboard.unknown
 key_gui.xaero_map_zoom_out:key.keyboard.unknown
 key_gui.xaero_quick_confirm:key.keyboard.right.shift
-key_iris.keybind.reload:key.keyboard.r
-key_iris.keybind.toggleShaders:key.keyboard.k
-key_iris.keybind.shaderPackSelection:key.keyboard.o
-soundCategory_master:0.23841059
+soundCategory_master:0.046357617
 soundCategory_music:0.06964679
-soundCategory_record:0.30075374
+soundCategory_record:0.06690141
 soundCategory_weather:0.15421985
-soundCategory_block:0.5880282
+soundCategory_block:0.471831
 soundCategory_hostile:0.26056337
 soundCategory_neutral:0.278169
 soundCategory_player:0.27112675

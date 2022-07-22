@@ -1,0 +1,38 @@
+diff --git a/build.gradle b/build.gradle
+index 8ef92cf..08dfc2e 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -11,7 +11,7 @@ buildscript {
+         }
+     }
+     dependencies {
+-        classpath "net.fabricmc:fabric-loom:0.11-SNAPSHOT"
++        classpath "net.fabricmc:fabric-loom:0.12-SNAPSHOT"
+         classpath "io.github.juuxel:loom-quiltflower:1.+"
+     }
+ }
+diff --git a/gradle.properties b/gradle.properties
+index 280b2f2..6312694 100644
+--- a/gradle.properties
++++ b/gradle.properties
+@@ -3,6 +3,6 @@ org.gradle.jvmargs=-Xmx4G
+ name=bbor
+ buildVersion=2.4
+ # leave a space to reduce merge conflicts on version change
+-minecraft_version=1.19.1-pre4
+-yarn_mappings=1.19.1-pre4+build.4
++minecraft_version=1.19
++yarn_mappings=1.19+build.4
+ loader_version=0.14.8
+diff --git a/src/main/resources/fabric.mod.json b/src/main/resources/fabric.mod.json
+index 24a62b6..f06fe82 100644
+--- a/src/main/resources/fabric.mod.json
++++ b/src/main/resources/fabric.mod.json
+@@ -12,6 +12,6 @@
+     "bbor.mixins.json"
+   ],
+   "depends": {
+-    "minecraft": ">=1.19.1-beta.2"
++    "minecraft": ">=1.19"
+   }
+ }

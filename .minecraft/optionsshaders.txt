@@ -1,4 +1,4 @@
-#Mon Jan 10 16:59:10 EST 2022
+#Sun Jan 1 00:00:00 GMT 2020
 handDepthMul=0.125
 TexMinFilB=0
 oldLighting=default
