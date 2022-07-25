@@ -8,7 +8,7 @@ ofAoLevel:1.0
 ofClouds:3
 ofCloudsHeight:1.0
 ofTrees:0
-ofRain:3
+ofRain:0
 ofAnimatedWater:0
 ofAnimatedLava:0
 ofAnimatedFire:true
