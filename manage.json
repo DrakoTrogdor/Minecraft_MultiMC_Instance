@@ -560,6 +560,7 @@
             "Name": "WorldEdit",
             "SubmoduleType": "ClientModule",
             "Repo": {
+                "LockAtCommit": "a8b5268",
                 "Remotes": {
                     "Origin": {
                         "URL":  "https://github.com/enginehub/WorldEdit",
