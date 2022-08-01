@@ -1,66 +1,66 @@
 [submodule "AppleSkin"]
 	path = src/AppleSkin
 	url = https://github.com/squeek502/AppleSkin
-	branch = 1.17-fabric
+	branch = 1.19-fabric
+[submodule "AutoFish"]
+	path = src/AutoFish
+	url = https://github.com/MrTroot/autofish
+	branch = fabric
 [submodule "BoundingBoxOutlineReloaded"]
 	path = src/BoundingBoxOutlineReloaded
 	url = https://github.com/irtimaled/BoundingBoxOutlineReloaded
-	branch = 1.16.3-fabric
+	branch = 1.19.1-fabric-dev
+[submodule "Carpet"]
+	path = src/Carpet
+	url = https://github.com/gnembon/fabric-carpet
+	branch = 1.19.1
 [submodule "CraftPresence"]
 	path = src/CraftPresence
 	url = https://gitlab.com/CDAGaming/CraftPresence.git
-	branch = 1.17.x-Fabric
-[submodule "fabric"]
-	path = src/fabric
+	branch = 1.19.x-Fabric
+[submodule "Fabric"]
+	path = src/Fabric
 	url = https://github.com/FabricMC/fabric
-	branch = 1.17
-[submodule "fabric-carpet"]
-	path = src/fabric-carpet
-	url = https://github.com/gnembon/fabric-carpet
-	branch = 1.17
-[submodule "fabric-yarn"]
-	path = src/fabric-yarn
+	branch = 1.19.1
+[submodule "FabricLoom"]
+	path = src/FabricLoom
+	url = https://github.com/Chocohead/Fabric-Loom
+	branch = jeka'nt
+[submodule "FabricYarn"]
+	path = src/FabricYarn
 	url = https://github.com/FabricMC/yarn
 	branch = 1.17
 [submodule "Grid"]
 	path = src/Grid
 	url = https://github.com/gbl/Grid
-	branch = fabric_1_16
-[submodule "HWYLA"]
-	path = src/HWYLA
-	url = https://github.com/TehNut/HWYLA
-	branch = 1.16_fabric
-[submodule "Inventory-Sorter"]
-	path = src/Inventory-Sorter
+	branch = fabric_1_19
+[submodule "InventorySorter"]
+	path = src/InventorySorter
 	url = https://github.com/kyrptonaught/Inventory-Sorter
-	branch = 1.17
-[submodule "itemscroller"]
-	path = src/itemscroller
+	branch = 1.19
+[submodule "ItemScroller"]
+	path = src/ItemScroller
 	url = https://github.com/maruohon/itemscroller
-	branch = fabric_1.17_temp_features
-[submodule "litematica"]
-	path = src/litematica
+	branch = pre-rewrite/fabric/1.19.x
+[submodule "Litematica"]
+	path = src/Litematica
 	url = https://github.com/maruohon/litematica
-	branch = fabric_1.17_update
-[submodule "malilib"]
-	path = src/malilib
+	branch = pre-rewrite/fabric/1.19.x
+[submodule "MaliLib"]
+	path = src/MaliLib
 	url = https://github.com/maruohon/malilib
-	branch = fabric_1.17.x
+	branch = pre-rewrite/fabric/1.19.x
 [submodule "Manage"]
 	path = src/Manage
 	url = https://github.com/DrakoTrogdor/MC_Manage_Submodules
-[submodule "minihud"]
-	path = src/minihud
+[submodule "MiniHUD"]
+	path = src/MiniHUD
 	url = https://github.com/maruohon/minihud
-	branch = fabric_1.17_snapshots_temp_features
+	branch = pre-rewrite/fabric/1.19.x
 [submodule "ModMenu"]
 	path = src/ModMenu
 	url = https://github.com/Prospector/ModMenu
-	branch = 1.17
-[submodule "ModUpdater"]
-	path = src/ModUpdater
-	url = https://gitea.thebrokenrail.com/TheBrokenRail/ModUpdater.git
-	branch = master
+	branch = 1.19
 [submodule "OptiFabric"]
 	path = src/OptiFabric
 	url = https://github.com/Chocohead/OptiFabric
@@ -68,36 +68,100 @@
 [submodule "ShulkerBoxTooltip"]
 	path = src/ShulkerBoxTooltip
 	url = https://github.com/MisterPeModder/ShulkerBoxTooltip
-	branch = 1.17
-[submodule "Skin-Swapper"]
-	path = src/Skin-Swapper
+	branch = 1.19
+[submodule "SkinSwapper"]
+	path = src/SkinSwapper
 	url = https://github.com/cobrasrock/Skin-Swapper
-	branch = 1.17-Fabric
-[submodule "tweakeroo"]
-	path = src/tweakeroo
+	branch = 1.19-Fabric
+[submodule "Tweakeroo"]
+	path = src/Tweakeroo
 	url = https://github.com/maruohon/tweakeroo
-	branch = fabric_1.17_temp_features
+	branch = pre-rewrite/fabric/1.19.x
+[submodule "VoiceChat"]
+	path = src/VoiceChat
+	url = https://github.com/henkelmax/simple-voice-chat
+	branch = 1.19.1
 [submodule "WorldEdit"]
 	path = src/WorldEdit
 	url = https://github.com/enginehub/WorldEdit
-	branch = master
+	branch = version/7.2.x
 [submodule "WorldEditCUI"]
 	path = src/WorldEditCUI
 	url = https://github.com/mikroskeem/WorldEditCUI
-	branch = mc/1.17
-[submodule "wthit"]
-	path = src/wthit
+	branch = master
+[submodule "WTHIT"]
+	path = src/WTHIT
 	url = https://github.com/badasintended/wthit
-	branch = 1.17
-[submodule "Chocohead_Fabric-Loom"]
-	path = src/Chocohead_Fabric-Loom
-	url = https://github.com/Chocohead/Fabric-Loom
-	branch = jeka'nt
-[submodule "simple-voice-chat"]
-	path = src/simple-voice-chat
-	url = https://github.com/henkelmax/simple-voice-chat
-	branch = 1.17.1-fabric
+	branch = dev/master
+[submodule "src/AppleSkin"]
+	path = src/AppleSkin
+	url = https://github.com/squeek502/AppleSkin
 [submodule "src/AutoFish"]
 	path = src/AutoFish
 	url = https://github.com/MrTroot/autofish
-	branch = fabric
+[submodule "src/BoundingBoxOutlineReloaded"]
+	path = src/BoundingBoxOutlineReloaded
+	url = https://github.com/irtimaled/BoundingBoxOutlineReloaded
+[submodule "src/Carpet"]
+	path = src/Carpet
+	url = https://github.com/gnembon/fabric-carpet
+[submodule "src/CraftPresence"]
+	path = src/CraftPresence
+	url = https://gitlab.com/CDAGaming/CraftPresence.git
+[submodule "src/Fabric"]
+	path = src/Fabric
+	url = https://github.com/FabricMC/fabric
+[submodule "src/FabricLoom"]
+	path = src/FabricLoom
+	url = https://github.com/Chocohead/Fabric-Loom
+[submodule "src/FabricYarn"]
+	path = src/FabricYarn
+	url = https://github.com/FabricMC/yarn
+[submodule "src/Grid"]
+	path = src/Grid
+	url = https://github.com/gbl/Grid
+[submodule "src/InventorySorter"]
+	path = src/InventorySorter
+	url = https://github.com/kyrptonaught/Inventory-Sorter
+[submodule "src/ItemScroller"]
+	path = src/ItemScroller
+	url = https://github.com/maruohon/itemscroller
+[submodule "src/Litematica"]
+	path = src/Litematica
+	url = https://github.com/maruohon/litematica
+[submodule "src/MaliLib"]
+	path = src/MaliLib
+	url = https://github.com/maruohon/malilib
+[submodule "src/Manage"]
+	path = src/Manage
+	url = https://github.com/DrakoTrogdor/MC_Manage_Submodules
+[submodule "src/MiniHUD"]
+	path = src/MiniHUD
+	url = https://github.com/maruohon/minihud
+[submodule "src/ModMenu"]
+	path = src/ModMenu
+	url = https://github.com/Prospector/ModMenu
+[submodule "src/OptiFabric"]
+	path = src/OptiFabric
+	url = https://github.com/Chocohead/OptiFabric
+[submodule "src/ShulkerBoxTooltip"]
+	path = src/ShulkerBoxTooltip
+	url = https://github.com/MisterPeModder/ShulkerBoxTooltip
+[submodule "src/SkinSwapper"]
+	path = src/SkinSwapper
+	url = https://github.com/cobrasrock/Skin-Swapper
+[submodule "src/Tweakeroo"]
+	path = src/Tweakeroo
+	url = https://github.com/maruohon/tweakeroo
+[submodule "src/VoiceChat"]
+	path = src/VoiceChat
+	url = https://github.com/henkelmax/simple-voice-chat
+[submodule "src/WorldEdit"]
+	path = src/WorldEdit
+	url = https://github.com/enginehub/WorldEdit
+[submodule "src/WorldEditCUI"]
+	path = src/WorldEditCUI
+	url = https://github.com/enginehub/WorldEditCUI
+[submodule "src/WTHIT"]
+	path = src/WTHIT
+	url = https://github.com/badasintended/wthit

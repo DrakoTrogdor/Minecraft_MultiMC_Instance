@@ -2,11 +2,15 @@
     "$schema": "./src/Manage/manage.schema.json",
     "configuration": {
         "myGit_URL": "https://github.com/DrakoTrogdor",
-        "JAVA_HOME": [
-            {"8": "C:\\Program Files\\AdoptOpenJDK\\jdk-8.0.265.01-hotspot"},
-            {"14": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.2.12-hotspot"},
-            {"16": "C:\\Program Files\\AdoptOpenJDK\\jdk-16.0.1.9-hotspot"},
-            {"17": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.1.12-hotspot"}
+        "JAVA_HOME": [{
+                "8": "C:\\Program Files\\AdoptOpenJDK\\jdk-8.0.265.01-hotspot"
+            }, {
+                "14": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.2.12-hotspot"
+            }, {
+                "16": "C:\\Program Files\\AdoptOpenJDK\\jdk-16.0.1.9-hotspot"
+            }, {
+                "17": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.1.12-hotspot"
+            }
         ],
         "Java_Default": 17,
         "ShowDebugInfo": false,
@@ -48,8 +52,7 @@
             ".minecraft/XaeroWorldMap"
         ]
     },
-    "submodules": [
-        {
+    "submodules": [{
             "Name": "AppleSkin",
             "SubmoduleType": "ClientModule",
             "Repo": {
@@ -70,8 +73,7 @@
                 "JAVA_HOME": 17,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
-        },
-        {
+        }, {
             "Name": "AutoFish",
             "SubmoduleType": "ClientModule",
             "Repo": {
@@ -92,17 +94,17 @@
                 "JAVA_HOME": 17,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
-        },
-        {
+        }, {
             "Name": "BoundingBoxOutlineReloaded",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/irtimaled/BoundingBoxOutlineReloaded",
+                        "URL": "https://github.com/irtimaled/BoundingBoxOutlineReloaded",
                         "DefaultBranch": "1.19.1-fabric-dev",
                         "IgnoreBranches": [
                             "1\\.1[0-8](?:\\.[\\dx])?",
+                            "1\\.19-fabric-dev",
                             "bukkit",
                             "forge",
                             "master"
@@ -116,75 +118,21 @@
                 "JAVA_HOME": 17
             },
             "FinalName": "BBOutlineReloaded"
-        },
-        {
-            "Name": "CraftPresence",
-            "SubmoduleType": "ClientModule",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://gitlab.com/CDAGaming/CraftPresence.git",
-                        "DefaultBranch": "1.19.x-Fabric",
-                        "IgnoreBranches": [
-                            "1\\.1[0-8](?:\\.[\\dx])?",
-                            "1\\.1\\.0",
-                            "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
-                            "experiment",
-                            "Forge",
-                            "Rift"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Output": "build\\libs\\CraftPresence-Fabric-*.jar",
-                "JAVA_HOME": 17,
-                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
-            }
-        },
-        {
-            "Name": "fabric",
-            "SubmoduleType": "ClientModule",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/FabricMC/fabric",
-                        "DefaultBranch": "1.19",
-                        "IgnoreBranches": [
-                            "1.1[0-8](?:\\.[\\dx])?",
-                            "1[2-9]w[0-5][0-9][a-f]",
-                            "1\\.16\\.1",
-                            "20w(0[0-9]|1[0-4])[a-f]",
-                            "20w14infinite",
-                            "dev/0\\.2",
-                            "master"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "Command": "remapJar",
-                "Output": "build\\libs\\fabric-api-*.jar",
-                "JAVA_HOME": 17,
-                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
-            },
-            "FinalName": "FabricAPI"
-        },
-        {
-            "Name": "fabric-carpet",
+        }, {
+            "Name": "Carpet",
             "Ignore": false,
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/gnembon/fabric-carpet",
-                        "DefaultBranch": "1.19.0",
+                        "URL": "https://github.com/gnembon/fabric-carpet",
+                        "DefaultBranch": "master",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
+                            "1.19.0",
                             "20w14inf",
+                            "deep_dark_experiment",
                             "expression_optimizer",
                             "foo",
                             "ghost",
@@ -210,20 +158,76 @@
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "Carpet"
-        },
-        {
+        }, {
+            "Name": "CraftPresence",
+            "SubmoduleType": "ClientModule",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL": "https://gitlab.com/CDAGaming/CraftPresence.git",
+                        "DefaultBranch": "1.19.x-Fabric",
+                        "IgnoreBranches": [
+                            "1\\.1[0-8](?:\\.[\\dx])?",
+                            "1\\.[0-1]\\.0",
+                            "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
+                            "experiment",
+                            "Forge",
+                            "Rift"
+                        ]
+                    }
+                }
+            },
+            "Build": {
+                "Type": "Gradle",
+                "Output": "build\\libs\\CraftPresence-Fabric-*.jar",
+                "JAVA_HOME": 17,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
+            }
+        }, {
+            "Name": "Fabric",
+            "SubmoduleType": "ClientModule",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL": "https://github.com/FabricMC/fabric",
+                        "DefaultBranch": "1.19.1",
+                        "IgnoreBranches": [
+                            "1.1[0-8](?:\\.[\\dx])?",
+                            "1[2-9]w[0-5][0-9][a-f]",
+                            "1\\.16\\.1",
+                            "^1.19$",
+                            "1\\.19_experimental",
+                            "20w(0[0-9]|1[0-4])[a-f]",
+                            "20w14infinite",
+                            "22w13oneblockatatime",
+                            "dev/0\\.2",
+                            "master"
+                        ]
+                    }
+                }
+            },
+            "Build": {
+                "Type": "Gradle",
+                "Command": "remapJar",
+                "Output": "build\\libs\\fabric-api-*.jar",
+                "JAVA_HOME": 17,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
+            },
+            "FinalName": "FabricAPI"
+        }, {
             "Name": "Grid",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/gbl/Grid",
+                        "URL": "https://github.com/gbl/Grid",
                         "DefaultBranch": "fabric_1_19",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
+                            "master",
                             "rift"
                         ]
                     }
@@ -239,44 +243,13 @@
                 "JAVA_HOME": 17,
                 "JAVA_OPTS": "\"-Xmx4096m\" \"-Xms4096m\""
             }
-        },
-        {
-            "Name": "WTHIT",
+        }, {
+            "Name": "InventorySorter",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/badasintended/wthit",
-                        "DefaultBranch": "dev/master",
-                        "IgnoreBranches": [
-                            "1.1[0-8](?:\\.[\\dx])?",
-                            "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
-                            "1[2-9]w[0-5][0-9][a-f]",
-                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
-                            "forge",
-                            "docs",
-                            "gh-pages"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "InitCommand": "$env:MOD_VERSION=$(git describe --tags --abbrev=0)",
-                "PreCommand": "# java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
-                "VersionCommand": "fabric:properties",
-                "Command": "fabric:build",
-                "Output": "platform\\fabric\\build\\libs\\wthit-fabric-*.jar",
-                "JAVA_HOME": 17
-            }
-        },
-        {
-            "Name": "Inventory-Sorter",
-            "SubmoduleType": "ClientModule",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/kyrptonaught/Inventory-Sorter",
+                        "URL": "https://github.com/kyrptonaught/Inventory-Sorter",
                         "DefaultBranch": "1.19",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
@@ -293,15 +266,14 @@
                 "JAVA_HOME": 17
             },
             "FinalName": "InventorySorter"
-        },
-        {
-            "Name": "itemscroller",
+        }, {
+            "Name": "ItemScroller",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/maruohon/itemscroller",
-                        "DefaultBranch": "fabric_1.18_temp_features",
+                        "URL": "https://github.com/maruohon/itemscroller",
+                        "DefaultBranch": "pre-rewrite/fabric/1.19.x",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
@@ -321,20 +293,20 @@
                 "JAVA_HOME": 17
             },
             "FinalName": "ItemScroller"
-        },
-        {
-            "Name": "litematica",
+        }, {
+            "Name": "Litematica",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/maruohon/litematica",
-                        "DefaultBranch": "temp_1.18_update",
+                        "URL": "https://github.com/maruohon/litematica",
+                        "DefaultBranch": "pre-rewrite/fabric/1.19.x",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
+                            "master",
                             "rift",
                             "optifine-fix-test"
                         ]
@@ -347,19 +319,19 @@
                 "JAVA_HOME": 17
             },
             "FinalName": "Litematica"
-        },
-        {
-            "Name": "malilib",
+        }, {
+            "Name": "MaliLib",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/maruohon/malilib",
-                        "DefaultBranch": "fabric_1.18.x",
+                        "URL": "https://github.com/maruohon/malilib",
+                        "DefaultBranch": "pre-rewrite/fabric/1.19.x",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "fabric_1\\.19\\.x_early_port",
                             "forge",
                             "rift",
                             "liteloader"
@@ -373,17 +345,16 @@
                 "JAVA_HOME": 17
             },
             "FinalName": "MaliLib"
-        },
-        {
-            "Name": "minihud",
+        }, {
+            "Name": "MiniHUD",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/maruohon/minihud",
-                        "DefaultBranch": "fabric_1.18_temp_features",
+                        "URL": "https://github.com/maruohon/minihud",
+                        "DefaultBranch": "pre-rewrite/fabric/1.19.x",
                         "IgnoreBranches": [
-                            "1.1[0-6](?:\\.[\\dx])?",
+                            "1.1[0-8](?:\\.[\\dx])?",
                             "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
@@ -401,14 +372,13 @@
                 "JAVA_HOME": 17
             },
             "FinalName": "MiniHUD"
-        },
-        {
+        }, {
             "Name": "ModMenu",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/Prospector/ModMenu",
+                        "URL": "https://github.com/Prospector/ModMenu",
                         "DefaultBranch": "1.19",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
@@ -427,19 +397,19 @@
                 "Output": "build\\libs\\modmenu-*.jar",
                 "JAVA_HOME": 17
             }
-        },
-        {
+        }, {
             "Name": "OptiFabric",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/Chocohead/OptiFabric",
+                        "URL": "https://github.com/Chocohead/OptiFabric",
                         "DefaultBranch": "llama",
                         "IgnoreBranches": [
                             "alpaca",
                             "optisine",
-                            "master"
+                            "master",
+                            "vicuña"
                         ]
                     }
                 }
@@ -451,14 +421,13 @@
                 "JAVA_HOME": 14,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
-        },
-        {
+        }, {
             "Name": "ShulkerBoxTooltip",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/MisterPeModder/ShulkerBoxTooltip",
+                        "URL": "https://github.com/MisterPeModder/ShulkerBoxTooltip",
                         "DefaultBranch": "1.19",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
@@ -474,19 +443,19 @@
                 "JAVA_HOME": 17,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
-        },
-        {
-            "Name": "Skin-Swapper",
+        }, {
+            "Name": "SkinSwapper",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/cobrasrock/Skin-Swapper",
+                        "URL": "https://github.com/cobrasrock/Skin-Swapper",
                         "DefaultBranch": "1.19-fabric",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
-                            "2[0-9]w(0[0-9]|1[0-4])[a-f]"
+                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "feature/offline"
                         ]
                     }
                 }
@@ -498,47 +467,16 @@
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "SkinSwapper"
-        },
-        {
-            "Name": "simple-voice-chat",
+        }, {
+            "Name": "Tweakeroo",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/henkelmax/simple-voice-chat",
-                        "DefaultBranch": "1.19",
+                        "URL": "https://github.com/maruohon/tweakeroo",
+                        "DefaultBranch": "pre-rewrite/fabric/1.19.x",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
-                            "1.17-fabric",
-                            "1[2-9]w[0-5][0-9][a-f]",
-                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
-                            "bukkit",
-                            "api-documentation",
-                            "openal"
-                        ]
-                    }
-                }
-            },
-            "Build": {
-                "Type": "Gradle",
-                "VersionCommand": "fabric:properties",
-                "Command": "fabric:build",
-                "Output": "fabric\\build\\libs\\voicechat-fabric-*.jar",
-                "JAVA_HOME": 17,
-                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
-            },
-            "FinalName": "VoiceChat"
-        },
-        {
-            "Name": "tweakeroo",
-            "SubmoduleType": "ClientModule",
-            "Repo": {
-                "Remotes": {
-                    "Origin": {
-                        "URL":  "https://github.com/maruohon/tweakeroo",
-                        "DefaultBranch": "fabric_1.18_temp_features",
-                        "IgnoreBranches": [
-                            "1.1[0-6](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
                             "forge",
@@ -555,20 +493,81 @@
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             },
             "FinalName": "Tweakeroo"
-        },
-        {
+        }, {
+            "Name": "VoiceChat",
+            "SubmoduleType": "ClientModule",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL": "https://github.com/henkelmax/simple-voice-chat",
+                        "DefaultBranch": "1.19.1",
+                        "IgnoreBranches": [
+                            "1.1[0-8](?:\\.[\\dx])?",
+                            "1.17-fabric",
+                            "^1.19$",
+                            "1[2-9]w[0-5][0-9][a-f]",
+                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "1\\.7\\.10",
+                            "bukkit",
+                            "api-documentation",
+                            "openal"
+                        ]
+                    }
+                }
+            },
+            "Build": {
+                "Type": "Gradle",
+                "VersionCommand": "fabric:properties",
+                "Command": "fabric:build",
+                "Output": "fabric\\build\\libs\\voicechat-fabric-*.jar",
+                "JAVA_HOME": 17,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
+            },
+            "FinalName": "VoiceChat"
+        }, {
+            "Name": "WTHIT",
+            "SubmoduleType": "ClientModule",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL": "https://github.com/badasintended/wthit",
+                        "DefaultBranch": "dev/master",
+                        "IgnoreBranches": [
+                            "1.1[0-8](?:\\.[\\dx])?",
+                            "1\\.[2-9](?:\\.[\\dx]|_\\d+)?",
+                            "1[2-9]w[0-5][0-9][a-f]",
+                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "dev/snapshot",
+                            "docs",
+                            "forge",
+                            "gh-pages"
+                        ]
+                    }
+                }
+            },
+            "Build": {
+                "Type": "Gradle",
+                "InitCommand": "$env:MOD_VERSION=$(git describe --tags --abbrev=0)",
+                "PreCommand": "# java \"-Dfile.encoding=UTF-8\" \"-Dsun.stdout.encoding=UTF-8\" \"-Dsun.stderr.encoding=UTF-8\" \"-Dorg.gradle.appname=gradlew\" -classpath \".\\gradle\\wrapper\\gradle-wrapper.jar\" org.gradle.wrapper.GradleWrapperMain genSources --no-daemon --quiet --warning-mode=none --console=rich",
+                "VersionCommand": "fabric:properties",
+                "Command": "fabric:build",
+                "Output": "platform\\fabric\\build\\libs\\wthit-fabric-*.jar",
+                "JAVA_HOME": 17
+            }
+        }, {
             "Name": "WorldEdit",
             "SubmoduleType": "ClientModule",
             "Repo": {
-                "LockAtCommit": "a8b5268",
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/enginehub/WorldEdit",
+                        "URL": "https://github.com/enginehub/WorldEdit",
                         "DefaultBranch": "master",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
                             "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "bugfix/",
+                            "feat/",
                             "feature",
                             "forge",
                             "spigot",
@@ -577,6 +576,7 @@
                             "test-commands",
                             "groupmanager",
                             "temp-docprinter-hack",
+                            "testing/",
                             "version/(?:5|7\\.2)\\.x"
                         ]
                     }
@@ -590,15 +590,20 @@
                 "JAVA_HOME": 17,
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
-        },
-        {
+        }, {
             "Name": "WorldEditCUI",
             "SubmoduleType": "ClientModule",
             "Repo": {
                 "Remotes": {
                     "Origin": {
-                        "URL":  "https://github.com/EngineHub/WorldEditCUI",
-                        "DefaultBranch": "mc/1.19"
+                        "URL": "https://github.com/enginehub/WorldEditCUI",
+                        "DefaultBranch": "master",
+                        "IgnoreBranches": [
+                            "1.1[0-8](?:\\.[\\dx])?",
+                            "1[2-9]w[0-5][0-9][a-f]",
+                            "2[0-9]w(0[0-9]|1[0-4])[a-f]",
+                            "develop"
+                        ]
                     }
                 }
             },
