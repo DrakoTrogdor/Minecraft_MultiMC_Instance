@@ -3,13 +3,13 @@
     "configuration": {
         "myGit_URL": "https://github.com/DrakoTrogdor",
         "JAVA_HOME": [{
-                "8": "C:\\Program Files\\AdoptOpenJDK\\jdk-8.0.265.01-hotspot"
+                "8": "C:\\Program Files\\AdoptOpenJDK\\jdk-8.0.229.10-hotspot"
             }, {
                 "14": "C:\\Program Files\\AdoptOpenJDK\\jdk-14.0.2.12-hotspot"
             }, {
                 "16": "C:\\Program Files\\AdoptOpenJDK\\jdk-16.0.1.9-hotspot"
             }, {
-                "17": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.1.12-hotspot"
+                "17": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.4.101-hotspot"
             }
         ],
         "Java_Default": 17,
@@ -103,7 +103,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL": "https://github.com/irtimaled/BoundingBoxOutlineReloaded",
-                        "DefaultBranch": "1.19.1-fabric-dev",
+                        "DefaultBranch": "1.19.2-fabric-dev",
                         "IgnoreBranches": [
                             "1\\.1[0-8](?:\\.[\\dx])?",
                             "1\\.19-fabric-dev",
@@ -167,7 +167,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL": "https://gitlab.com/CDAGaming/CraftPresence.git",
-                        "DefaultBranch": "1.19.x-Fabric",
+                        "DefaultBranch": "1.19.x",
                         "IgnoreBranches": [
                             "1\\.1[0-8](?:\\.[\\dx])?",
                             "1\\.[0-1]\\.0",
@@ -192,7 +192,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL": "https://github.com/FabricMC/fabric",
-                        "DefaultBranch": "1.19.1",
+                        "DefaultBranch": "1.19.2",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1[2-9]w[0-5][0-9][a-f]",
@@ -502,7 +502,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL": "https://github.com/henkelmax/simple-voice-chat",
-                        "DefaultBranch": "1.19.1",
+                        "DefaultBranch": "1.19.2",
                         "IgnoreBranches": [
                             "1.1[0-8](?:\\.[\\dx])?",
                             "1.17-fabric",
