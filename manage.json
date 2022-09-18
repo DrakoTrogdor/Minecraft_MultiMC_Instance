@@ -96,6 +96,30 @@
                 "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
             }
         }, {
+            "Name": "BadPackets",
+            "Repo": {
+                "Remotes": {
+                    "Origin": {
+                        "URL": "https://github.com/badasintended/badpackets",
+                        "DefaultBranch": "master",
+                        "IgnoreBranches": [
+                            "1\\.(((?!\\d{2,})\\d{1}|1[0-8])(\\.(\\d+|x))?|(?!19\\.[2-9x])19(\\.[0-1]))?",
+                            "[1-2][0-9]w[0-5][0-9]([a-f]|inf)",
+                            "forge"
+                        ]
+                    }
+                }
+            },
+            "Builds": {
+                "Type": "Gradle",
+                "VersionCommand": "fabric:properties",
+                "Command": "fabric:build",
+                "OutputType": "ClientModule",
+                "Output": "platform\\fabric\\build\\libs\\badpackets-fabric-*.jar",
+                "JAVA_HOME": 17,
+                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
+            }
+        }, {
             "Name": "BoundingBoxOutlineReloaded",
             "Repo": {
                 "Remotes": {

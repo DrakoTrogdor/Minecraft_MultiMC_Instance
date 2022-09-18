@@ -341,6 +341,12 @@
         "keys": ""
       }
     },
+    "disableBossBar": {
+      "enabled": false,
+      "hotkey": {
+        "keys": ""
+      }
+    },
     "disableBossFog": {
       "enabled": false,
       "hotkey": {
@@ -577,6 +583,9 @@
     "disableDoubleTapSprint": {
       "keys": ""
     },
+    "disableBossBar": {
+      "keys": ""
+    },
     "disableBossFog": {
       "keys": ""
     },
@@ -700,7 +709,6 @@
     "tweakChatTimestamp": false,
     "tweakCommandBlockExtraFields": false,
     "tweakCreativeExtraItems": false,
-    "tweakCustomFlatPresets": false,
     "tweakCustomFlyDeceleration": false,
     "tweakElytraCamera": false,
     "tweakEntityTypeAttackRestriction": false,
@@ -804,9 +812,6 @@
       "keys": ""
     },
     "tweakCreativeExtraItems": {
-      "keys": ""
-    },
-    "tweakCustomFlatPresets": {
       "keys": ""
     },
     "tweakCustomFlyDeceleration": {

@@ -3,46 +3,18 @@
   "ignoreUpdates": false,
   "promiscuous": false,
   "clearAllOnKey": false,
-  "cuboidGridColor": {
-    "hex": "#CC3333CC"
-  },
-  "cuboidEdgeColor": {
-    "hex": "#CC4C4CCC"
-  },
-  "cuboidFirstPointColor": {
-    "hex": "#33CC33CC"
-  },
-  "cuboidSecondPointColor": {
-    "hex": "#3333CCCC"
-  },
-  "polyGridColor": {
-    "hex": "#CC3333CC"
-  },
-  "polyEdgeColor": {
-    "hex": "#CC4C4CCC"
-  },
-  "polyPointColor": {
-    "hex": "#33CCCCCC"
-  },
-  "ellipsoidGridColor": {
-    "hex": "#CC4C4CCC"
-  },
-  "ellipsoidPointColor": {
-    "hex": "#CCCC33CC"
-  },
-  "cylinderGridColor": {
-    "hex": "#CC3333CC"
-  },
-  "cylinderEdgeColor": {
-    "hex": "#CC4C4CCC"
-  },
-  "cylinderPointColor": {
-    "hex": "#CC33CCCC"
-  },
-  "chunkBoundaryColour": {
-    "hex": "#33CC33CC"
-  },
-  "chunkGridColour": {
-    "hex": "#4CCCAA99"
-  }
+  "cuboidGridColor": "#CC3333CC",
+  "cuboidEdgeColor": "#CC4C4CCC",
+  "cuboidFirstPointColor": "#33CC33CC",
+  "cuboidSecondPointColor": "#3333CCCC",
+  "polyGridColor": "#CC3333CC",
+  "polyEdgeColor": "#CC4C4CCC",
+  "polyPointColor": "#33CCCCCC",
+  "ellipsoidGridColor": "#CC4C4CCC",
+  "ellipsoidPointColor": "#CCCC33CC",
+  "cylinderGridColor": "#CC3333CC",
+  "cylinderEdgeColor": "#CC4C4CCC",
+  "cylinderPointColor": "#CC33CCCC",
+  "chunkBoundaryColour": "#33CC33CC",
+  "chunkGridColour": "#4CCCAA99"
 }

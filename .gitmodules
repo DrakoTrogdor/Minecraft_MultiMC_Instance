@@ -165,3 +165,6 @@
 [submodule "src/WTHIT"]
 	path = src/WTHIT
 	url = https://github.com/badasintended/wthit
+[submodule "src/BadPackets"]
+	path = src/BadPackets
+	url = https://github.com/badasintended/badpackets
