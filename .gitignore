@@ -23,6 +23,7 @@
 /.minecraft/mods/*.jar.disabled
 /.minecraft/mods/mamiyaotaru/voxelmap
 /.minecraft/ModTranslations
+/.minecraft/profilekeys
 /.minecraft/replay_recordings
 /.minecraft/replay_pid*.log
 /.minecraft/resourcepacks

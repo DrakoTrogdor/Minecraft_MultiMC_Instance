@@ -22,6 +22,7 @@
             ".minecraft/crash-reports/",
             ".minecraft/logs/",
             ".minecraft/mods/*.jar.disabled",
+            ".minecraft/profilekeys",
             ".minecraft/schematics",
             ".minecraft/screenshots",
             ".minecraft/skins",
@@ -38,6 +39,7 @@
             ".minecraft/mods/*.jar.disabled",
             ".minecraft/replay_recordings/",
             ".minecraft/modcore/",
+            ".minecraft/profilekeys",
             ".minecraft/resourcepacks",
             ".minecraft/saves",
             ".minecraft/schematics",
@@ -490,7 +492,7 @@
                 "Type": "Gradle",
                 "Output": "build\\libs\\tweakeroo-fabric-*.jar",
                 "JAVA_HOME": 17,
-                "JAVA_OPTS": "\"-Xmx64m\" \"-Xms64m\""
+                "JAVA_OPTS": "\"-Xmx1024m\" \"-Xms1024m\""
             },
             "FinalName": "Tweakeroo"
         }, {

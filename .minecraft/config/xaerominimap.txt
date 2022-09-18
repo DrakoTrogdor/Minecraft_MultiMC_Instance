@@ -99,6 +99,9 @@ hideMinimapUnderF3:true
 manualCaveModeStartAuto:true
 manualCaveModeStart:-1
 chunkGridLineWidth:1
+temporaryWaypointsGlobal:true
+keepUnlockedWhenEnlarged:false
+enlargedMinimapAToggle:false
 displayPacPlayers:true
 displayClaims:true
 displayCurrentClaim:true
