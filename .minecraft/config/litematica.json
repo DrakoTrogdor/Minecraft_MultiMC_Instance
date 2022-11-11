@@ -41,12 +41,15 @@
     "pasteNbtRestoreBehavior": "none",
     "pasteToMcFunctionFiles": false,
     "pasteUseFillCommand": true,
+    "pickBlockAvoidDamageable": true,
+    "pickBlockAvoidTools": false,
     "pickBlockEnabled": true,
     "pickBlockShulkers": false,
     "placementRestriction": false,
     "placementRestrictionWarn": "actionbar",
     "renderMaterialListInGuis": true,
     "renderThreadNoTimeout": true,
+    "signTextPaste": true,
     "toolItemEnabled": true,
     "unhideSchematicVCS": false,
     "pasteReplaceBehavior": "none",
@@ -261,6 +264,9 @@
     },
     "toggleSchematicRendering": {
       "keys": "J,G"
+    },
+    "toggleSignTextPaste": {
+      "keys": ""
     },
     "toggleTranslucentRendering": {
       "keys": ""
