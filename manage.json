@@ -101,7 +101,7 @@
                 "Remotes": {
                     "Origin": {
                         "URL": "https://github.com/badasintended/badpackets",
-                        "DefaultBranch": "master",
+                        "DefaultBranch": "0.2",
                         "IgnoreBranches": [
                             "1\\.(((?!\\d{2,})\\d{1}|1[0-8])(\\.(\\d+|x))?|(?!19\\.[2-9x])19(\\.[0-1]))?",
                             "[1-2][0-9]w[0-5][0-9]([a-f]|inf)",
@@ -112,6 +112,7 @@
             },
             "Builds": {
                 "Type": "Gradle",
+                "InitCommand": "$env:MOD_VERSION=$(git describe --tags --abbrev=0)",
                 "VersionCommand": "fabric:properties",
                 "Command": "fabric:build",
                 "OutputType": "ClientModule",
@@ -147,6 +148,7 @@
             "Name": "Carpet",
             "Ignore": false,
             "Repo": {
+                "LockAtCommit": "ffa4fcf2a66862e6d31e05d423c4bf9b089ea250",
                 "Remotes": {
                     "Origin": {
                         "URL": "https://github.com/gnembon/fabric-carpet",
